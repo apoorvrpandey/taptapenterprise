@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assessment Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    
+
+    <link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/manage_internships.css">
+  <link rel="stylesheet" href="css/internships_common.css">
+  <link rel="stylesheet" href="css/nav_log.css">
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+  <style>
+    .container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.circular-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.message {
+    font-size: 16px;
+    color: #333;
+}
+.internship-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 3 columns for each row */
+            gap: 20px; /* Space between cards */
+        }
+
+        .internship {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .pagination {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+       
+
+       
+
+        .pagination {
+            margin-top: 20px;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .container {
+            width: 100%;
+            margin: auto;
+            padding-top: 20px;
+        }
+
+        .search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust the gap between input and select as needed */
+}
+
+#searchInput {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    outline: none;
+    font-size: 16px;
+    flex: 1;
+    max-width:600px
+   
+}
+
+#searchInput::placeholder {
+    color: black; /* Adjust placeholder text color if needed */
+   
+}
+
+#sortOptions {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+.search-container input,
+.search-container select {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.search-container input:focus,
+.search-container select:focus {
+    box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
+    border-color: #007bff;
+}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        thead {
+            background-color: #7962bd;
+        }
+
+        td {
+            padding: 10px;
+           font-size: 14px;
+            border-bottom: 1px solid #ddd;
+            
+        }
+        th {
+            padding: 10px;
+          
+           color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .actions img {
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .circle {
+    width: 40px; /* Adjust size as needed */
+    height: 40px; /* Adjust size as needed */
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-image: url('img/blackbuckslogo.jpg'); /* Replace with the path to your image */
+    display: inline-block;
+}
+
+        /* Rounded corners for table header */
+        thead th:first-child {
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        thead th:last-child {
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .view{
+            background-color: #D3FB52;
+    color: #333;
+    padding: 10px 15px;
+    border: 2px solid #A1C900;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .view:hover{
+            background-color: #D3FB52;
+    color: #333;
+    padding: 10px 15px;
+    border: 2px solid #A1C900;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        th.left-align, td.left-align {
+    text-align: left;
+}
+
+/* Center-align text in all other columns */
+th.center-align, td.center-align {
+    text-align: center;
+}
+/* Ensure the first column is left-aligned */
+table td:first-child {
+    text-align: left;
+}
+.center-align {
+    text-align: center;
+}
+
+th {
+    position: relative;
+    cursor: pointer;
+}
+
+.fa-chevron-up,
+.fa-chevron-down {
+    padding-top: 3px;
+    margin-left: 5px;
+    font-size: 0.5em;
+    color: white;
+    margin: -3px 0; /* Adjust this value to remove any extra space */
+    
+}
+.fa-chevron-up{
+    margin-bottom: 0;
+}
+
+.fa-chevron-up:hover,
+.fa-chevron-down:hover {
+    opacity: 1;
+}
+.sort-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 5px;
+    padding-left: 5px;
+   
+}
+
+.sort-icons i {
+    cursor: pointer;
+}
+
+.search-bar-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#searchInput {
+    padding-right: 250px; /* Adjust padding to make room for the icon */
+  
+    box-sizing: border-box; /* Include padding in the width calculation */
+    max-width:1000px
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px; /* Adjust position as needed */
+    pointer-events: none; /* Ensure icon doesn't interfere with typing */
+    color: #332828; /* Style the icon color */
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the search bar and the sort options */
+}
+
+#sortOptions {
+    flex-shrink: 0; /* Prevent the select box from shrinking */
+}
+
+.loader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #25b09b;
+  --_m: conic-gradient(#0000 10%, #000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+  mask: var(--_m);
+  -webkit-mask-composite: source-out;
+  mask-composite: subtract;
+  animation: l3 1s infinite linear;
+  margin-left: 600px;
+ 
+}
+
+@keyframes l3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.loader-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Ensure it's above other content */
+}
+
+
+        .hidden {
+            display: none;
+        }
+
+
+
+  </style>
+</head>
+<body>
+    <script>
+        window.userRole = "<%= user.role %>";
+      </script>
+      <script src="js/rolebase.js"></script>
+      
+      
+      
+      
+        
+        
+        
+        
+  <div class="supercss">
+  
+   
+    <div class="sidebar">
+       
+    
+        <% if (user.role === 'EmployabilityAdmin') { %>
+          <a class="logo"
+          style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+          <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+      </a>
+            <a href="employabilityReport" class="menu-item active" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+        <% } else if (user.role === 'SuperAdmin') { %>
+            <a class="logo"
+                style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+            </a>
+            <a href="employabilityReport" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item">
+                <img src="img/internship_whiteicon.png" alt="manage" style="width: 20px; height: auto">
+                <span>Internships</span>
+            </a>
+        <% } else { %>
+            <a class="logo"
+            style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+            <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+        </a>
+            <a href="myDashboard" class="menu-item" id="dashboard-link">
+                <img src="img/dash_white.png" alt="dash" style="max-width:22px; height:22px">
+                <span style="color:white">Dashboard</span>
+            </a>
+            <a href="employabilityReport" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+                <img alt="Assessment icon" src="img/assessment.png" style="max-width:19px; height:19.5px">
+                <span>Assessments</span>
+            </a>
+            <a href="jobsDashboard" class="menu-item">
+                <img src="img/jobs.png" alt="jobs" style="max-width:20px; height:21px">
+                <span>Jobs</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/" class="menu-item">
+                <img alt="course icon" src="img/course.png" style="max-width:19px; height:20px">
+                <span>Course</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/lessonPlan/" class="menu-item">
+                <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width:23px; height:18px">
+                <span>Lesson Plan</span>
+            </a>
+            <a href="trainingsDashboard" class="menu-item">
+                <img src="img/trainings.png" alt="trainings" style="max-width:27px; height:21px">
+                <span>Trainings</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item">
+                <img src="img/internship_whiteicon.png" alt="manage" style="width: 20px; height: auto">
+                <span>Internships</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/" class="menu-item">
+                <img alt="vpl icon" src="img/vpl.png" style="max-width:19px; height:17px">
+                <span>VPL</span>
+            </a>
+        <% } %>
+    </div>
+    
+    
+ 
+       <div class="css">
+        <div class="css0">
+          <div class="navbar">
+           <div class="nav1"></div>
+           <div class="nav2">
+               <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                   <div class="chakra-stack css-nr8aow">
+                       <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                   </div>
+               </a>
+               <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                   <div class="chakra-stack css-nr8aow">
+                       <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0"></div></a>
+               <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                   <div class="chakra-stack css-nr8aow">
+                       <div class="css-1edim3w">
+                           <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj">
+                           <div class="css-1bac456">
+                               <div class="css-1rkwksi">1</div>
+                           </div>
+                       </div>
+                   </div>
+               </a>
+               <button type="button" class="navbtn" id="userButton">
+                   <span class="user-details">
+                       <div class="user">
+                           <span class="user-profile">
+                               <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                           </span>
+                           <div class="username">
+                               <p class="userN"></p>
+                               <p class="userR"></p>
+                           </div>
+                       </div>
+                   </span>
+                   <span class="chakra-button__icon css-1hzyiq5">
+                       <svg viewBox="0 0 16 16" style="height:12px !important; width: 12px !important;"  aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                           <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                       </svg>
+                   </span>
+               </button>
+               
+               <button type="button" class="logoutbtn" id="logoutButton" style="display: none;">
+                   Log out
+               </button>
+               
+              
+           </div>
+         
+    <script>
+       document.addEventListener('DOMContentLoaded', () => {
+       const userButton = document.getElementById('userButton');
+       const logoutButton = document.getElementById('logoutButton');
+    
+       userButton.addEventListener('click', () => {
+           if (logoutButton.style.display === 'none') {
+               logoutButton.style.display = 'flex';
+               logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+               logoutButton.style.left = `${userButton.offsetLeft}px`;
+           } else {
+               logoutButton.style.display = 'none';
+           }
+       });
+    
+       logoutButton.addEventListener('click', () => {
+           // Add your logout logic here
+           console.log('User logged out');
+       });
+    });
+
+
+    
+    
+    </script>
+          </div>
+       </div>
+       <div class="css1">
+  <div class="main-container">
+    <div class="roww marginr" style="margin: 20px;">
+      <img src="img/empgrey.png" alt="internship icon" style="width: 14px; height: 14px; margin-right: 5px">
+      <a href="employabilityReport" style="text-decoration: none;"><p class="grey f14 marginr" >
+       Employability Dashboard <i class="fa-solid fa-chevron-right f10 marginl grey"></i>
+      </p></a>
+      <a href="assessmentDashboard" style="text-decoration: none;"><p class="f14" >Employability Assessments</p></a>
+    
+    </div>
+
+    <div class="search-container">
+        <div class="search-bar-wrapper">
+            <input type="text" id="searchInput" placeholder="Search" oninput="filterInternships()" />
+            <i class="fas fa-search search-icon"></i>
+        </div>
+        <!-- <select id="sortOptions" onchange="filterInternships()">
+            <option value="default">Sort By</option>
+            <option value="asc">A to Z</option>
+            <option value="desc">Z to A</option>
+        </select> -->
+    </div>
+   
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th class="left-align">
+                        <div style="display: flex; flex-direction: row;">
+                            
+                            <div style="justify-content: center; align-items: center; padding-top: 4px; padding-right: 2px;">Assessment title</div>
+                            <div class="sort-icons">
+                                <i class="fas fa-chevron-up" id="sortTitleAsc"></i>
+                                <i class="fas fa-chevron-down" id="sortTitleDesc"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="center-align">
+                        <div style="display: flex; flex-direction: row;">
+                            <div style="justify-content: center; align-items: center; padding-top: 4px; padding-right: 2px;">Test Takers Count</div>
+                            <div class="sort-icons">
+                                <i class="fas fa-chevron-up" id="sortTestTakersAsc"></i>
+                                <i class="fas fa-chevron-down" id="sortTestTakersDesc"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="center-align">
+                        Start Date
+                    </th>
+                    <th class="center-align">
+                        End Date
+                    </th>
+                    <th class="center-align">
+                        <div style="display: flex; flex-direction: row;">
+                            <div style="justify-content: center; align-items: center; padding-top: 4px;">Average Employability Score</div>
+                            <div class="sort-icons">
+                                <i class="fas fa-chevron-up" id="sortEmployabilityAsc"></i>
+                                <i class="fas fa-chevron-down" id="sortEmployabilityDesc"></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th class="center-align">
+                        Report Link
+                    </th>
+                </tr>
+            </thead>
+            <div id="loader" class="loader"></div>
+            <tbody id="tableBody">
+                <!-- Rows will be inserted here dynamically -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div id="logoutModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p class="question">Are you sure you want to logout?</p>
+            <div class="modal-buttons">
+                <button id="cancelLogout">Cancel</button>
+                <button id="confirmLogout">Yes</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        let internshipsData = [];
+        const searchInput = document.getElementById('searchInput');
+        const sortOptions = document.getElementById('sortOptions');
+        const loader = document.getElementById('loader');
+        const internshipsContainer = document.getElementById('internshipsContainer');
+
+        async function fetchInternships() {
+            loader.classList.remove('hidden'); // Show loader
+            try {
+                const response = await fetch('api/employability_assessments/');
+                internshipsData = await response.json();
+                sortInternships('testTakers', 'desc'); // Sort and render by default
+            } catch (error) {
+                console.error('Error fetching internships:', error);
+            } finally {
+                loader.classList.add('hidden'); // Hide loader
+            }
+        }
+
+        function formatDate(dateString) {
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            return new Intl.DateTimeFormat('en-GB', options).format(new Date(dateString));
+        }
+
+        function filterInternships() {
+            let filteredData = internshipsData;
+
+            // Filter by search input
+            const searchText = searchInput ? searchInput.value.toLowerCase() : '';
+            if (searchText) {
+                filteredData = filteredData.filter(internship =>
+                    internship.title.toLowerCase().includes(searchText)
+                );
+            }
+
+            // Sort if sort option is selected
+            const sortValue = sortOptions ? sortOptions.value : 'default';
+            if (sortValue !== 'default') {
+                const [type, order] = sortValue.split('-');
+                sortInternships(type, order);
+            } else {
+                renderInternships(filteredData);
+            }
+        }
+
+        function renderInternships(data) {
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+
+            if (data.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td colspan="7" style="text-align: center;">No Hackathons available</td>';
+                tableBody.appendChild(tr);
+                return;
+            }
+
+            data.forEach(internship => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="left-align"><span class="circle"></span></td>
+                    <td class="left-align">${internship.title}</td>
+                    <td>${internship.count}</td>
+                    <td>${formatDate(internship.start_date)}</td>
+                    <td>${formatDate(internship.end_date)}</td>
+                    <td>${internship.average_emp_score}%</td>
+                    <td class="actions">
+                        <a href="assessmentReport?id=${internship.id}"><button class="view">View Report</button></a>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function sortInternships(type, order) {
+            let sortedData = [...internshipsData];
+
+            if (type === 'testTakers') {
+                sortedData.sort((a, b) => order === 'asc' ? a.count - b.count : b.count - a.count);
+            } else if (type === 'employability') {
+                sortedData.sort((a, b) => order === 'asc' ? a.average_emp_score - b.average_emp_score : b.average_emp_score - a.average_emp_score);
+            } else if (type === 'title') {
+                sortedData.sort((a, b) => order === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title));
+            }
+
+            renderInternships(sortedData);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchInternships();
+
+            // Add event listeners for sort chevrons
+            document.getElementById('sortTitleAsc').addEventListener('click', () => sortInternships('title', 'asc'));
+            document.getElementById('sortTitleDesc').addEventListener('click', () => sortInternships('title', 'desc'));
+            document.getElementById('sortTestTakersAsc').addEventListener('click', () => sortInternships('testTakers', 'asc'));
+            document.getElementById('sortTestTakersDesc').addEventListener('click', () => sortInternships('testTakers', 'desc'));
+            document.getElementById('sortEmployabilityAsc').addEventListener('click', () => sortInternships('employability', 'asc'));
+            document.getElementById('sortEmployabilityDesc').addEventListener('click', () => sortInternships('employability', 'desc'));
+
+            // Add event listener for sort by title
+            sortOptions.addEventListener('change', () => {
+                const sortValue = sortOptions.value;
+                if (sortValue === 'title-asc') {
+                    sortInternships('title', 'asc');
+                } else if (sortValue === 'title-desc') {
+                    sortInternships('title', 'desc');
+                }
+            });
+        });
+    </script>
+        
+
+<!-----------User Details Fetching---------------------->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to get the value of a cookie by name
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
+      // Get the JWT token from the cookie
+      const token = getCookie('userAdminToken');
+      
+      if (token) {
+        // Decode the JWT token
+        const decoded = jwt_decode(token);
+        
+        // Display the username and role
+        document.querySelector('.userN').textContent = decoded.email;
+        document.querySelector('.userR').textContent = decoded.role;
+      } else {
+        // Handle the case where the token is not found
+        document.querySelector('.userN').textContent = 'No user logged in';
+        document.querySelector('.userR').textContent = '';
+      }
+    });
+  </script>
+       
+<!---------Logout module----------->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutButton = document.getElementById('logoutButton');
+        const logoutModal = document.getElementById('logoutModal');
+        const modalContent = logoutModal.querySelector('.modal-content');
+        const confirmLogoutButton = modalContent.querySelector('#confirmLogout');
+        const cancelLogoutButton = modalContent.querySelector('#cancelLogout');
+
+        logoutButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the button
+
+            // Show the modal
+            logoutModal.style.display = 'block';
+
+            // Add event listeners to the modal buttons
+            confirmLogoutButton.addEventListener('click', function() {
+                // If user confirms, navigate to /logout
+                window.location.href = '/logout';
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+
+            cancelLogoutButton.addEventListener('click', function() {
+                // If user cancels, hide the modal
+                logoutModal.style.display = 'none';
+            });
+
+            // Add event listener to the close span
+            closeSpan.addEventListener('click', function() {
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+
+            // Add event listener to the modal itself to close when clicked outside
+            window.addEventListener('click', function(event) {
+                if (event.target === logoutModal) {
+                    logoutModal.style.display = 'none'; // Hide the modal
+                }
+            });
+        });
+    });
+</script> 
+
+</body>
+</html>

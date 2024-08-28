@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internship Attendance</title>
+  <link href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" rel="stylesheet">
+  <style>
+    .table-container {
+      margin: 20px;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.userRole = "<%= user.role %>";
+  </script>
+  <script src="js/rolebase.js"></script>
+  
+  <section class="section">
+    <div class="container">
+      <h1 class="title">Internship Attendance</h1>
+      <div class="table-container">
+        <table id="attendance-table" class="table is-striped is-fullwidth">
+          <thead id="attendance-table-header">
+            <!-- Headers will be inserted here dynamically -->
+          </thead>
+          <tbody id="attendance-table-body">
+            <!-- Data will be inserted here dynamically -->
+          </tbody>
+        </table>
+      </div>
+      <button id="export-btn" class="button is-primary">Export to Excel</button>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      fetch('api/internship_weekly_attendance/data')
+        .then(response => response.json())
+        .then(data => {
+          const tableHeader = document.getElementById('attendance-table-header');
+          const tableBody = document.getElementById('attendance-table-body');
+
+          // Get the weeks from the first student's data for header creation
+          const weeks = data[0].weekly_data;
+
+          // Create header row
+          const headerRow = document.createElement('tr');
+          headerRow.innerHTML = `
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Registration Number</th>
+          `;
+          
+          weeks.forEach((week, index) => {
+            const startDate = new Date(week.week_start).toLocaleDateString('en-US');
+            const endDate = new Date(week.week_end).toLocaleDateString('en-US');
+            headerRow.innerHTML += `
+              <th>Week ${index + 1}<br>(${startDate} - ${endDate})</th>
+              <th>Attendance %</th>
+            `;
+          });
+
+          tableHeader.appendChild(headerRow);
+
+          // Create table rows
+          data.forEach(student => {
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+              <td>${student.name}</td>
+              <td>${student.email}</td>
+              <td>${student.phone}</td>
+              <td>${student.regno}</td>
+            `;
+
+            student.weekly_data.forEach(week => {
+              row.innerHTML += `
+                <td>${week.total_events}</td>
+                <td>${week.attendance_percentage.toFixed(2)}%</td>
+              `;
+            });
+
+            tableBody.appendChild(row);
+          });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+
+      // Export to Excel button click handler
+      document.getElementById('export-btn').addEventListener('click', () => {
+        const wb = XLSX.utils.table_to_book(document.getElementById('attendance-table'));
+        XLSX.write(wb, { bookType: 'xlsx', type: 'base64' });
+        const fileName = 'internship_attendance.xlsx';
+        const blob = new Blob([XLSX.write(wb, { bookType: 'xlsx', type: 'blob' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    });
+  </script>
+</body>
+</html>

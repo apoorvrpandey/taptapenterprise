@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="icon" type="image/x-icon" href="img/sidebar logo.png" />
+
+    <link rel="stylesheet" href="css/nav_log.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <title>Job Applications</title>
+    <style>
+        .css1{
+            background-color: #e2e2e2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #4C4267;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+       
+        .usercard {
+            width: 95%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .roww{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.marginr{
+    margin-right: 10px;
+}
+.grey{
+    color: rgba(0, 0, 0, 0.7);
+}
+.f14{
+    font-size: 14px;
+}
+    </style>
+</head>
+
+<body>
+    <script>
+        window.userRole = "<%= user.role %>";
+      </script>
+      <script src="js/rolebase.js"></script>
+      
+
+   
+    <div class="supercss">
+         <div class="sidebar">
+        <a class="logo" style="text-align: center;align-items:center;padding:5px">
+           <img src="img/sidebar logo.png" alt="Logo" style="width: 64px; max-width: 120px;height:73px;">
+        </a>
+       <a href="myDashboard" class="menu-item" id="dashboard-link">
+            <img src="img/dash_white.png" alt="dash" style="width: 20px; height: 20px"><span style="color:white">My Dashboard</span>
+        </a>
+         <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="dash" style="width: 20px; height: 20px;"><span>Employbility</span>
+            </a>
+        <a href="https://admin.hackathon.blackbucks.me"  class="menu-item" >
+            <img alt="Assessment icon" src="img/assessment.png" style="width: 20px; height: 20px;">
+            <span>Assessments</span></a>
+       
+         <a href="jobsDashboard" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/jobs_black.png" alt="jobs" style="width: 20px; height: 19px;"><span style="color:black;font-weight:bold">Jobs</span>
+             </a>
+        <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/"  class="menu-item" >
+            <img alt="course icon" src="img/course.png" style="width: 20px; height: 20px;"> 
+            <span>Course</span></a>
+        <a href="https://admin.hackathon.blackbucks.me/lessonPlan/"  class="menu-item" >
+            <img alt="lessonplan icon" src="img/lessonplan.png" style="width: 20px; height: 20px;">
+            <span>Lesson Plan</span></a>
+        
+                <a href="trainingsDashboard" class="menu-item">
+                    <img src="img/trainings.png" alt="trainings" style="width: 20px; height: 20px;"><span>Trainings</span>
+                 </a>
+                 <a href="internshipsDashboard" class="menu-item">
+                    <img
+                      src="img/internship_whiteicon.png"
+                      alt="manage"
+                      style="width: 20px; height: auto"
+                    /><span>Internships</span>
+                  </a>
+        <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/"  class="menu-item" >
+                    <img alt="vpl icon" src="img/vpl.png" style="width: 20px; height: 20px;">
+                    <span>VPL</span></a>
+       
+         
+
+             
+     </div>
+     
+           <div class="css">
+            <div class="css0">
+                <div class="navbar">
+                 <div class="nav1"></div>
+                 <div class="nav2">
+                     <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                         <div class="chakra-stack css-nr8aow">
+                             <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                         </div>
+                     </a>
+                     <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                         <div class="chakra-stack css-nr8aow">
+                             <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0"></div></a>
+                     <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                         <div class="chakra-stack css-nr8aow">
+                             <div class="css-1edim3w">
+                                 <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj">
+                                 <div class="css-1bac456">
+                                     <div class="css-1rkwksi">1</div>
+                                 </div>
+                             </div>
+                         </div>
+                     </a>
+                     <button type="button" class="navbtn" id="userButton">
+                         <span class="user-details">
+                             <div class="user">
+                                 <span class="user-profile">
+                                     <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                                 </span>
+                                 <div class="username">
+                                     <p class="userN"></p>
+                                     <p class="userR"></p>
+                                 </div>
+                             </div>
+                         </span>
+                         <span class="chakra-button__icon css-1hzyiq5">
+                             <svg viewBox="0 0 16 16" style="height:12px !important; width: 12px !important;"  aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                             </svg>
+                         </span>
+                     </button>
+                     
+                     <button type="button" class="logoutbtn" id="logoutButton" style="display: none;">
+                         Log out
+                     </button>
+                     
+                    
+                 </div>
+               
+          <script>
+             document.addEventListener('DOMContentLoaded', () => {
+             const userButton = document.getElementById('userButton');
+             const logoutButton = document.getElementById('logoutButton');
+          
+             userButton.addEventListener('click', () => {
+                 if (logoutButton.style.display === 'none') {
+                     logoutButton.style.display = 'flex';
+                     logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+                     logoutButton.style.left = `${userButton.offsetLeft}px`;
+                 } else {
+                     logoutButton.style.display = 'none';
+                 }
+             });
+          
+             logoutButton.addEventListener('click', () => {
+                 // Add your logout logic here
+                 console.log('User logged out');
+             });
+          });
+          
+          </script>
+                </div>
+             </div>
+           <div class="css1">
+    <div class="main-container">
+        <div class="roww marginr">
+            <img
+              src="img/jobsgrey.png"
+              alt="internship icon"
+              style="width: 14px; height: 14px; margin-right: 5px"
+            />
+            <a href="jobsDashboard" style="text-decoration: none;">
+              <p class="grey f14 marginr">
+                Jobs Dashboard <i class="fa-solid fa-chevron-right f10 marginl grey"></i>
+              </p></a>
+            <p class="f14">Job Applications</p>
+          </div>
+        <div class="usercard">
+            <h2><span id="company-title"></span> Job Applications</h2>
+            
+            <div id="job-applications-table"></div>
+            <div id="error-message" style="color: red;"></div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    
+<div id="logoutModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <p class="question">Are you sure you want to logout?</p>
+        <div class="logout-div"></div>
+        <div class="modal-buttons">
+            <button id="cancelLogout">Cancel</button>
+            <button id="confirmLogout">Yes</button>
+        </div>
+    </div>
+</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobId = urlParams.get('job_post_id');
+
+            if (jobId) {
+                fetch(`api/job_application/data/${jobId}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (Array.isArray(data) && data.length > 0) {
+                            const companyName = data[0].company_title;
+                            document.getElementById('company-title').textContent = `${companyName}`;
+                        }
+                        generateTable(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching job applications:', error);
+                        document.getElementById('error-message').textContent = `Error fetching job applications: ${error.message}`;
+                    });
+            }
+        });
+
+        function generateTable(data) {
+            if (!Array.isArray(data) || data.length === 0) {
+                document.getElementById('error-message').textContent = 'No job applications found.';
+                return;
+            }
+
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+
+            const headers = ['Name', 'Email', 'Roll Number', 'College Name', 'Company', 'Job Title'];
+            const headerRow = document.createElement('tr');
+            headers.forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            data.forEach(application => {
+                const row = document.createElement('tr');
+                Object.values(application).forEach(value => {
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    row.appendChild(cell);
+                });
+                tbody.appendChild(row);
+            });
+            table.appendChild(tbody);
+
+            const tableContainer = document.getElementById('job-applications-table');
+            tableContainer.innerHTML = '';
+            tableContainer.appendChild(table);
+        }
+    </script>
+
+
+<!-----------User Details Fetching---------------------->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to get the value of a cookie by name
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+  
+      // Get the JWT token from the cookie
+      const token = getCookie('userAdminToken');
+      
+      if (token) {
+        // Decode the JWT token
+        const decoded = jwt_decode(token);
+        
+        // Display the username and role
+        document.querySelector('.userN').textContent = decoded.email;
+        document.querySelector('.userR').textContent = decoded.role;
+      } else {
+        // Handle the case where the token is not found
+        document.querySelector('.userN').textContent = 'No user logged in';
+        document.querySelector('.userR').textContent = '';
+      }
+    });
+  </script>
+       <!---------Logout module----------->
+       <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutButton = document.getElementById('logoutButton');
+            const logoutModal = document.getElementById('logoutModal');
+            const modalContent = logoutModal.querySelector('.modal-content');
+            const confirmLogoutButton = modalContent.querySelector('#confirmLogout');
+            const cancelLogoutButton = modalContent.querySelector('#cancelLogout');
+      
+            logoutButton.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default behavior of the button
+      
+                // Show the modal
+                logoutModal.style.display = 'block';
+      
+                // Add event listeners to the modal buttons
+                confirmLogoutButton.addEventListener('click', function() {
+                    // If user confirms, navigate to /logout
+                    window.location.href = '/logout';
+                    logoutModal.style.display = 'none'; // Hide the modal
+                });
+      
+                cancelLogoutButton.addEventListener('click', function() {
+                    // If user cancels, hide the modal
+                    logoutModal.style.display = 'none';
+                });
+      
+                // Add event listener to the close span
+                closeSpan.addEventListener('click', function() {
+                    logoutModal.style.display = 'none'; // Hide the modal
+                });
+      
+                // Add event listener to the modal itself to close when clicked outside
+                window.addEventListener('click', function(event) {
+                    if (event.target === logoutModal) {
+                        logoutModal.style.display = 'none'; // Hide the modal
+                    }
+                });
+            });
+        });
+      </script>
+</body>
+
+</html>

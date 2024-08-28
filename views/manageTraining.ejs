@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+      <link rel="stylesheet" href="css/phases.css">
+      <link rel="stylesheet" href="css/trainings_common.css">
+      <link rel="stylesheet" href="css/nav_log.css">
+      <link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon">
+      <title>Training Settings</title>
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
+      <!-- Include Toastify CSS and JS -->
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+     <!-- Add this in your HTML file -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+   </head>
+   <body>
+    <script>
+        window.userRole = "<%= user.role %>";
+      </script>
+      <script src="js/rolebase.js"></script>
+      
+    <div class="supercss">
+        <div class="sidebar">
+            <a class="logo" style="text-align: center;align-items:center;padding:5px">
+               <img src="img/sidebar logo.png" alt="Logo" style="width: 64px; max-width: 120px;height:73px;">
+            </a>
+           <a href="myDashboard" class="menu-item" id="dashboard-link">
+                <img src="img/dash_white.png" alt="dash" style="width: 20px; height: 20px"><span style="color:white">Dashboard</span>
+            </a>
+             <a href="employabilityReport" class="menu-item">
+                    <img src="img/emp.png" alt="dash" style="width: 20px; height: 20px;"><span>Employability</span>
+                </a>
+            <a href="https://admin.hackathon.blackbucks.me"  class="menu-item" >
+                <img alt="Assessment icon" src="img/assessment.png" style="width: 20px; height: 20px;">
+                <span>Assessments</span></a>
+           
+             <a href="jobsDashboard" class="menu-item">
+               <img src="img/jobs.png" alt="jobs" style="width: 20px; height: 20px;"><span>Jobs</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/"  class="menu-item" >
+                <img alt="course icon" src="img/course.png" style="width: 20px; height: 20px;"> 
+                <span>Course</span></a>
+            <a href="https://admin.hackathon.blackbucks.me/lessonPlan/"  class="menu-item" >
+                <img alt="lessonplan icon" src="img/lessonplan.png" style="width: 20px; height: 20px;">
+                <span>Lesson Plan</span></a>
+            
+                    <a href="trainingsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+                <img src="img/trainings_black.png" alt="trainings" style="width: 20px; height: 20px;"><span style="color: black;font-weight:bold">Trainings</span>
+            </a>
+                     <a href="internshipsDashboard" class="menu-item">
+                        <img
+                          src="img/internship_whiteicon.png"
+                          alt="manage"
+                          style="width: 20px; height: auto"
+                        /><span>Internships</span>
+                      </a>
+                    <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/"  class="menu-item" >
+                        <img alt="vpl icon" src="img/vpl.png" style="width: 20px; height: 20px;">
+                        <span>VPL</span></a>
+           
+             
+    
+                 
+         </div>
+     
+           <div class="css">
+            <div class="css0">
+                <div class="navbar">
+                 <div class="nav1"></div>
+                 <div class="nav2">
+                     <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                         <div class="chakra-stack css-nr8aow">
+                             <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                         </div>
+                     </a>
+                     <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                         <div class="chakra-stack css-nr8aow">
+                             <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0"></div></a>
+                     <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                         <div class="chakra-stack css-nr8aow">
+                             <div class="css-1edim3w">
+                                 <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj">
+                                 <div class="css-1bac456">
+                                     <div class="css-1rkwksi">1</div>
+                                 </div>
+                             </div>
+                         </div>
+                     </a>
+                     <button type="button" class="navbtn" id="userButton">
+                         <span class="user-details">
+                             <div class="user">
+                                 <span class="user-profile">
+                                     <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                                 </span>
+                                 <div class="username">
+                                     <p class="userN"></p>
+                                     <p class="userR"></p>
+                                 </div>
+                             </div>
+                         </span>
+                         <span class="chakra-button__icon css-1hzyiq5">
+                             <svg viewBox="0 0 16 16" style="height:12px !important; width: 12px !important;"  aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                                 <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                             </svg>
+                         </span>
+                     </button>
+                     
+                     <button type="button" class="logoutbtn" id="logoutButton" style="display: none;">
+                         Log out
+                     </button>
+                     
+                    
+                 </div>
+               
+          <script>
+             document.addEventListener('DOMContentLoaded', () => {
+             const userButton = document.getElementById('userButton');
+             const logoutButton = document.getElementById('logoutButton');
+          
+             userButton.addEventListener('click', () => {
+                 if (logoutButton.style.display === 'none') {
+                     logoutButton.style.display = 'flex';
+                     logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+                     logoutButton.style.left = `${userButton.offsetLeft}px`;
+                 } else {
+                     logoutButton.style.display = 'none';
+                 }
+             });
+          
+             logoutButton.addEventListener('click', () => {
+                 // Add your logout logic here
+                 console.log('User logged out');
+             });
+          });
+          
+          </script>
+                </div>
+             </div>
+           <div class="css1">
+      <div id="toast-message" class="toast" 
+         style="background-color: rgb(155, 255, 185); 
+         color: black;
+         border: 1px solid green; 
+         border-radius: 10px; display: none;">
+          <span id="toast-text"></span>
+        </div>
+      <div class="main-container">
+         <div id="new-form-section" class="section">
+          <div class="roww marginr" style="margin: 20px;">
+            <img src="img/traininggrey.png" alt="internship icon" style="width: 14px; height: 14px; margin-top:10px; margin-right: 5px">
+            <a href="trainingsDashboard" style="text-decoration: none;">
+            <p class="grey f14 marginr" style="margin:10px 0 0 0;">
+               Trainings <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+            </p></a>
+            <p class="f14" style="margin:10px 0 0 0;">Update Trainings</p>
+         </div>
+          <div class="paging">
+            <div class="reg_icon">
+               <div class="circle completed active">
+                  <img src="img/tdetails.png" alt="Training Details">
+               </div>
+               <p>Training Details</p>
+            </div>
+            <div class="horizontal-line"></div>
+            <div class="reg_icon">
+               <div class="circle">
+                  <img src="img/pdetails.png" alt="Training Details">
+               </div>
+               <p>Phase Details</p>
+            </div>
+            <div class="horizontal-line"></div>
+            <div class="reg_icon" >
+               <div class="circle" id="event">
+                  <img src="img/edetails.png" alt="Training Details">
+               </div>
+               <p>Event Details</p>
+            </div>
+         </div>
+
+         <div class="update-training-form">
+          <form id="edit-training-form">
+            <div class="training-details-p2">
+              <div class="left-section">
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label for="training_title">Training Title<span class="compulsory-mark">*</span></label>
+                      <input type="text" class="form-control" id="training_title" name="training_title" required>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label for="training_description">Description of Training<span class="compulsory-mark">*</span></label>
+                      <input type="text" class="form-control" id="training_description" name="training_description" required>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                  <div class="form-group">
+                      <label for="training_hours">No of Hours<span class="compulsory-mark">*</span></label>
+                      <input type="number" class="form-control" id="training_hours" name="training_hours" required>
+                  </div>
+              </div>
+              <div class="col-md-12" style="margin-bottom: 25px;">
+                <div class="row" >
+                    <div class="col-md-6"  style="margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label for="training_start_date" >Training Start Date<span class="compulsory-mark">*</span></label>
+                            <input type="date" class="form-control" id="training_start_date" name="training_start_date" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6"  style="margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label for="training_end_date">Training End Date<span class="compulsory-mark">*</span></label>
+                            <input type="date" class="form-control" id="training_end_date" name="training_end_date" required>
+                        </div>
+                    </div>
+                </div></div>
+             
+         </div>
+             <div class="right-section">
+              <div class="col-md-12">
+              <div class="form-group">
+                <label for="banner_image" >Banner Image</label>
+                 <div class="banner-img">
+                <input type="file" id="banner_image" name="banner_image" accept="image/*">
+                <img id="banner-preview" class="banner-preview" src="" alt="Banner Preview"></div>
+              </div></div>
+             
+         </div>
+         </div>
+           
+            <button type="submit" class="training-button" id="save-new-form">Save & Next</button>
+          </form>
+            <!-- New form content goes here -->
+         </div>
+         
+        
+        </div>
+
+         <div id="phases-section" class="section" style="display: none;">
+          <div class="roww marginr" style="margin: 20px;">
+            <img src="img/edit.png" alt="internship icon" style="width: 14px; height: 14px; margin-top:10px; margin-right: 5px">
+            <p class="grey f14 marginr" style="margin:10px 0 0 0;">
+               Phases <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+            </p>
+            <p class="f14" style="margin:10px 0 0 0;">Add Phases</p>
+         </div>
+          <div class="paging">
+            <div class="reg_icon">
+               <div class="circle completed active">
+                  <img src="img/tdetails.png" alt="Training Details">
+               </div>
+               <p>Training Details</p>
+            </div>
+            <div class="horizontal-line"></div>
+            <div class="reg_icon">
+               <div class="circle completed active">
+                  <img src="img/active-phase.png" alt="Training Details">
+               </div>
+               <p>Phase Details</p>
+            </div>
+            <div class="horizontal-line"></div>
+            <div class="reg_icon" >
+               <div class="circle" id="event">
+                  <img src="img/edetails.png" alt="Training Details">
+               </div>
+               <p>Event Details</p>
+            </div>
+         </div>
+
+            <p class="grey f20 font600">Phases Details</p>
+            <div id="phases-container"></div>
+            <div style="float: right; margin-bottom: 40px">
+               <button class="add-phase-button" id="add-phase">Add Phase</button>
+               <button class="continue-button" id="save-and-continue">Next</button>
+            </div>
+          
+         </div>
+         <div id="live-sessions-section" class="section" style="display: none;">
+
+
+          <div class="roww marginr" style="margin: 20px;">
+            <img src="img/edit.png" alt="internship icon" style="width: 14px; height: 14px; margin-top:10px; margin-right: 5px">
+            <p class="grey f14 marginr" style="margin:10px 0 0 0;">
+               Events <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+            </p>
+            <p class="f14" style="margin:10px 0 0 0;">Add Events</p>
+         </div>
+          <div class="paging">
+            <div class="reg_icon">
+               <div class="circle completed active">
+                  <img src="img/tdetails.png" alt="Training Details">
+               </div>
+               <p>Training Details</p>
+            </div>
+            <div class="horizontal-line"></div>
+            <div class="reg_icon">
+               <div class="circle completed active">
+                  <img src="img/active-phase.png" alt="Training Details">
+               </div>
+               <p>Phase Details</p>
+            </div>
+            <div class="horizontal-line"></div>
+            <div class="reg_icon" >
+               <div class="circle completed active">
+                  <img src="img/active-other.png" alt="Training Details">
+               </div>
+               <p>Event Details</p>
+            </div>
+         </div>
+           
+            <div id="live-sessions-container">
+               <div class="live">
+                <h2 class="f20 font600" style="margin-left: 20px;">Live Sessions</h2>
+                <div class="live-session-container">
+                <div class="col-md-6">
+                  <div class="form-group select">
+                  <label for="phaseSelectLive" style="margin-right: 10px;">Select Phase:</label>
+                  <select id="phaseSelectLive" name="phaseSelectLive">
+                     <option value="">-- Select Phase --</option>
+                  </select></div></div>
+                  <div class="col-md-6">
+                    <div class="form-group select">
+                  <label for="phaseSelectLive" style="margin-right: 10px;">Select Session Titles:</label>
+                  <select id="customEventsDropdown" multiple="multiple" style="width: 100%;">
+                     <option value="">Select...</option>
+                  </select></div></div>
+                  <!-- Hidden input field to store selected event IDs -->
+                  <input type="hidden" id="selectedEventsIds" name="selectedEventIds">
+                 
+               </div>
+               <div id="saved-sessions-container" class="saved-sessions"></div>
+               <button class="save-button" onclick="saveLiveSession()">Save Live Session</button>
+
+
+            </div>
+            
+         </div>
+
+
+
+         <div id="assessments-section" class="section" style="display: none;">
+            
+            <div id="assessments-container">
+              <div class="live">
+                <h2 class="f20 font600" style="margin-left: 20px;">Assessments</h2>
+               <div class="assessment-container">
+                <div class="col-md-6">
+                  <div class="form-group select">
+                  <label for="phaseSelectAssessment" style="margin-right: 10px;">Select Phase:</label>
+                  <select id="phaseSelectAssessment" name="phaseSelectAssessment">
+                     <option value="">-- Select Phase --</option>
+                  </select></div></div>
+                  <div class="col-md-6">
+                    <div class="form-group select">
+                  <label style="margin-right: 10px;">Assign Assessments:</label>
+                  <select id="customAssessmentsDropdown" multiple="multiple" style="width: 100%;">
+                     <option value="">Select...</option>
+                  </select></div></div>
+                  <!-- Hidden input field to store selected assessment IDs -->
+                  <input type="hidden" id="selectedAssessmentIds" name="selectedAssessmentIds">
+                 
+               </div>
+               <div id="saved-assessments-container" class="saved-sessions"></div>
+             
+               <div style="display:flex; flex-direction: row; float: right; align-items: center;">
+                <button class="save-button" style="margin: 0;" onclick="saveAssessment()">Save Assessment</button>
+                <a href="manage_trainings" class="submitbtn"  style="text-decoration: none; margin-left: 10px; font-size: 14px;">Submit</a>
+               </div>
+              </div>
+              </div>
+            </div>
+            
+
+
+      </div>
+    </div>
+    <div id="logoutModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p class="question">Are you sure you want to logout?</p>
+            <div class="logout-div"></div>
+            <div class="modal-buttons">
+                <button id="cancelLogout">Cancel</button>
+                <button id="confirmLogout">Yes</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+      <script>
+ function showToast(message, type = 'success') {
+            Toastify({
+                text: message,
+                duration: 3000,
+                close: true,
+                gravity: 'top',
+                position: 'center',
+                backgroundColor: type === 'success' ? 'green' : 'red',
+            }).showToast();
+        }
+
+        let batchOptions = '';
+        let phases = [];
+
+        // Fetch batch data once and populate batchOptions
+        fetch('/api/batches/data')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (Array.isArray(data)) {
+                    data.forEach(batch => {
+                        const option = `<option value="${batch.id}">${batch.batch_title}</option>`;
+                        batchOptions += option;
+                    }); 
+
+                    const initialBatchSelect = document.getElementById('batchSelect-1');
+                    if (initialBatchSelect) {
+                        initialBatchSelect.innerHTML += batchOptions;
+                        $(initialBatchSelect).select2(); // Initialize select2 for multi-select
+                    }
+                    fetchPhases();
+
+                } else {
+                    console.error('Data format error: Expected an array but received', data);
+                }
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
+
+        async function fetchTrainingDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const trainingId = urlParams.get('id');
+
+            if (!trainingId) {
+                console.error('Invalid training ID');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/training_overview/training/${trainingId}`);
+                if (!response.ok) throw new Error('Failed to fetch training details');
+
+                const training = await response.json();
+                populateForm(training);
+            } catch (error) {
+                console.error('Error fetching training details:', error);
+            }
+        }
+
+        function populateForm(training) {
+            document.getElementById('training_title').value = training.title;
+            document.getElementById('training_description').value = training.description;
+            document.getElementById('training_hours').value = training.total_training_hours;
+
+            const formattedStartDate = formatDateForInput(training.start_date);
+            const formattedEndDate = formatDateForInput(training.end_date);
+
+            document.getElementById('training_start_date').value = formattedStartDate;
+            document.getElementById('training_end_date').value = formattedEndDate;
+            document.getElementById('banner-preview').src = training.banner;
+        }
+
+        function formatDateForInput(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function previewBannerImage(event) {
+            const file = event.target.files[0];
+            const preview = document.getElementById('banner-preview');
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.src = '';
+            }
+        }
+
+        document.getElementById('banner_image').addEventListener('change', previewBannerImage);
+
+        document.getElementById('edit-training-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const trainingId = urlParams.get('id');
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch(`/api/update_trainings/update/${trainingId}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const errorMessage = await response.text();
+                    throw new Error(errorMessage);
+                }
+
+                showToast('Training details updated successfully');
+                document.getElementById('phases-section').style.display = 'block';
+            } catch (error) {
+                console.error('Error updating training details:', error);
+                showToast('Error updating training details: ' + error.message);
+            }
+        });
+
+        async function fetchPhases() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const trainingId = urlParams.get('id');
+            if (!trainingId) {
+                document.getElementById('phases-container').innerHTML = '<p>Invalid training ID</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/phases/phases_data/${trainingId}`);
+                if (!response.ok) {
+                    throw new Error(`Error fetching phases: ${response.statusText}`);
+                }
+                phases = await response.json();
+                console.log('Fetched phases:', phases);
+                renderPhases(phases);
+            } catch (error) {
+                console.error('Error fetching phases:', error);
+                addPhaseForm(1); // Add a default empty form if there's an error or no phases
+            }
+        }
+
+        function renderPhases(phases) {
+            const container = document.getElementById('phases-container');
+            container.innerHTML = '';
+            if (phases.length === 0) {
+                addPhaseForm(1); // Add a default empty form if no phases
+            } else {
+                phases.forEach((phase, index) => {
+                    addPhaseForm(index + 1, phase);
+                });
+            }
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        function addPhaseForm(index, phase = {}) {
+    const container = document.getElementById('phases-container');
+    const phaseForm = document.createElement('div');
+    phaseForm.className = 'phase-container';
+    if (phase.id) {
+        phaseForm.setAttribute('data-phase-id', phase.id); // Set the phase ID as a data attribute
+    }
+    const startDate = phase.start_date ? formatDate(phase.start_date) : '';
+    const endDate = phase.end_date ? formatDate(phase.end_date) : '';
+    phaseForm.innerHTML = `
+        <div style="padding:5px;">
+            <h2>Phase ${index}</h2>
+            <div style="display:flex; flex-direction:row;">
+                <div style="display:flex; flex-direction:column; width:50%;padding:25px;">
+                    <div class="form-group form-group-item">
+                        <label>Phase Title:</label>
+                        <input type="text" name="title" value="${phase.title || ''}" placeholder="Enter Phase Title" required>
+                    </div>
+                    <div class="form-group form-group-item" style="margin-top:25px">
+                        <label for="batchSelect-${index}">Select Batches:</label>
+                        <select id="batchSelect-${index}" name="batches" multiple="multiple" required>
+                            ${batchOptions}
+                        </select>
+                    </div>
+                    <div class="form-group form-group-item" style="margin-top:25px">
+                        <label>No. of Mock Interviews:</label>
+                        <input type="number" name="mock_interviews" value="${phase.mock_interviews || ''}" required placeholder="Enter Number of Mock Interviews">
+                    </div>
+                    <div class="form-group form-group-item" style="margin-top:25px">
+                        <label>No. of Assessments:</label>
+                        <input type="number" name="assessments" value="${phase.assessments || ''}" required placeholder="Enter Number of Assessments">
+                    </div>
+                    <div class="form-group form-group-item" style="margin-top:25px">
+                        <label>No. of Webinars:</label>
+                        <input type="number" name="webinars" value="${phase.webinars || ''}" required placeholder="Enter Number of Webinars">
+                    </div>
+                </div>
+                <div style="display:flex; flex-direction:column; width:50%;padding:25px;">
+                    <div class="container">
+                        <div class="column">
+                            <div class="row">
+                                <div class="col-md-6" style=" display:flex;">
+                                    <label style="text-wrap:nowrap;">Start Date:</label>
+                                    <input type="date" name="start_date" value="${startDate}" required>
+                                </div>
+                                <div class="col-md-6" style="display:flex;">
+                                    <label style="text-wrap:nowrap;">End Date:</label>
+                                    <input type="date" name="end_date" value="${endDate}" required>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-item" style="margin-top:25px">
+                                <label>No. of Hours:</label>
+                                <input type="number" name="hours" value="${phase.hours || ''}" required placeholder="Enter the number of Hours">
+                            </div>
+                            <div class="form-group form-group-item" style="margin-top:25px">
+                                <label>No. of Live Sessions:</label>
+                                <input type="number" name="live_sessions" value="${phase.live_sessions || ''}" required placeholder="Enter Number of Live Sessions"><br>
+                            </div>
+                            <div class="form-group form-group-item" style="margin-top:25px">
+                                <label>No. of Student Reviews:</label>
+                                <input type="number" name="student_reviews" value="${phase.student_reviews || ''}" required placeholder="Enter Number of Student Reviews"><br>
+                            </div>
+                            <div class="form-group form-group-item" style="margin-top:25px; align-items:center; justify-content:end;">
+                                ${phase.id ? 
+                                    `<button type="button" class="update-button" onclick="updatePhase(${index})" style="margin-top:0; margin-right:10px">Update Phase</button>` :
+                                    `<button type="button" class="save-button" onclick="savePhase(${index})" style="margin-top:0; margin-right:10px">Save Phase</button>`
+                                }
+                                <button type="button" class="delete-button" onclick="deletePhase(${index})"><i class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    container.appendChild(phaseForm);
+    const batchSelect = phaseForm.querySelector(`#batchSelect-${index}`);
+    $(batchSelect).select2(); // Initialize select2 for multi-select
+
+   
+}
+  
+
+
+function deletePhase(index) {
+            const container = document.getElementById('phases-container');
+            const phaseForms = container.getElementsByClassName('phase-container');
+
+            if (phaseForms[index - 1]) {
+                const phaseId = phaseForms[index - 1].dataset.phaseId;
+
+                if (!phaseId) {
+                    console.error('Phase ID not found');
+                    return;
+                }
+
+                fetch(`/api/phases/delete_phase/${phaseId}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            phaseForms[index - 1].remove();
+                            showToast('Phase deleted successfully');
+                        } else {
+                            console.error('Failed to delete phase:', response.statusText);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting phase:', error);
+                    });
+            }
+        }
+
+        async function savePhase(index) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const trainingId = urlParams.get('id');
+            const container = document.getElementById('phases-container');
+            const phaseForm = container.getElementsByClassName('phase-container')[index - 1];
+
+            if (!phaseForm) {
+                console.error('Phase form not found');
+                return;
+            }
+
+            const phase = {
+                title: phaseForm.querySelector('[name="title"]').value,
+                start_date: phaseForm.querySelector('[name="start_date"]').value,
+                end_date: phaseForm.querySelector('[name="end_date"]').value,
+                hours: phaseForm.querySelector('[name="hours"]').value,
+                batch_ids: $(phaseForm.querySelector('[name="batches"]')).val(),
+                live_sessions: phaseForm.querySelector('[name="live_sessions"]').value,
+                assessments: phaseForm.querySelector('[name="assessments"]').value,
+                mock_interviews: phaseForm.querySelector('[name="mock_interviews"]').value,
+                webinars: phaseForm.querySelector('[name="webinars"]').value,
+                student_reviews: phaseForm.querySelector('[name="student_reviews"]').value,
+            };
+
+            if (new Date(phase.end_date) < new Date(phase.start_date)) {
+                alert('End date cannot be before start date');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/phases/create_phase/${trainingId}/phase/${index}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(phase),
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    showToast(`Phase saved successfully.`);
+                    updatePhaseSelectOptions();
+                } else {
+                    showToast('Failed to save phase');
+                }
+            } catch (error) {
+                console.error('Error saving phase:', error);
+                showToast('Failed to save phase. Please try again later.');
+            }
+        }
+
+        async function updatePhase(index) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const trainingId = urlParams.get('id');
+            const container = document.getElementById('phases-container');
+            const phaseForm = container.getElementsByClassName('phase-container')[index - 1];
+
+            if (!phaseForm) {
+                console.error('Phase form not found');
+                return;
+            }
+
+            const phaseId = phaseForm.dataset.phaseId;
+            if (!phaseId) {
+                console.error('Phase ID not found');
+                return;
+            }
+
+            const phase = {
+                title: phaseForm.querySelector('[name="title"]').value,
+                start_date: phaseForm.querySelector('[name="start_date"]').value,
+                end_date: phaseForm.querySelector('[name="end_date"]').value,
+                hours: phaseForm.querySelector('[name="hours"]').value,
+                batch_ids: $(phaseForm.querySelector('[name="batches"]')).val(),
+                live_sessions: phaseForm.querySelector('[name="live_sessions"]').value,
+                assessments: phaseForm.querySelector('[name="assessments"]').value,
+                mock_interviews: phaseForm.querySelector('[name="mock_interviews"]').value,
+                webinars: phaseForm.querySelector('[name="webinars"]').value,
+                student_reviews: phaseForm.querySelector('[name="student_reviews"]').value,
+            };
+
+            if (new Date(phase.end_date) < new Date(phase.start_date)) {
+                alert('End date cannot be before start date');
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/phases/update_phase/${phaseId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(phase),
+                });
+
+                if (response.ok) {
+                    const responseData = await response.json();
+                    showToast(`Phase updated successfully.`);
+                    updatePhaseSelectOptions();
+                } else {
+                    showToast('Failed to update phase');
+                }
+            } catch (error) {
+                console.error('Error updating phase:', error);
+                showToast('Failed to update phase. Please try again later.');
+            }
+        }
+
+        async function fetchBatchName(batchId) {
+            try {
+                const response = await fetch(`/api/batches/data/${batchId}`);
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch batch name for ID ${batchId}`);
+                }
+                const batchData = await response.json();
+                return batchData.batch_title;
+            } catch (error) {
+                console.error('Error fetching batch name:', error);
+                return '';
+            }
+        }
+
+        async function updatePhaseSelectOptions() {
+            const phaseSelects = document.querySelectorAll('select[name^="phaseSelect"]');
+            phaseSelects.forEach(phaseSelect => {
+                phaseSelect.innerHTML = '<option value="">-- Select Phase --</option>';
+                phases.forEach(phase => {
+                    const option = document.createElement('option');
+                    option.value = phase.id;
+                    option.textContent = phase.title;
+                    phaseSelect.appendChild(option);
+                });
+            });
+        }
+
+        async function fetchAssessmentsData(url) {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                console.error('Error fetching assessments data:', error.message);
+                return [];
+            }
+        }
+
+        async function populateAssessmentsOptions(url, selectElement, hiddenInput) {
+            const data = await fetchAssessmentsData(url);
+
+            data.forEach(item => {
+                const option = new Option(item.title, item.id, false, false);
+                selectElement.append(option);
+            });
+
+            selectElement.select2({
+                placeholder: 'Search by title or ID...',
+                allowClear: true
+            });
+
+            selectElement.on('change', function () {
+                const selectedIds = selectElement.val() || [];
+                hiddenInput.val(selectedIds.join(','));
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchPhases();
+        });
+
+        $(document).ready(async function () {
+            const assessmentsDropdown = $('#customAssessmentsDropdown');
+            const eventsDropdown = $('#customEventsDropdown');
+            const selectedAssessmentIdsInput = $('#selectedAssessmentIds');
+            const selectedEventIdsInput = $('#selectedEventsIds');
+
+            await populateAssessmentsOptions('api/assessments/data', assessmentsDropdown, selectedAssessmentIdsInput);
+            await populateAssessmentsOptions('api/event_details/data', eventsDropdown, selectedEventIdsInput);
+
+            await populateAssessmentsOptions('api/event_details/data', eventsDropdown, selectedEventIdsInput);
+        });
+
+        function fetchAndDisplayAllLiveSessionDetails(trainingId) {
+            if (!trainingId) {
+                showToast('Invalid training ID.');
+                return;
+            }
+
+            fetch(`/api/event_details/training_live_sessions/${trainingId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch live session details.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayLiveSessionDetails(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching live session details:', error);
+                    showToast(error.message);
+                });
+        }
+
+        function fetchAndDisplayLiveSessionDetails() {
+            const phaseId = document.getElementById('phaseSelectLive').value;
+
+            if (!phaseId) {
+                showToast('Please select a phase.');
+                return;
+            }
+
+            fetch(`/api/event_details/phase_live_sessions/${phaseId}`)
+             .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch live session details.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayLiveSessionDetails(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching live session details:', error);
+                    showToast(error.message);
+                });
+        }
+
+ 
+
+        function displayLiveSessionDetails(liveSessions) {
+  console.log('Live session details:', liveSessions);
+  const savedSessionsContainer = document.getElementById('saved-sessions-container');
+  savedSessionsContainer.innerHTML = '';
+
+  if (!Array.isArray(liveSessions)) {
+    console.error('liveSessions is not an array:', liveSessions);
+    return;
+  }
+
+  if (liveSessions.length === 0) {
+    const noSessionsMessage = document.createElement('p');
+    noSessionsMessage.textContent = 'No live sessions found.';
+    savedSessionsContainer.appendChild(noSessionsMessage);
+  } else {
+    liveSessions.forEach(session => {
+      const sessionDiv = document.createElement('div');
+      sessionDiv.classList.add('saved-session');
+
+
+      const phaseText = document.createElement('p');
+      phaseText.textContent = `Phase ID: ${session.phase_id}`;
+        console.log(`id: ${session.id}`);
+      const eventText = document.createElement('p');
+      eventText.textContent = `Event ID: ${session.event_id}`;
+
+      const removeButton = document.createElement('button');
+                    removeButton.classList.add('remove-session-button');
+                    removeButton.textContent = 'X';
+                    removeButton.onclick = () => removeLiveSession(session.id, sessionDiv);
+      
+
+      sessionDiv.appendChild(phaseText);
+      sessionDiv.appendChild(eventText);
+      sessionDiv.appendChild(removeButton);
+      savedSessionsContainer.appendChild(sessionDiv);
+    });
+  }
+}
+
+function removeLiveSession(id, sessionDiv) {
+  fetch(`/api/event_details/delete_livesession/${id}`, {
+    method: 'DELETE'
+  })
+   .then(response => response.json())
+   .then(data => {
+      console.log('Live Session deleted:', data);
+      sessionDiv.remove();
+      showToast('Live Session deleted successfully!');
+    })
+   .catch(error => {
+      console.error('Error deleting livesession:', error);
+      showToast('Failed to delete livesession.');
+    });
+}
+
+        function saveLiveSession() {
+            const phaseId = document.getElementById('phaseSelectLive').value;
+            const selectedEventIds = $('#customEventsDropdown').val();
+
+            if (!phaseId || !selectedEventIds || selectedEventIds.length === 0) {
+                showToast('Please select a phase and at least one event.');
+                return;
+            }
+
+            const liveSessionData = {
+                phase_id: phaseId,
+                event_ids: selectedEventIds
+            };
+
+            fetch('/api/event_details/add_live_sessions/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(liveSessionData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Live session saved:', data);
+                    showToast('Live session saved successfully!');
+                    fetchAndDisplayLiveSessionDetails(); // Fetch and display updated live session details after saving
+                })
+                .catch(error => {
+                    console.error('Error saving live session:', error);
+                    showToast('Failed to save live session.');
+                });
+        }
+
+        function fetchAndDisplayAssessmentDetails(phaseId) {
+            if (!phaseId) {
+                showToast('Please select a phase.');
+                return;
+            }
+
+            fetch(`/api/assessments/phase_assessments/${phaseId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch assessment details.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayAssessmentDetails(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching assessment details:', error);
+                    showToast(error.message);
+                });
+        }
+
+        function fetchAndDisplayAllAssessmentDetails(trainingId) {
+            if (!trainingId) {
+                showToast('Invalid training ID.');
+                return;
+            }
+
+            fetch(`/api/assessments/training_assessments/${trainingId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch assessment details.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    displayAssessmentDetails(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching assessment details:', error);
+                    showToast(error.message);
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const trainingId = urlParams.get('id');
+            if (!trainingId) {
+                console.error('Training ID not found in URL.');
+                return;
+            }
+            fetchAndDisplayAllAssessmentDetails(trainingId);
+            fetchAndDisplayAllLiveSessionDetails(trainingId);
+        });
+
+        document.getElementById('phaseSelectAssessment').addEventListener('change', (event) => {
+            const phaseId = event.target.value;
+            fetchAndDisplayAssessmentDetails(phaseId);
+        });
+
+        function saveAssessment() {
+            const phaseId = document.getElementById('phaseSelectAssessment').value;
+            const selectedAssessmentIds = $('#customAssessmentsDropdown').val();
+
+            if (!phaseId || !selectedAssessmentIds || selectedAssessmentIds.length === 0) {
+                showToast('Please select a phase and at least one assessment.');
+                return;
+            }
+
+            const assessmentData = {
+                phase_id: phaseId,
+                assessment_ids: selectedAssessmentIds
+            };
+
+            fetch('/api/assessments/add_assessment/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(assessmentData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to save assessment.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Assessment saved:', data);
+                    showToast('Assessment saved successfully!');
+                    fetchAndDisplayAssessmentDetails(phaseId); // Fetch and display updated assessment details after saving
+                })
+                .catch(error => {
+                    console.error('Error saving assessment:', error);
+                    showToast(error.message);
+                });
+        }
+
+        function displayAssessmentDetails(assessments) {
+            console.log('All assessment details:', assessments);
+            const savedAssessmentsContainer = document.getElementById('saved-assessments-container');
+            savedAssessmentsContainer.innerHTML = '';
+
+            if (assessments.length === 0) {
+                const noAssessmentsMessage = document.createElement('p');
+                noAssessmentsMessage.textContent = 'No assessments found for this training.';
+                savedAssessmentsContainer.appendChild(noAssessmentsMessage);
+            } else {
+                assessments.forEach(assessment => {
+                    const assessmentDiv = document.createElement('div');
+                    assessmentDiv.classList.add('saved-session');
+
+                    const phaseText = document.createElement('p');
+                    phaseText.textContent = `Phase ID: ${assessment.phase_id}`;
+
+                    const assessmentText = document.createElement('p');
+                    assessmentText.textContent = `Assessment ID: ${assessment.assessment_id}`;
+
+                    const removeButton = document.createElement('button');
+                    removeButton.classList.add('remove-session-button');
+                    removeButton.textContent = 'X';
+                    removeButton.onclick = () => removeAssessment(assessment.id, assessmentDiv);
+
+                    assessmentDiv.appendChild(phaseText);
+                    assessmentDiv.appendChild(assessmentText);
+                    assessmentDiv.appendChild(removeButton);
+                    savedAssessmentsContainer.appendChild(assessmentDiv);
+                });
+            }
+        }
+
+        function removeAssessment(id, assessmentDiv) {
+            fetch(`/api/assessments/delete_assessment/${id}`, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to delete assessment.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Assessment deleted:', data);
+                    assessmentDiv.remove();
+                    showToast('Assessment deleted successfully!', 'success');
+                })
+                .catch(error => {
+                    console.error('Error deleting assessment:', error);
+                    showToast('Failed to delete assessment.', 'error');
+                });
+        }
+
+        document.getElementById('add-phase').addEventListener('click', () => {
+            addPhaseForm(phases.length + 1);
+        });
+
+        document.getElementById('save-new-form').addEventListener('click', () => {
+            document.getElementById('new-form-section').style.display = 'none';
+            document.getElementById('phases-section').style.display = 'block';
+        });
+
+        document.getElementById('save-and-continue').addEventListener('click', async () => {
+            const container = document.getElementById('phases-container');
+            const phaseForms = container.getElementsByClassName('phase-container');
+
+            for (let i = 0; i < phaseForms.length; i++) {
+                await savePhase(i + 1);
+            }
+
+            document.getElementById('phases-section').style.display = 'none';
+            document.getElementById('live-sessions-section').style.display = 'block';
+            document.getElementById('assessments-section').style.display = 'block';
+            updatePhaseSelectOptions();
+            
+        });
+
+        fetchPhases();
+
+        window.onload = fetchTrainingDetails;
+
+
+
+      </script>
+
+<!-----------User Details Fetching---------------------->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to get the value of a cookie by name
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+  
+      // Get the JWT token from the cookie
+      const token = getCookie('userAdminToken');
+      
+      if (token) {
+        // Decode the JWT token
+        const decoded = jwt_decode(token);
+        
+        // Display the username and role
+        document.querySelector('.userN').textContent = decoded.email;
+        document.querySelector('.userR').textContent = decoded.role;
+      } else {
+        // Handle the case where the token is not found
+        document.querySelector('.userN').textContent = 'No user logged in';
+        document.querySelector('.userR').textContent = '';
+      }
+    });
+  </script>
+        <!---------Logout module----------->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutButton = document.getElementById('logoutButton');
+        const logoutModal = document.getElementById('logoutModal');
+        const modalContent = logoutModal.querySelector('.modal-content');
+        const confirmLogoutButton = modalContent.querySelector('#confirmLogout');
+        const cancelLogoutButton = modalContent.querySelector('#cancelLogout');
+  
+        logoutButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the button
+  
+            // Show the modal
+            logoutModal.style.display = 'block';
+  
+            // Add event listeners to the modal buttons
+            confirmLogoutButton.addEventListener('click', function() {
+                // If user confirms, navigate to /logout
+                window.location.href = '/logout';
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            cancelLogoutButton.addEventListener('click', function() {
+                // If user cancels, hide the modal
+                logoutModal.style.display = 'none';
+            });
+  
+            // Add event listener to the close span
+            closeSpan.addEventListener('click', function() {
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            // Add event listener to the modal itself to close when clicked outside
+            window.addEventListener('click', function(event) {
+                if (event.target === logoutModal) {
+                    logoutModal.style.display = 'none'; // Hide the modal
+                }
+            });
+        });
+    });
+  </script>
+   </body>
+</html>

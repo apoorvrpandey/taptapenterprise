@@ -1,0 +1,737 @@
+/* Modal Styles */
+/* Modal Styles */
+body {
+    font-family: Roboto, sans-serif;
+    font-feature-settings: "kern";
+    background-color: white;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .supercss {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 80px minmax(0px, 1fr);
+    max-width: 1600px;
+    margin-inline: auto;
+  }
+  
+ 
+  .logo {
+    margin-bottom: 5px;
+  }
+  
+  .sidebar a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70px;
+    height: 60px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  
+  .nav2 {
+    margin-top: 0px;
+    margin-inline-end: 0px;
+    margin-bottom: 0px;
+    margin-inline-start: 1rem;
+  }
+  
+  .navbtn {
+    appearance: none;
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    user-select: none;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+    outline: transparent solid 2px !important;
+    outline-offset: 2px;
+    line-height: 1.2;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    transition-property: background-color, border-color, color, fill, stroke,
+      opacity, box-shadow, transform;
+    transition-duration: 200ms;
+    height: 2.5rem;
+    min-width: 2.5rem;
+    font-size: 1rem;
+    padding-inline-start: 1rem;
+    padding-inline-end: 1rem;
+    background: transparent;
+    border: none;
+    margin-inline-start: 1rem;
+    cursor: pointer;
+    text-decoration: none !important;
+  }
+  
+  .logoutbtn {
+    position: absolute;
+    z-index: 2000;
+    width: 20%;
+    margin-top: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    user-select: none;
+    display: flex;
+    line-height: inherit;
+    border-radius: 5px;
+    -webkit-box-align: center;
+    border-color: #ede8f0;
+    border-bottom: #ede8f0;
+    border: 1px solid #ede8f0;
+    padding: 20px;
+    align-items: center;
+    text-align: start;
+    flex: 0 0 auto;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    padding-inline-start: 0.5rem;
+    padding-inline-end: 0.5rem;
+    transition-property: background-color, background-image, background-position;
+    transition-duration: 50ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+    background: #fff;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 0.8rem;
+    font-size: 100%;
+  }
+  
+  .logoutbtn:hover {
+    background-color: #f4f9ff;
+  }
+  
+  .user-details {
+    pointer-events: none;
+    flex: 1 1 auto;
+    min-width: 0px;
+  }
+  
+  .user {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  
+  .user-profile {
+    border-radius: 50px;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    position: relative;
+    flex-shrink: 0;
+    color: white;
+    --avatar-border-color: white;
+    border-color: white;
+    vertical-align: top;
+    width: 2rem;
+    height: 2rem;
+    margin-right: 10px;
+    font-size: calc(0.8rem);
+    background: #c8c9c9;
+  }
+  
+  .username {
+    display: none;
+    -webkit-box-align: start;
+    align-items: start;
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .userN {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    --chakra-line-clamp: 1;
+    margin: 0;
+    color: black;
+    text-decoration: none !important;
+  }
+  
+  .userR {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    color: rgb(58, 58, 58);
+    opacity: 0.6;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    --chakra-line-clamp: 1;
+    text-decoration: none !important;
+  }
+  
+  @media screen and (min-width: 48em) {
+    .username {
+      display: flex;
+    }
+  }
+  
+  .css-1hzyiq5 {
+    display: inline-flex;
+    align-self: center;
+    flex-shrink: 0;
+    margin-inline-start: 0.5rem;
+  }
+  
+  .logout {
+    text-decoration: none;
+    color: inherit;
+    user-select: none;
+    display: flex;
+    width: 100%;
+    -webkit-box-align: center;
+    align-items: center;
+    text-align: start;
+    flex: 0 0 auto;
+    border: none;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    padding-inline-start: 0.75rem;
+    padding-inline-end: 0.75rem;
+    transition-property: background-color, background-image, background-position;
+    transition-duration: 50ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+    background: #fff;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 0.5rem;
+  }
+  
+  #logout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+  }
+  
+  .logout.menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .logout.menu-item i {
+    font-size: 18px;
+    color: white;
+  }
+  
+  .menu-item {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    border: 1px solid rgb(0, 0, 0);
+    cursor: pointer;
+    background-color: transparent;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  .menu-item span {
+    color: rgb(255, 255, 255);
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-size: 9.5px;
+    line-height: 10px;
+    text-align: center;
+    padding-top: 2px;
+  }
+  
+  .menu-item .active {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: 1px solid rgb(0, 0, 0);
+    cursor: pointer;
+    background-color: rgb(136, 235, 76);
+  }
+  
+  .menu-item:hover {
+    border: 1px solid rgb(136, 235, 76);
+    border-radius: 10px;
+  }
+  
+  .menu-item:not(:focus) ~ .menu-item:focus {
+    background-color: initial; /* Set the default background color when another item is clicked */
+  }
+  
+  .navbar {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    flex-direction: row;
+    padding-inline: 0px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 999;
+    top: 0;
+    max-height:35px
+  }
+  
+  .nav1 {
+    flex: 1 1 0%;
+    place-self: stretch;
+  }
+  
+  .nav2 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-direction: row;
+  }
+  .nav-btn {
+    display: inline-flex;
+    appearance: none;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    user-select: none;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    line-height: 1.2;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    transition-duration: 200ms;
+    height: 2.5rem;
+    border: none;
+    min-width: 2.5rem;
+    font-size: 1rem;
+    padding-inline-start: 1rem;
+    padding-inline-end: 1rem;
+    background: transparent;
+  }
+  .nav-details {
+    pointer-events: none;
+    flex: 1 1 auto;
+    min-width: 0px;
+  }
+  .nav-btn.downarrow {
+    display: inline-flex;
+    align-self: center;
+    flex-shrink: 0;
+    margin-inline-start: 0.5rem;
+  }
+  
+  .nav2 {
+    a {
+      background-color: transparent;
+      color: inherit;
+      text-decoration: inherit;
+    }
+  
+    .css-nr8aow {
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      flex-direction: row;
+      cursor: pointer;
+      user-select: none;
+      border-radius: 5px;
+      background: white;
+      padding: 7px;
+      gap: 10px;
+    }
+  
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    .css-1edim3w {
+      flex-shrink: 0;
+      position: relative;
+    }
+    .css-1bac456 {
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      border-radius: 9999px;
+      background-color: red;
+      position: absolute;
+      top: calc(0.5rem * -1);
+      left: 0.5rem;
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1.25;
+      width: 14px;
+      height: 14px;
+      padding: 2px;
+    }
+    .css-a9v878 {
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      flex-direction: row;
+    }
+  
+    .css-m1xq4b {
+      border-radius: 50px;
+      display: inline-flex;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 500;
+      position: relative;
+      flex-shrink: 0;
+      color: white;
+      --avatar-border-color: white;
+      border-color: #fff;
+      vertical-align: top;
+      width: 2rem;
+      height: 2rem;
+      font-size: calc(0.8rem);
+      background: #edf2f7;
+    }
+    .css-1dwcg83 {
+      display: flex;
+      -webkit-box-align: start;
+      align-items: start;
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .css-g65qx3 {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      --chakra-line-clamp: 1;
+    }
+  
+    .css-9ihchg {
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      color: rgb(58, 58, 58);
+      opacity: 0.6;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      --chakra-line-clamp: 1;
+    }
+  
+    .css-1dwcg83 > :not(style) ~ :not(style) {
+      margin-top: var(--chakra-space-1);
+      margin-inline: 0px;
+      margin-bottom: 0px;
+    }
+  
+    .css-a9v878 > :not(style) ~ :not(style) {
+      margin-top: 0px;
+      margin-inline-end: 0px;
+      margin-bottom: 0px;
+      margin-inline-start: 1rem;
+    }
+  
+    .css-6mumrc {
+      display: inline-flex;
+      appearance: none;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+      user-select: none;
+      position: relative;
+      white-space: nowrap;
+      vertical-align: middle;
+      outline: transparent solid 2px;
+      outline-offset: 2px;
+      line-height: 1.2;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      transition-duration: 200ms;
+      border: none;
+      border-color: #ede8f0;
+      height: 2.5rem;
+      min-width: 2.5rem;
+      font-size: 1rem;
+      padding-inline-start: 1rem;
+      padding-inline-end: 1rem;
+      background: transparent;
+    }
+  
+    .css-xl71ch {
+      pointer-events: none;
+      flex: 1 1 auto;
+      min-width: 0px;
+    }
+  
+    .css-1hzyiq5 {
+      display: inline-flex;
+      align-self: center;
+      flex-shrink: 0;
+      margin-inline-start: 0.5rem;
+    }
+    .css-1eamic5 {
+      display: inline-block;
+      vertical-align: middle;
+      overflow: hidden;
+    }
+  }
+  
+  .css {
+    display: flex;
+    flex-direction: column;
+    background: white;
+  }
+  
+  .css1 {
+    background-color: rgb(215, 214, 214);
+    padding: 1.75rem;
+  }
+  
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    background: white;
+    padding: 2rem 1.75rem;
+    flex-grow: 1;
+   
+  }
+  
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .question {
+    flex: 0 1 0%;
+    padding-inline-start: 1.5rem;
+    padding-inline-end: 1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+  }
+  
+  .logout-div {
+    padding-inline-start: 1.5rem;
+    padding-inline-end: 1.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    flex: 1 1 0%;
+  }
+  .modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 15px;
+  }
+  
+  .modal-buttons {
+    text-align: right;
+    margin-top: 10px;
+  }
+  #cancelLogout {
+    background-color: #edf2f7;
+  }
+  
+  .modal-buttons button {
+    background-color: rgb(136, 235, 76);
+    color: black;
+    border: none;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .modal-buttons button:hover {
+    background-color: #4caf50;
+  }
+
+  .banner-mobile {
+    display: none;
+}
+
+.banner-desktop {
+    display: block;
+}
+
+.margin{
+  margin-right: 100px; 
+  margin-left: 0px;
+}
+
+.companies-desktop{
+  display: block;
+}
+
+.companies-mobile{
+  display: none;
+}
+
+  /* Responsive Adjustments */
+  @media screen and (max-width: 768px) {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+  
+    .supercss {
+      grid-template-columns: 1fr;
+    }
+  
+    .navbar {
+      display: none;
+    }
+  
+    .nav1,
+    .nav2 {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .nav-btn {
+      width: 100%;
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+    }
+  
+    .main-container {
+      background-color: #f9f9f9;
+      width: auto;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .modal-content {
+      width: 95%;
+      margin: 10% auto;
+      padding: 15px;
+    }
+  
+    .modal-buttons {
+      text-align: center;
+      margin-top: 15px;
+    }
+  
+    .modal-buttons button {
+      width: 100%;
+      margin: 5px 0;
+    }
+  
+    .user-profile {
+      width: 3rem;
+      height: 3rem;
+      font-size: 1rem;
+      margin-right: 5px;
+    }
+  
+    .username {
+      font-size: 1.25rem;
+    }
+  
+    .css1 {
+      margin: 0;
+      padding: 0;
+    }
+  
+    .css {
+      margin: 0;
+      padding: 0;
+    }
+  
+  
+    .banner-mobile {
+      display: block;
+  }
+
+  .banner-desktop {
+      display: none;
+  }
+  .margin{
+    margin-right:0px; 
+    margin-left: 0px;
+  }
+  .container{
+    gap:0
+  }
+
+  .companies-desktop{
+    display: none;
+  }
+
+  .companies-mobile{
+    display: block;
+  }
+  
+  }
+
+
+  
+  

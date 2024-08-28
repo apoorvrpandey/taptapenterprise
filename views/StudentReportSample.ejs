@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Report</title>
+  <link rel="shortcut icon" href="img/sidebarlogo.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/student_report_sample.css"> <!-- Linking to external CSS file -->
+
+  <link rel="stylesheet" href="css/nav_log1.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="img/sidebarlogo.png" />
+  <script src="js/student_report.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+  <style>
+    .loader {
+      width: 50px;
+      padding: 8px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #25b09b;
+      --_m:
+        conic-gradient(#0000 10%, #000),
+        linear-gradient(#000 0 0) content-box;
+      -webkit-mask: var(--_m);
+      mask: var(--_m);
+      -webkit-mask-composite: source-out;
+      mask-composite: subtract;
+      animation: l3 1s infinite linear;
+
+    }
+
+    @keyframes l3 {
+      to {
+        transform: rotate(1turn)
+      }
+    }
+
+    .roww {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .marginr {
+      margin-right: 10px;
+    }
+
+    .grey {
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .f14 {
+      font-size: 14px;
+    }
+
+    table#bands {
+      border-collapse: collapse;
+      width: 50%;
+    }
+
+    td {
+      padding: 5px 8px;
+      /* Adjusted padding */
+      vertical-align: middle;
+      font-size: 12px;
+      /* Adjust the text size as needed */
+      text-align: left;
+    }
+
+    th {
+      padding: 5px 8px;
+      /* Adjusted padding */
+      vertical-align: middle;
+      font-size: 14px;
+      /* Adjust the text size as needed */
+      text-align: left;
+      background-color: #4C4267;
+      color: #FFFFFF;
+    }
+
+    .points {
+      height: 10px;
+      width: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 10px;
+      margin-left: 5px;
+      /* Adjust the left margin to achieve equal spacing */
+    }
+
+    .points-a-plus {
+      background-color: #4CAF50;
+      /* A++ */
+    }
+
+    .points-a {
+      background-color: #FF5733;
+      /* A+ */
+    }
+
+    .points-b {
+      background-color: #337AFF;
+      /* A */
+    }
+
+    .points-c {
+      background-color: #FFC300;
+      /* B */
+    }
+
+    .points-d {
+      background-color: #9C27B0;
+      /* C */
+    }
+
+    .column1 {
+      padding-left: 30px;
+      padding-right: 30px;
+      /* Adjust this value to set the gap between columns */
+      width: 50%;
+    }
+
+    .column2 {
+      padding-left: 40px;
+      /* Adjust this value to set the gap between columns */
+      width: 50%;
+    }
+  </style>
+
+</head>
+
+<body>
+  
+  <div class="supercss">
+    <div class="sidebar" style="background-color:rgb(215, 214, 214)">
+      
+  </div>
+    <div class="css" style="background-color:rgb(215, 214, 214);margin-left: 0px;">
+      <div class="css0">
+        <div class="navbar" style="background-color:rgb(215, 214, 214)" >
+         
+         
+
+          <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              const userButton = document.getElementById('userButton');
+              const logoutButton = document.getElementById('logoutButton');
+
+              userButton.addEventListener('click', () => {
+                if (logoutButton.style.display === 'none') {
+                  logoutButton.style.display = 'flex';
+                  logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+                  logoutButton.style.left = `${userButton.offsetLeft}px`;
+                } else {
+                  logoutButton.style.display = 'none';
+                }
+              });
+
+              logoutButton.addEventListener('click', () => {
+                // Add your logout logic here
+                console.log('User logged out');
+              });
+            });
+
+          </script>
+        </div>
+      </div>
+      <div class="css1 margin" >
+        <div class="main-container" style="border:1px solid rgba(0, 0, 0, 0.3)">
+         
+          <div class="container">
+            <div class="left-card" >
+              <div class="banner-mobile banner">
+                <img src="img/banner1.png" alt="banner">
+            </div>
+              <h2 style="text-align: center;">Student Details</h2>
+              <img src="img/sidebar logo.png" alt="manage" class="circle" >
+              <p style="text-align: center; font-size: 16px;"><span id="full-name">Karthik</span><br><span
+                  >20BCD3467</span></p>
+              <div class="details">
+                <div class="dcard">
+                  <p>Email:</p>
+                  <strong><span >karthik@gmail.com</span></strong>
+                </div>
+                <div class="dcard">
+                  <p>Phone:</p>
+                  <strong><span >8902637498</span></strong>
+                </div>
+                <div class="dcard">
+                  <p>Reg No:</p>
+                  <strong><span >20BCD3467</span></strong>
+                </div>
+                <div class="dcard">
+                  <p>Branch:</p>
+                  <strong><span id="department-name"></span></strong>
+                </div>
+                <div class="dcard">
+                  <p>College:</p>
+                  <strong><span >Vellore Institute of Technology</span></strong>
+                </div>
+              </div>
+
+              <div class="companies companies-desktop">
+                <div class="underline-text">
+                  <h2 style="text-align: center;justify-content: center;">Chances of Clearing Screening Assessments</h2>
+                </div>
+
+                <div class="company_cards">
+                    <div class="ccard">
+                      <table class="company-table">				
+                        <tbody>
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/tcs.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                          padding-right: 10px;
+                          text-align: left;
+                          font-size: 15px;
+                          " >TCS Code Vita</td>
+                            <td style="padding: 5px;
+                    padding-right: 10px;
+                      text-align: end;
+                    font-size: 15px;font-weight: bold;">95%</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/tcs.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 20px;
+                      text-align: left;
+                    font-size: 15px;">TCS NQT</td>
+                            <td style="padding: 5px;
+                    padding-right: 10px;
+                      text-align: end;
+                    font-size: 15px;font-weight: bold;">93%</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/wipro.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 10px;
+                      text-align: left;
+                    font-size: 15px;">Wipro</td>
+                            <td style="padding: 5px;
+                    padding-right: 10px;
+                      text-align: end;
+                    font-size: 15px;font-weight: bold;">83%</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/infosys.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 10px;
+                      text-align: left;
+                    font-size: 15px;">Infosys</td>
+                            <td style="padding: 5px;
+                    padding-right: 10px;
+                      text-align: end;
+                    font-size: 15px;font-weight: bold;">70%</td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="ccard">
+                      <table class="company-table">				
+                        <tbody>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/capgemini.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;padding-right: 10px;text-align: left;font-size:15px;">Capgemini</td>
+                            <td style="padding: 5px;padding-right: 10px;text-align: center;font-size: 15px;font-weight: bold;">79%</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/accenture.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: left;
+                    font-size: 15px;">Accenture</td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: center;
+                    font-size: 15px;font-weight: bold;">89%</td>
+                          </tr>
+                          
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/ibm.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: left;
+                    font-size: 15px;">IBM</td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: center;
+                    font-size: 15px;font-weight: bold;">68%</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/cognizant.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                              padding-right: 0;
+                              text-align: left;
+                              font-size: 15px;">Cognizant GenC Elevate</td>
+                            <td style="padding: 5px;
+                                    padding-right: 0;
+                                    text-align: center;
+                                  font-size: 15px;font-weight: bold;">73%</td>
+                          </tr>
+                          
+                        
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="ccard">
+                      <table class="company-table">
+                        <tbody>
+                              <tr>
+                                <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/virtusa.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: left;
+                    font-size: 15px;">Virtusa</td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: center;
+                    font-size: 15px;font-weight: bold;">63%</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/hcl.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: left;
+                    font-size: 15px;">HCL</td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: center;
+                    font-size: 15px;font-weight: bold;">69%</td>
+                          </tr>
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/mahindra.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: left;
+                    font-size: 15px;">TechMahindra</td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: center;
+                    font-size: 15px;font-weight: bold;">57%</td>
+                          </tr>
+                         
+                          <tr>
+                            <td style="padding: 5px;
+                            padding-right: 0;
+                              text-align: left;
+                            font-size: 15px;"> <img src="img/cognizant2.png" alt="icon" style="height: 25px;width:auto"></td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: left;
+                    font-size: 15px;">Congnizant GenC Next</td>
+                            <td style="padding: 5px;
+                    padding-right: 0;
+                      text-align: center;
+                    font-size: 15px;font-weight: bold;">65%</td>
+                          </tr>
+                        
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                <div class="disclaimer">
+                  <img src="img/warning.png" alt="icon" style="width:30px;height: 30px;">
+                  <div class="vertical-line"></div>
+                  <p>Disclaimer: Subject to Company Eligibility Criteria Based on Your Academic Percentages and Current
+                    Job Vacancies Across Companies</p>
+                </div>
+              </div>
+            </div>
+
+            <script>
+              // Extract email parameter from the URL
+              const urlParams = new URLSearchParams(window.location.search);
+              const email = urlParams.get('email');
+
+              // Fetch data from backend using the extracted email
+              if (email) {
+                fetch(`/api/student_report_user/data?email=${encodeURIComponent(email)}`)
+                  .then(response => response.json())
+                  .then(data => {
+                    // Divide data into three chunks for three cards
+                    const chunkSize = Math.ceil(data.length / 3);
+                    const chunks = [];
+                    for (let i = 0; i < data.length; i += chunkSize) {
+                      chunks.push(data.slice(i, i + chunkSize));
+                    }
+
+                    // Function to generate table rows for a chunk of data
+                    const generateTableRows = (internships, tableId) => {
+                      const tableBody = document.getElementById(tableId).querySelector('tbody');
+                      internships.forEach(internship => {
+                        // Set default image URL if the logo is not available
+                        const logoSrc = internship.logo ? internship.logo : 'img/tcs.png';
+                        const newRow = `
+                              <tr>
+                                  <td style="padding: 5px; padding-right: 0; text-align: left; font-size: 15px;">
+                                  
+                                  </td>
+                                  <td style="padding: 5px; padding-right: 10px; text-align: left; font-size: 15px;">
+                                     <a href=/company?company=${internship.company_name}> ${internship.company_name}</a>
+                                  </td>
+                                  <td style="padding: 5px; padding-right: 10px; text-align: end; font-size: 13px; font-weight: bold;">
+                                      ${internship.subdomainsaccuracy === null ? '0%' : `<p>${internship.subdomainsaccuracy}%</p>`}
+                                  </td>
+                              </tr>
+                          `;
+                        tableBody.innerHTML += newRow;
+                      });
+                    };
+
+                    // Generate table rows for each chunk of data and distribute among three cards
+                    chunks.forEach((chunk, index) => {
+                      generateTableRows(chunk, `internshipTable${index + 1}`);
+                    });
+                  })
+                  .catch(error => console.error('Error fetching internship data:', error));
+              } else {
+                console.error('Email parameter is missing in the URL.');
+              }
+            </script>
+
+
+
+            <div class="right-card" >
+              <div class="right-content">
+                <div class="banner-desktop banner">
+                  <img src="img/banner1.png" alt="banner">
+              </div>
+
+                <!--Employbility Indicators-->
+                <div class="emp_indicators">
+                  <div class="underline-text">
+                    <h2>Employbility Indicators</h2>
+                  </div>
+                  <div class="emp_indi_cards">
+
+                    <div class="card">
+                      <div class="empcontainer">
+                        <div class="empcolumn">
+                          <div class="row">
+                            <p class="one">Band</p>
+                            <p class="two"><span id="employability-band"></span></p>
+
+                          </div>
+
+                        </div>
+
+                        <div class="empcolumn">
+                          <img src="img/empIcon1.png" alt="icon" style="padding-top: 20px;float: right;">
+                        </div>
+
+
+                      </div>
+                      <p><span style="color: #00b69b;"> <span id="employability-band"></span><span
+                            style="color: #606060; font-size: 12px;"><span id="studentno"></span>You hold the <span
+                              id="studentrank"></span> position in your college.</span></p>
+
+                    </div>
+
+                    <script>
+                      // Extract email parameter from the URL
+                      const urlParams1 = new URLSearchParams(window.location.search);
+                      const email1 = urlParams1.get('email');
+
+                      // Fetch college rank from backend using the extracted email
+                      if (email) {
+
+                        fetch(`/api/student_report_user/student_comment_data/${encodeURIComponent(email1)}`)
+                          .then(response => response.json())
+                          .then(data => {
+                            // Check if data is available
+                            if (data.length > 0) {
+                              // Extract college rank from the response
+                              const collegeRank = data[0].college_rank;
+
+                              // Update HTML content with the college rank
+                              document.getElementById('studentrank').textContent = collegeRank;
+                            } else {
+                              console.error('No data found for the given email.');
+                            }
+                          })
+                          .catch(error => console.error('Error fetching college rank:', error));
+                      } else {
+                        console.error('Email parameter is missing in the URL.');
+                      }
+
+                    </script>
+
+
+                    <div class="card">
+                      <div class="empcontainer">
+                        <div class="empcolumn">
+                          <div class="row">
+                            <p class="one">Score</p>
+                            <p class="two"><span id="total-score"></span><span style="font-size: 14px;">/100</span></p>
+                          </div>
+                        </div>
+                        <div class="empcolumn">
+                          <img src="img/empicon2.png" alt="icon" style="padding-top: 20px; float: right;">
+                        </div>
+                      </div>
+                      <p style="font-size: 12px;text-align: left;">
+                        <span id="difference-wrapper" style="color: #00b69b;">
+                          <i class="fa-solid fa-arrow-trend-up" id="trend-icon" style="color: #00b69b;"></i>
+                          <span style="color:rgb(0, 182, 155)">45</span><span style="color:rgb(0, 182, 155)">%  </span> 
+                        </span>
+                        <span style="color: #606060;font-size: 12px;">
+                          <span id="updown">Up</span> from batch average
+                        </span>
+                      </p>
+                    </div>
+                    <script>
+                      document.addEventListener('DOMContentLoaded', function () {
+                        var differenceTotalScoreElement = document.getElementById('difference-total-score');
+                        var differenceTotalScore = parseFloat(differenceTotalScoreElement.innerText);
+                        var differenceWrapper = document.getElementById('difference-wrapper');
+                        var trendIcon = document.getElementById('trend-icon');
+                        var updown = document.getElementById('updown');
+
+                        // Update the DOM elements based on the score difference
+                        if (differenceTotalScore < 0) {
+                          differenceWrapper.style.color = '#f93c65';
+                          trendIcon.style.color = '#f93c65';
+                          trendIcon.classList.replace('fa-arrow-trend-up', 'fa-arrow-trend-down');
+                          updown.innerText = 'Down';
+                        } else {
+                          differenceWrapper.style.color = '#606060';
+                          trendIcon.style.color = '#606060';
+                          trendIcon.classList.replace('fa-arrow-trend-down', 'fa-arrow-trend-up');
+                          updown.innerText = 'Up';
+                        }
+                      });
+                    </script>
+                    <div class="card">
+
+
+                      <table id="bands">
+                        <tr>
+                          <th class="column1">Band</th>
+                          <th class="column2">Description</th>
+                        </tr>
+                        <tr>
+                          <td class="column1"><span></span>A++</td>
+                          <td class="column2">15+ LPA</td>
+                        </tr>
+                        <tr>
+                          <td class="column1"><span></span>A+</td>
+                          <td class="column2">8-15 LPA</td>
+                        </tr>
+                        <tr>
+                          <td class="column1"><span></span>A</td>
+                          <td class="column2">3-8 LPA</td>
+                        </tr>
+                        <tr>
+                          <td class="column1"><span></span>B</td>
+                          <td class="column2">2-3 LPA</td>
+                        </tr>
+                        <tr>
+                          <td class="column1"><span></span>C</td>
+                          <td class="column2">Unable to Predict</td>
+                        </tr>
+                      </table>
+
+
+
+                    </div>
+                    <script>
+                      // Function to generate a random number between 1 and 100
+                      function getRandomProgress() {
+                        return Math.floor(Math.random() * 100) + 1;
+                      }
+
+                      // Set the random progress number to the span element
+                      document.getElementById('progress').textContent = getRandomProgress();
+                    </script>
+                  </div>
+
+                </div>
+
+                <!--Results-->
+                <div class="results">
+                  <div class="underline-text">
+                    <h2>Section Wise Scores</h2>
+                  </div>
+                  <div class="disclaimer">
+                    <img src="img/warning.png" alt="icon" style="width:30px;height: 30px;">
+                    <div class="vertical-line"></div>
+                    <p>Disclaimer: The results reflect your performance in the assessment. If you have used the platform
+                      in a way that it is not intended, results might not reflect your performance.</p><br>
+                  </div>
+                  <p style="font-size: 12px;">**NAN - Not Attempted</p>
+                  <div class="result_cards">
+                    <div class="rcard">
+                      <div class="resultscontainer">
+                        <div class="rescolumn">
+                          <div class="row">
+                            <p class="one">Aptitude</p>
+                            <p class="two"><span >92</span>%</p>
+                          </div>
+                        </div>
+                        <div class="rescolumn">
+                          <img src="img/resicon1.png" alt="icon" style="padding-top: 20px;float: right;">
+                        </div>
+                      </div>
+                      <a href="https://taptap.blackbucks.me/lessonPlan/?lessonPlanId=98" style="text-decoration: none;">
+                        <div class="rrcard" style="background-color: #f1f1fc;">
+                          <p class="suggestion-title" style="color:#00006c; font-size: 14px;">Suggestion:</p>
+                          <p class="sug"><span >Practise Easy level</span></p>
+                        </div>
+                      </a>
+                      <p id="aptitude-diff-text" style="font-size: 14px;float: left;">
+                        <span id="aptitude-icon-text">
+                          <i id="aptitude-icon" class="fa-solid fa-arrow-trend-up" style="color:rgb(0, 182, 155)"></i>
+                          <span style="color:rgb(0, 182, 155)">38.62</span><span style="color:rgb(0, 182, 155)">%</span>
+                        </span>
+                        <span style="color: #606060;"><span id="aptitude-upanddown">Down</span> from batch
+                          average</span>
+                      </p>
+                    </div>
+                    <div class="rcard">
+                      <div class="resultscontainer">
+                        <div class="rescolumn">
+                          <div class="row">
+                            <p class="one">Verbal</p>
+                            <p class="two"><span >89</span>%</p>
+                          </div>
+                        </div>
+                        <div class="rescolumn">
+                          <img src="img/resicon2.png" alt="icon" style="padding-top: 20px;float: right;">
+                        </div>
+                      </div>
+                      <a href="https://taptap.blackbucks.me/lessonPlan/?lessonPlanId=98" style="text-decoration: none;">
+                        <div class="rrcard" style="background-color: #ffeae2;">
+                          <p class="suggestion-title" style="color:#00006c; font-size: 14px;">Suggestion:</p>
+                          <p class="sug"><span >Practise Medium level Grammar+LSRW.</span></p>
+                        </div>
+                      </a>
+                      <p id="english-diff-text" style="font-size: 14px;float: left;">
+                        <span id="english-icon-text">
+                          <i id="english-icon" class="fa-solid fa-arrow-trend-up" style="color:rgb(0, 182, 155)"></i>
+                          <span style="color:rgb(0, 182, 155)">42.09</span><span style="color:rgb(0, 182, 155)">%</span>
+                        </span>
+                        <span style="color: #606060;"><span id="english-upanddown">Up</span> from batch average</span>
+                      </p>
+                    </div>
+                    <div class="rcard">
+                      <div class="resultscontainer">
+                        <div class="rescolumn">
+                          <div class="row">
+                            <p class="one">Coding</p>
+                            <p class="two"><span >95</span>%</p>
+                          </div>
+                        </div>
+                        <div class="rescolumn">
+                          <img src="img/resicon3.png" alt="icon" style="padding-top: 20px;float: right;">
+                        </div>
+                      </div>
+                      <a href="https://taptap.blackbucks.me/lessonPlan/?lessonPlanId=98" style="text-decoration: none;">
+                        <div class="rrcard" style="background-color: #e9f3ff;">
+                          <p class="suggestion-title" style="color:#00006c; font-size: 14px;">Suggestion:</p>
+                          <p class="sug"><span >Learn Python. Practise Easy and Medium level questions.</span></p>
+                        </div>
+                      </a>
+                      <p id="coding-diff-text" style="font-size: 14px;float: left;">
+                        <span id="coding-icon-text">
+                          <i id="coding-icon" class="fa-solid fa-arrow-trend-up" style="color:rgb(0, 182, 155)"></i>
+                          <span style="color:rgb(0, 182, 155)">83.28</span><span style="color:rgb(0, 182, 155)">%</span>
+                        </span>
+                        <span style="color: #606060;"><span id="coding-upanddown">Up</span> from batch average</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <script>
+                    function updateColor(id, value, iconId, updownId) {
+                      const iconTextElement = document.getElementById(id);
+                      const icon = document.getElementById(iconId);
+                      const text = iconTextElement.querySelector('span');
+                      const updownElement = document.getElementById(updownId);
+
+                      if (value < 0) {
+                        icon.className = "fa-solid fa-arrow-trend-up";
+                        icon.style.color = '#00b69b';
+                        text.style.color = '#00b69b';
+                        iconTextElement.style.color = '#00b69b';
+                        updownElement.textContent = "Up";
+                      } else {
+                        icon.className = "fa-solid fa-arrow-trend-down";
+                        icon.style.color = '#f93c65';
+                        text.style.color = '#f93c65';
+                        iconTextElement.style.color = '#f93c65';
+                        updownElement.textContent = "Down";
+                      }
+
+                      // Update the text content to remove negative symbol after applying the logic
+                      text.textContent = Math.abs(value).toString();
+                    }
+
+                    function updateAllColors() {
+                      const aptitudeValue = parseFloat(document.getElementById('difference-aptitude').textContent);
+                      const englishValue = parseFloat(document.getElementById('difference-english').textContent);
+                      const codingValue = parseFloat(document.getElementById('difference-coding').textContent);
+
+                      updateColor('aptitude-icon-text', aptitudeValue, 'aptitude-icon', 'aptitude-upanddown');
+                      updateColor('english-icon-text', englishValue, 'english-icon', 'english-upanddown');
+                      updateColor('coding-icon-text', codingValue, 'coding-icon', 'coding-upanddown');
+                    }
+
+                    document.addEventListener('DOMContentLoaded', updateAllColors);
+                  </script>
+
+
+
+
+
+
+                </div>
+
+                <!--advise for mobile-->
+                <div class="companies companies-mobile">
+                  <div class="underline-text">
+                    <h2 style="text-align: center;justify-content: center;">Chances of Clearing Screening Assessments</h2>
+                  </div>
+  
+                  <div class="company_cards">
+                      <div class="ccard">
+                        <table class="company-table">				
+                          <tbody>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/tcs.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                            padding-right: 10px;
+                            text-align: left;
+                            font-size: 15px;
+                            " >TCS Code Vita</td>
+                              <td style="padding: 5px;
+                      padding-right: 10px;
+                        text-align: end;
+                      font-size: 15px;font-weight: bold;">95%</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/tcs.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 20px;
+                        text-align: left;
+                      font-size: 15px;">TCS NQT</td>
+                              <td style="padding: 5px;
+                      padding-right: 10px;
+                        text-align: end;
+                      font-size: 15px;font-weight: bold;">93%</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/wipro.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 10px;
+                        text-align: left;
+                      font-size: 15px;">Wipro</td>
+                              <td style="padding: 5px;
+                      padding-right: 10px;
+                        text-align: end;
+                      font-size: 15px;font-weight: bold;">83%</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/infosys.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 10px;
+                        text-align: left;
+                      font-size: 15px;">Infosys</td>
+                              <td style="padding: 5px;
+                      padding-right: 10px;
+                        text-align: end;
+                      font-size: 15px;font-weight: bold;">70%</td>
+                            </tr>
+                            
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="ccard">
+                        <table class="company-table">				
+                          <tbody>
+                              <tr>
+                                <td style="padding: 5px;
+                                padding-right: 0;
+                                  text-align: left;
+                                font-size: 15px;"> <img src="img/capgemini.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;padding-right: 10px;text-align: left;font-size:15px;">Capgemini</td>
+                              <td style="padding: 5px;padding-right: 10px;text-align: center;font-size: 15px;font-weight: bold;">79%</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/accenture.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: left;
+                      font-size: 15px;">Accenture</td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: center;
+                      font-size: 15px;font-weight: bold;">89%</td>
+                            </tr>
+                            
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/ibm.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: left;
+                      font-size: 15px;">IBM</td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: center;
+                      font-size: 15px;font-weight: bold;">68%</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/cognizant.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                                padding-right: 0;
+                                text-align: left;
+                                font-size: 15px;">Cognizant GenC Elevate</td>
+                              <td style="padding: 5px;
+                                      padding-right: 0;
+                                      text-align: center;
+                                    font-size: 15px;font-weight: bold;">73%</td>
+                            </tr>
+                            
+                          
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="ccard">
+                        <table class="company-table">
+                          <tbody>
+                                <tr>
+                                  <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/virtusa.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: left;
+                      font-size: 15px;">Virtusa</td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: center;
+                      font-size: 15px;font-weight: bold;">63%</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/hcl.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: left;
+                      font-size: 15px;">HCL</td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: center;
+                      font-size: 15px;font-weight: bold;">69%</td>
+                            </tr>
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/mahindra.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: left;
+                      font-size: 15px;">TechMahindra</td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: center;
+                      font-size: 15px;font-weight: bold;">57%</td>
+                            </tr>
+                           
+                            <tr>
+                              <td style="padding: 5px;
+                              padding-right: 0;
+                                text-align: left;
+                              font-size: 15px;"> <img src="img/cognizant2.png" alt="icon" style="height: 25px;width:auto"></td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: left;
+                      font-size: 15px;">Congnizant GenC Next</td>
+                              <td style="padding: 5px;
+                      padding-right: 0;
+                        text-align: center;
+                      font-size: 15px;font-weight: bold;">65%</td>
+                            </tr>
+                          
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  <div class="disclaimer">
+                    <img src="img/warning.png" alt="icon" style="width:30px;height: 30px;">
+                    <div class="vertical-line"></div>
+                    <p>Disclaimer: Subject to Company Eligibility Criteria Based on Your Academic Percentages and Current
+                      Job Vacancies Across Companies</p>
+                  </div>
+                </div>
+
+
+                <!--General Advice-->
+
+                <div class="advice">
+                  <div class="underline-text">
+                    <h2>General Advice</h2>
+                  </div>
+
+                  <div class="advicecard">
+                    <div class="acard">
+                      <img src="img/advice.png" alt="icon">
+                      <p><span >Good Work Keep it up</span></p>
+                    </div>
+                  </div>
+
+                  <div class="advice-container">
+                    <div class="column">
+                      <a href="https://taptap.blackbucks.me/?assessmentType=myCollege&studentAssessmentTabIndex=1"
+                        class="aacard-link">
+                        <div class="aacard">
+                          <div class="acontent">
+                            <div style="padding-right:20px">
+                              <img src="img/project.png" alt="icon" style="height: auto;width: 50px;">
+                            </div>
+                            <div>
+                              <p class="aheading">Project</p>
+                              <p class="amatter">Give special emphasis on the Academic Project</p>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                      <a href="https://taptap.blackbucks.me/?assessmentType=gestSuite&studentAssessmentTabIndex=3"
+                        style="text-decoration: none; color: inherit;">
+                        <div class="aacard">
+                          <div class="acontent" style="display: flex; align-items: center;">
+                            <div style="padding-right: 20px;">
+                              <img src="img/skill.png" alt="icon">
+                            </div>
+                            <div>
+                              <p class="aheading">Rate Your Skill</p>
+                              <p class="amatter">Complete skill tests in taptap and verify your skills </p>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+
+                      <a href="https://taptap.blackbucks.me/?assessmentType=practice"
+                        style="text-decoration: none; color: inherit;">
+                        <div class="aacard">
+                          <div class="acontent">
+                            <div style="padding-right:20px"><img src="img/test.png" alt="icon"></div>
+                            <div>
+                              <p class="aheading">Attempt PGEST</p>
+                              <p class="amatter">Take Monthly Employability Test on TapTap every month</p>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+
+                    </div>
+                    <div class="column">
+                      <a href="https://taptap.blackbucks.me/myprofile/" class="aacard-link">
+                        <div class="aacard">
+                          <div class="acontent">
+                            <div style="padding-right:20px">
+                              <img src="img/resume.png" alt="icon" style="height: auto;width: 50px;">
+                            </div>
+                            <div>
+                              <p class="aheading">Complete Resume</p>
+                              <p class="amatter">Complete your profile & Generate your resume</p>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+
+                      <div class="aacard">
+                        <div class="acontent">
+                          <div style="padding-right:20px"><img src="img/maintain.png" alt="icon"
+                              style="height: auto;width: 50px;"></div>
+                          <div>
+                            <p class="aheading">Academic Standards</p>
+                            <p class="amatter">Maintain 60% and more in your academics</p>
+                          </div>
+                        </div>
+                      </div>
+                      <a href="https://taptap.blackbucks.me/?assessmentType=learn&studentAssessmentTabIndex=1"
+                        class="aacard-link">
+                        <div class="aacard">
+                          <div class="acontent">
+                            <div style="padding-right:20px">
+                              <img src="img/certificate.png" alt="icon" style="height: auto;width: 50px;">
+                            </div>
+                            <div>
+                              <p class="aheading">Get Certified</p>
+                              <p class="amatter">Complete a certification</p>
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div id="logoutModal" class="modal" style="display: none;">
+          <div class="modal-content">
+            <p class="question">Are you sure you want to logout?</p>
+            <div class="logout-div"></div>
+            <div class="modal-buttons">
+              <button id="cancelLogout">Cancel</button>
+              <button id="confirmLogout">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+ 
+
+  
+</body>
+
+</html>

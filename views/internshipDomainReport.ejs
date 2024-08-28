@@ -1,0 +1,3407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/internship_domain.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/nav_log.css" />
+    <link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <title>Domain Analysis</title>
+    <style>
+      /* .nodata {
+        border: 1px solid rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        padding: 10px;
+        position: relative;
+        text-align: center;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.7);
+        margin: 10px;
+      } */
+
+      .loader {
+        width: 50px;
+        padding: 8px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #25b09b;
+        --_m: conic-gradient(#0000 10%, #000),
+          linear-gradient(#000 0 0) content-box;
+        -webkit-mask: var(--_m);
+        mask: var(--_m);
+        -webkit-mask-composite: source-out;
+        mask-composite: subtract;
+        animation: l3 1s infinite linear;
+      }
+      @keyframes l3 {
+        to {
+          transform: rotate(1turn);
+        }
+      }
+
+      
+
+   
+    </style>
+  </head>
+  <body>
+    <script>
+      window.userRole = "<%= user.role %>";
+    </script>
+    <script src="js/rolebase.js"></script>
+    
+    <div class="supercss">
+      <% if (user.role === 'InternshipsAdmin') { %>
+        <div class="sidebar">
+            <a class="logo" style="text-align: center; align-items:center; padding:5px;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px; height:80px;">
+            </a>  
+            <a href="internshipsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+                <img src="img/internship.png" alt="manage" style="width: 20px; height: auto" />
+                <span style="color: black; font-weight: bold;">Internships</span>
+            </a>
+        </div>
+    <% } else if (user.role === 'SuperAdmin') { %>
+        <div class="sidebar">
+            <a class="logo" style="text-align: center; align-items:center; padding:5px;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px; height:80px;">
+            </a>  
+            <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="employability" style="max-width:18px; height:20px">
+                <span>Employability</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/internship.png" alt="internships" style="width: 20px; height: auto" />
+                <span style="color: black; font-weight: bold;">Internships</span>
+            </a>
+        </div>
+    <% } else { %>
+        <div class="sidebar">
+            <a class="logo" style="text-align: center; align-items:center; padding:5px;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px; height:80px;">
+            </a>  
+            <a href="myDashboard" class="menu-item" id="dashboard-link">
+                <img src="img/dash_white.png" alt="dash" style="max-width:22px; height:22px">
+                <span style="color:white">Dashboard</span>
+            </a>
+            <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="employability" style="max-width:18px; height:20px">
+                <span>Employability</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+                <img alt="Assessment icon" src="img/assessment.png" style="max-width:19px; height:19.5px">
+                <span>Assessments</span>
+            </a>
+            <a href="jobsDashboard" class="menu-item">
+                <img src="img/jobs.png" alt="jobs" style="max-width:20px; height:21px">
+                <span>Jobs</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/" class="menu-item">
+                <img alt="course icon" src="img/course.png" style="max-width:19px; height:20px">
+                <span>Course</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/lessonPlan/" class="menu-item">
+                <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width:23px; height:18px">
+                <span>Lesson Plan</span>
+            </a>
+            <a href="trainingsDashboard" class="menu-item">
+                <img src="img/trainings.png" alt="trainings" style="max-width:27px; height:21px">
+                <span>Trainings</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+                <img src="img/internship.png" alt="internships" style="width: 20px; height: auto" />
+                <span style="color: black; font-weight: bold;">Internships</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/" class="menu-item">
+                <img alt="vpl icon" src="img/vpl.png" style="max-width:19px; height:17px">
+                <span>VPL</span>
+            </a> 
+        </div>
+    <% } %>
+    
+
+      <div class="css">
+        <div class="css0">
+          <div class="navbar">
+            <div class="nav1"></div>
+            <div class="nav2">
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageStudents/"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Manage Users"
+                    src="img/newManageUsers.svg"
+                    class="chakra-image css-0"
+                  />
+                </div>
+              </a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/tpCalendar/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Calendar"
+                    src="img/newCalenderNavIcon.svg"
+                    class="chakra-image css-0"
+                  /></div
+              ></a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageNotification/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <div class="css-1edim3w">
+                    <img
+                      alt="Notifications"
+                      src="img/newNotificationIcon.svg"
+                      class="chakra-image css-6su6fj"
+                    />
+                    <div class="css-1bac456">
+                      <div class="css-1rkwksi">1</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <button type="button" class="navbtn" id="userButton">
+                <span class="user-details">
+                  <div class="user">
+                    <span class="user-profile">
+                      <i
+                        class="fa-solid fa-circle-user"
+                        style="font-size: 30px"
+                      ></i>
+                    </span>
+                    <div class="username">
+                      <p class="userN"></p>
+                      <p class="userR"></p>
+                    </div>
+                  </div>
+                </span>
+                <span class="chakra-button__icon css-1hzyiq5">
+                  <svg
+                    viewBox="0 0 16 16"
+                    style="height: 12px !important; width: 12px !important"
+                    aria-hidden="true"
+                    focusable="false"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="black"
+                    class="css-1eamic5 ex0cdmw0"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    ></path>
+                  </svg>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="logoutbtn"
+                id="logoutButton"
+                style="display: none; background-color: #ffffff"
+              >
+                Log out
+              </button>
+            </div>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const userButton = document.getElementById("userButton");
+                const logoutButton = document.getElementById("logoutButton");
+
+                userButton.addEventListener("click", () => {
+                  if (logoutButton.style.display === "none") {
+                    logoutButton.style.display = "flex";
+                    logoutButton.style.top = `${
+                      userButton.offsetTop + userButton.offsetHeight
+                    }px`;
+                    logoutButton.style.left = `${userButton.offsetLeft}px`;
+                  } else {
+                    logoutButton.style.display = "none";
+                  }
+                });
+
+                logoutButton.addEventListener("click", () => {
+                  // Add your logout logic here
+                  console.log("User logged out");
+                });
+              });
+            </script>
+          </div>
+
+          <div class="css1">
+            <div class="main-container">
+              <div class="new-cont">
+                <div class="roww marginr">
+                  <img
+                    src="img/internshipgrey.png"
+                    alt="internship icon"
+                    style="width: 14px; height: 14px; margin-right: 5px"
+                  />
+                  <a href="internshipsDashboard" style="text-decoration: none">
+                    <p class="grey f14 marginr" style="margin: 0;font-size: 14px ">
+                      Internships
+                      <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                    </p>
+                  </a>
+                  <a
+                    id="internshipLink"
+                    href="#"
+                    style="text-decoration: none; color: grey; font-size: 14px"
+                  >
+                    <p
+                      className="grey f14 marginr"
+                      style="margin: 0; "
+                    >
+                      Overall Dashboard
+                      <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                    </p>
+                  </a>
+
+                  <p class="f14" style="font-size: 14px"><span id="domain-title"></span> Overview</p>
+                </div>
+                <div class="topnav">
+                  <a
+                    href="#Overview"
+                    class="active"
+                    onclick="smoothScroll('Overview')"
+                  >
+                    <img src="img/fsdtab.png" alt="fsdoverview" />
+                    <span style="padding-left: 5px">Internship Overview</span>
+                  </a>
+                  <a href="#candidates" onclick="smoothScroll('candidates')">
+                    <img src="img/candidates.png" alt="" />
+                    <span style="padding-left: 5px">Enrolled Candidates</span>
+                  </a>
+                  <a
+                    href="#Student-Activity"
+                    onclick="smoothScroll('Student-Activity')"
+                  >
+                    <img
+                      src="img/activity.png"
+                      alt="activity"
+                      style="width: 15px; height: 15px"
+                    />
+                    <span style="padding-left: 5px">Student Activities</span>
+                  </a>
+                  <!-- <a href="#projects" onclick="smoothScroll('projects')">
+                    <img
+                      src="img/activity.png"
+                      alt="activity"
+                      style="width: 15px; height: 15px"
+                    />
+                    <span style="padding-left: 5px">Projects</span>
+                  </a> -->
+                  <a
+                    href="#student-attendance"
+                    onclick="smoothScroll('student-attendance')"
+                  >
+                    <img
+                      src="img/activity.png"
+                      alt="activity"
+                      style="width: 15px; height: 15px"
+                    />
+                    <span style="padding-left: 5px">Student Attendance</span>
+                  </a>
+                </div>
+              </div>
+
+              <div
+                class="overview section"
+                id="Overview"
+                style="border: none; padding: 0"
+              >
+                <h3 class="f22 font600" style="font-size: 16px">
+                  <span style="display: none" id="title"></span> Overview
+                </h3>
+                <div class="suboverview">
+                  <div class="lefthalf">
+                    <div class="row">
+                      <div
+                        class="quarter gradient-background active"
+                        onclick="showRightHalf('live-sessions' , this)"
+                      >
+                        <div>
+                          <p>Live Sessions</p>
+                          <span id="live-session-count">0</span>
+                        </div>
+                        <div class="circle active">
+                          <img src="img/ls.png" alt="live sessions" />
+                        </div>
+                      </div>
+                      <div
+                        class="quarter"
+                        onclick="showRightHalf('assessments', this)"
+                      >
+                        <div>
+                          <p>Assessments</p>
+                          <span id="a-assessments">0</span>
+                        </div>
+                        <div class="circle">
+                          <img src="img/fsd-options.png" alt="Assessments" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div
+                        class="quarter"
+                        onclick="showRightHalf('employability-test', this)"
+                      >
+                        <div>
+                          <p>Employability Tests</p>
+                          <span id="employability_count">0</span>
+                        </div>
+                        <div class="circle">
+                          <img src="img/fsd-options.png" alt="tests" />
+                        </div>
+                      </div>
+                      <div class="quarter">
+                        <div>
+                          <p>Projects</p>
+                          <span id="project_count">0</span>
+                        </div>
+                        <div class="circle">
+                          <img src="img/fsd-options.png" alt="tests" />
+                        </div>
+                      </div>
+                      <script>
+                        // Function to fetch project count and update the page
+                        async function updateProjectCount() {
+                          // Extract the domain ID from the URL (you might need to adjust this depending on your URL structure)
+                          const urlParams = new URLSearchParams(window.location.search);
+                          const domainId = urlParams.get('domain_id'); // Adjust this if domainId is part of the URL path instead of query parameters
+                      
+                          if (!domainId) {
+                            console.error('Domain ID is missing in the URL');
+                            return;
+                          }
+                      
+                          try {
+                            const response = await fetch(`api/internship_domain_analysis_report/project_title_count/${domainId}`);
+                            if (!response.ok) {
+                              throw new Error('Network response was not ok');
+                            }
+                      
+                            const data = await response.json();
+                            const projectCount = data.title_count; // Adjust this if the property name is different
+                            document.getElementById('project_count').textContent = projectCount;
+                          } catch (error) {
+                            console.error('Error fetching project count:', error);
+                            document.getElementById('project_count').textContent = 'Error';
+                          }
+                        }
+                      
+                        // Call the function when the page loads
+                        document.addEventListener('DOMContentLoaded', updateProjectCount);
+                      </script>
+                      
+                      
+
+
+                    </div>
+                  </div>
+                  <div class="gap"></div>
+                  <div class="righthalf">
+                    <!------------------overview-Livesessions------------------>
+                    <div class="righthalf-part active" id="live-sessions">
+                      <h4 class="f20 font600">Live Sessions</h4>
+                      <hr />
+                      <div class="ls-options">
+                        <div class="ls-table">
+                          <table class="otable">
+                            <thead>
+                              <tr>
+                                <th>Overview</th>
+                                <th>Live Session %</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr style="display: none">
+                                <td>
+                                  <span class="smallcircle sc3"></span>
+                                  Absentees
+                                </td>
+                                <td id="absentees">0</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <span class="smallcircle sc4"></span>
+                                  Hours Covered
+                                </td>
+                                <td id="hours-covered">0</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <span class="smallcircle sc1"></span>
+                                  Overall Feedback
+                                </td>
+                                <td id="overall-feedback">0%</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <span class="smallcircle sc2"></span>
+                                  Session Interactiveness
+                                </td>
+                                <td id="session-interactiveness">0%</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <!-----------------Overview- Assessments----------->
+                    <div class="righthalf-part" id="assessments">
+                      <h4 class="f20 font600">Assessments</h4>
+                      <hr />
+                      <div class="a-options">
+                        <div class="a-table">
+                          <table class="assessment-table">
+                            <thead>
+                              <tr>
+                                <th>Overall</th>
+                                <th>Assessments</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <span class="smallcircle sc3"></span>
+                                  Daily Test
+                                </td>
+                                <td id="a-dailyTests"></td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <span class="smallcircle sc1"></span>
+                                  Assignments
+                                </td>
+                                <td id="a-assignments"></td>
+                              </tr>
+
+                              <tr>
+                                <td>
+                                  <span class="smallcircle sc4"></span>
+                                  Grand Test
+                                </td>
+                                <td id="a-grandTests"></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="a-graph">
+                          <canvas
+                            id="myChart-assessment"
+                            height="auto"
+                          ></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <!----------------Overview-Employabitity test-------------->
+                    <div class="righthalf-part" id="employability-test">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: row;
+                          justify-content: space-between;
+                        "
+                      >
+                        <h4 class="f20 font600">Employability Test</h4>
+                      </div>
+                      <div class="oemp-graph" style="height: 160px">
+                        <canvas
+                          id="myChart-employability"
+                          height="200"
+                        ></canvas>
+                        <p id="chart-error-message" style="display: none">
+                          No data available
+                        </p>
+                      </div>
+                    </div>
+                    <!------------------Overview- Projects---------------->
+                    <div class="righthalf-part" id="projectss">
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: row;
+                          justify-content: space-around;
+                        "
+                      >
+                        <h4 class="f20 font600">Projects</h4>
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                          "
+                        >
+                          <div class="smallcircle sc2"></div>
+                          <p>Enroll Student</p>
+                        </div>
+                        <div
+                          style="
+                            display: flex;
+                            flex-direction: row;
+                            align-items: center;
+                          "
+                        >
+                          <div class="smallcircle sc3"></div>
+                          <p>Available Project</p>
+                        </div>
+                      </div>
+                      <hr />
+                      <table class="oproj-graph">
+                        <tr>
+                          <td>
+                            <section class="total-section">
+                              <!-- Use Font Awesome version 5 user icon -->
+                              <i class="fas fa-user"></i>
+                              <svg>
+                                <circle
+                                  id="track"
+                                  cx="40"
+                                  cy="40"
+                                  r="35"
+                                ></circle>
+                                <!-- Adjusted circle radius -->
+                                <circle
+                                  id="progress"
+                                  cx="40"
+                                  cy="40"
+                                  r="35"
+                                ></circle>
+                                <!-- Adjusted circle radius -->
+                              </svg>
+                              <span
+                                id="percentage"
+                                style="display: none"
+                              ></span>
+                            </section>
+                          </td>
+                          <td style="margin-left: 40px; padding-left: 40px">
+                            <div style="display: flex; flex-direction: column">
+                              <span style="margin: 0; padding: 0">1,235</span>
+                              <p style="margin-top: 4px; padding: 0">
+                                How Many Enroll
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <section class="project-section">
+                              <!-- Use Font Awesome version 5 user icon -->
+                              <i class="fas fa-tag"></i>
+                              <svg>
+                                <circle
+                                  id="track"
+                                  cx="40"
+                                  cy="40"
+                                  r="35"
+                                ></circle>
+                                <!-- Adjusted circle radius -->
+                                <circle
+                                  id="progress"
+                                  cx="40"
+                                  cy="40"
+                                  r="35"
+                                ></circle>
+                                <!-- Adjusted circle radius -->
+                              </svg>
+                              <span
+                                id="percentage"
+                                style="display: none"
+                              ></span>
+                            </section>
+                          </td>
+                          <td style="margin-left: 40px; padding-left: 40px">
+                            <div style="display: flex; flex-direction: column">
+                              <span style="margin: 0; padding: 0">456</span>
+                              <p style="margin-top: 4px; padding: 0">
+                                Available Projects <br />Student Yet to Choose
+                                Project
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                      <script>
+                        function updateProgress(percentage) {
+                          const progressCircle =
+                            document.getElementById("progress");
+                          const circumference =
+                            2 *
+                            Math.PI *
+                            parseFloat(progressCircle.getAttribute("r"));
+                          const offset = circumference * (1 - percentage / 100);
+                          progressCircle.style.strokeDashoffset = offset;
+                          document.getElementById(
+                            "percentage"
+                          ).textContent = `${percentage}%`;
+                        }
+                        // Example: Update progress to 50%
+                        updateProgress(465); // Call this function with your desired percentage value
+                      </script>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!--------------------------Enrolled Candidates Section--------------------------------->
+              <div
+                class="enrolled-candidates"
+                id="candidates"
+                style="margin-top: 40px"
+              >
+                <h3 class="f22 font600" style="font-size: 16px">
+                  Enrolled Candidates
+                </h3>
+                <div class="section">
+                  <li class="table-header">
+                    <div class="col col-1">Basic Info</div>
+                    <div class="col col-2">Domain</div>
+                    <div class="col col-3">Employability Band</div>
+                    <div class="col col-4">Employability Score</div>
+                    <div class="col col-5">Enrolled Date</div>
+                  </li>
+                  <ul class="responsive-table" id="candidates-table"></ul>
+                  <div class="pagination" id="pagination">
+                    <button id="prev-page" disabled style="font-size: 14px">
+                      <i class="fa-solid fa-chevron-left"></i> Previous
+                    </button>
+                    <div id="pageNos"></div>
+                    <button id="next-page" style="font-size: 14px">
+                      Next <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!------------------------Student activity section-------------------------------------->
+              <div class="student-activity section" id="Student-Activity">
+                <h3 class="f22 font600">Student Activity</h3>
+                <div
+                  class="sa-topnav"
+                  style="margin-top: 20px; margin-bottom: 10px"
+                >
+                  <div class="sa-links-container">
+                    <a
+                      class="active"
+                      onclick="toggleSection('absentees-assessments', this)"
+                    >
+                      <img
+                        src="img/activity.png"
+                        alt="activity"
+                        style="width: 15px; height: 15px"
+                      />
+                      <span>Summary</span>
+                    </a>
+                    <a
+                      href="#dailytest"
+                      onclick="toggleSection('daily-test', this)"
+                    >
+                      <img
+                        src="img/fsdtab.png"
+                        alt="daily test"
+                        width="18px"
+                        height="16px"
+                      />
+                      <span>Daily Test</span>
+                    </a>
+                    <a
+                      href="#grandtest"
+                      onclick="toggleSection('grand-test', this)"
+                    >
+                      <img
+                        src="img/candidates.png"
+                        alt="grand test"
+                        style="width: 16px; height: 16px; padding-left: 5px"
+                      />
+                      <span>Grand Test</span>
+                    </a>
+                    <a
+                      href="#employabilitytest"
+                      onclick="toggleSection('emp-test', this)"
+                    >
+                      <img
+                        src="img/activity.png"
+                        alt="activity"
+                        style="width: 15px; height: 15px"
+                      />
+                      <span>Employability Test</span>
+                    </a>
+                    <a
+                      href="#inactivestudents"
+                      onclick="toggleSection('inactivestudents-assessments', this)"
+                    >
+                      <img
+                        src="img/activity.png"
+                        alt="activity"
+                        style="width: 15px; height: 15px"
+                      />
+                      <span
+                        >Inactive Students: <span id="rowCount"></span
+                      ></span>
+                    </a>
+                  </div>
+                </div>
+                <div class="stu-act" id="daily-test">
+                  <div
+                    style="width: 100%; border-radius: 10px; overflow: hidden"
+                  >
+                    <div class="dt-tablecontainer2">
+                      <table id="dailytesttable">
+                        <thead class="dthead" id="dailytesttable-head"></thead>
+                        <tbody id="dailytesttable-body"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="pagination" id="daily-pagination-controls">
+                    <button
+                      id="dailyprevPage"
+                      onclick="dataprevPage()"
+                      style="font-size: 14px"
+                    >
+                      Previous
+                    </button>
+                    <div id="dailypageNumbers"></div>
+                    <button
+                      id="dailynextPage"
+                      onclick="datanextPage()"
+                      style="font-size: 14px"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+
+                <div class="stu-act" id="grand-test">
+                  <div
+                    style="width: 100%; border-radius: 10px; overflow: hidden"
+                  >
+                    <div
+                      style="
+                        width: 100%;
+                        display: flex;
+                        justify-content: center;
+                      "
+                    >
+                      <div id="result-message" class="nodata">
+                        <div class="nodata-found-cont">
+                          <img
+                            src="img/NOdata-found.jpg"
+                            class="nodata-image"
+                            alt="nodata"
+                          />
+                          <p
+                            style="
+                              font-size: 17px;
+                              font-family: system-ui, -apple-system,
+                                BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+                                Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
+                                sans-serif;
+                              font-weight: 600;
+                            "
+                          >
+                            Grand Test is not conducted
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="dt-tablecontainer2">
+                      <table>
+                        <thead class="dthead" id="grandtesttable-head"></thead>
+                        <tbody id="grandtesttable-body"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="pagination" id="grand-pagination-controls">
+                    <button
+                      id="grandprevPage"
+                      onclick="grandprevPage()"
+                      style="font-size: 14px"
+                    >
+                      Previous
+                    </button>
+                    <div id="grandpageNumbers"></div>
+                    <button
+                      id="grandnextPage"
+                      onclick="grandnextPage()"
+                      style="font-size: 14px"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+
+                <div class="stu-act" id="emp-test">
+                  <div class="dt-tablecontainer2">
+                    <table>
+                      <thead class="dthead" id="emptesttable-head"></thead>
+                      <tbody id="emptesttable-body"></tbody>
+                    </table>
+                  </div>
+                  <div class="pagination" id="emp-pagination-controls">
+                    <button
+                      id="empprevPage"
+                      onclick="empprevPage()"
+                      style="font-size: 14px"
+                    >
+                      Previous
+                    </button>
+                    <div id="emppageNumbers"></div>
+                    <button
+                      id="empnextPage"
+                      onclick="empnextPage()"
+                      style="font-size: 14px"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+
+                <div class="stu-act" id="inactivestudents-assessments">
+                  <div class="dt-tablecontainer2">
+                    <table>
+                      <thead
+                        class="dthead"
+                        id="inactivestudentsassessmentstable-head"
+                      ></thead>
+                      <tbody id="inactivestudentsassessmentstable-body"></tbody>
+                    </table>
+                  </div>
+                  <div class="pagination" id="inactive-pagination-controls">
+                    <button
+                      id="inactiveprevPage"
+                      onclick="inactiveprevPage()"
+                      style="font-size: 14px"
+                    >
+                      Previous
+                    </button>
+                    <div id="inactivepageNumbers"></div>
+                    <button
+                      id="inactivenextPage"
+                      onclick="inactivenextPage()"
+                      style="font-size: 14px"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+
+                <div class="stu-act active" id="absentees-assessments">
+                  <div class="dt-tablecontainer2">
+                    <table>
+                      <thead id="table-header">
+                        <!-- Header will be inserted here by JavaScript -->
+                      </thead>
+                      <tbody id="assessment-data">
+                        <!-- Event data will be inserted here by JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="pagination" id="absentees-pagination-controls">
+                    <button
+                      id="assessmentabsenteesprevPage"
+                      onclick="absenteesPrevPage()"
+                      style="font-size: 14px"
+                    >
+                      Previous
+                    </button>
+                    <div id="assessmentabsenteespageNumbers"></div>
+                    <button
+                      id="assessmentabsenteesnextPage"
+                      onclick="absenteesNextPage()"
+                      style="font-size: 14px"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-----------------------------------Projects Section------------------------------------>
+
+              <div class="student-activity section" id="Project">
+                <h3 class="f22 font600">Project Details</h3>
+                <div class="dt-tablecontainer2">
+                    <table id="project-table">
+                        <thead class="dthead">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Registration Number</th>
+                                <th>College Name</th>
+                                <th>Project Title</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Data rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                    <div id="no-data-message" style="display: none; text-align: center; margin-top: 20px;">
+                        <p>No data available</p>
+                    </div>
+                </div>
+                
+                <div id="pagination-controls"></div>
+            
+                <script>
+                    let currentPage = 1;
+                    const rowsPerPage = 10;
+                    const pagesToShow = 4;
+                    let projectData = [];
+            
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const domainId = urlParams.get('domain_id');  // Replace 'domain_id' with the correct query parameter name if different
+            
+                        if (!domainId) {
+                            console.error('Domain ID not found in URL');
+                            return;
+                        }
+            
+                        const url = `api/internship_domain_analysis_report/project_details/${domainId}`;
+            
+                        fetch(url)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.error) {
+                                    console.error(data.error);
+                                    return;
+                                }
+            
+                                projectData = data;
+                                displayTable();
+                                setupPagination();
+                            })
+                            .catch(error => {
+                                console.error('Error fetching project details:', error);
+                            });
+                    });
+            
+                    function displayTable() {
+                        const tableBody = document.getElementById('table-body');
+                        const noDataMessage = document.getElementById('no-data-message');
+                        tableBody.innerHTML = '';
+            
+                        const start = (currentPage - 1) * rowsPerPage;
+                        const end = start + rowsPerPage;
+                        const paginatedData = projectData.slice(start, end);
+            
+                        if (paginatedData.length === 0) {
+                            noDataMessage.style.display = 'block';
+                        } else {
+                            noDataMessage.style.display = 'none';
+                            paginatedData.forEach(item => {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `
+                                    <td>${item.name}</td>
+                                    <td>${item.email}</td>
+                                    <td>${item.regno}</td>
+                                    <td>${item.college_name}</td>
+                                    <td>${item.title}</td>
+                                `;
+                                tableBody.appendChild(tr);
+                            });
+                        }
+                    }
+            
+                    function setupPagination() {
+                        const totalPages = Math.ceil(projectData.length / rowsPerPage);
+                        const paginationControls = document.getElementById('pagination-controls');
+                        paginationControls.innerHTML = '';
+            
+                        if (totalPages > 1) {
+                            const paginationContainer = document.createElement('div');
+                            paginationContainer.classList.add('pagination-container');
+                            paginationControls.appendChild(paginationContainer);
+            
+                            const prevButton = document.createElement('span');
+                            prevButton.textContent = 'Previous';
+                            prevButton.classList.add('prev-button');
+                            prevButton.style.margin = '0 10px';
+                            prevButton.addEventListener('click', () => {
+                                if (currentPage > 1) {
+                                    currentPage--;
+                                    displayTable();
+                                    updatePagination();
+                                }
+                            });
+                            paginationContainer.appendChild(prevButton);
+            
+                            const paginationNumbersContainer = document.createElement('div');
+                            paginationNumbersContainer.classList.add('pagination-numbers-container');
+                            paginationContainer.appendChild(paginationNumbersContainer);
+            
+                            const nextButton = document.createElement('span');
+                            nextButton.textContent = 'Next';
+                            nextButton.classList.add('next-button');
+                            nextButton.style.margin = '0 10px';
+                            nextButton.addEventListener('click', () => {
+                                if (currentPage < totalPages) {
+                                    currentPage++;
+                                    displayTable();
+                                    updatePagination();
+                                }
+                            });
+                            paginationContainer.appendChild(nextButton);
+            
+                            updatePagination();
+                        }
+                    }
+            
+                    function updatePagination() {
+                        const totalPages = Math.ceil(projectData.length / rowsPerPage);
+                        const paginationNumbersContainer = document.querySelector('.pagination-numbers-container');
+                        paginationNumbersContainer.innerHTML = '';
+            
+                        let startPage = Math.max(1, currentPage - Math.floor(pagesToShow / 2));
+                        let endPage = Math.min(totalPages, startPage + pagesToShow - 1);
+            
+                        if (endPage - startPage < pagesToShow - 1) {
+                            startPage = Math.max(1, endPage - pagesToShow + 1);
+                        }
+            
+                        for (let i = startPage; i <= endPage; i++) {
+                            const pageNumber = document.createElement('button');
+                            pageNumber.textContent = i;
+                            pageNumber.classList.add('pagination-button');
+                            pageNumber.style.margin = '0 5px';
+                            pageNumber.addEventListener('click', () => {
+                                currentPage = i;
+                                displayTable();
+                                updatePagination();
+                            });
+                            if (i === currentPage) {
+                                pageNumber.classList.add('current');
+                            }
+                            paginationNumbersContainer.appendChild(pageNumber);
+                        }
+            
+                        const prevButton = document.querySelector('.prev-button');
+                        const nextButton = document.querySelector('.next-button');
+            
+                        prevButton.classList.toggle('disabled', currentPage === 1);
+                        nextButton.classList.toggle('disabled', currentPage === totalPages);
+                    }
+                </script>
+            </div>
+            
+            
+            
+            
+            
+
+              <!---------------------------Attendance Section------------------------------------------->
+              <div class="student-attendance" id="student-attendance">
+                <h3 class="f22 font600">Student Attendance</h3>
+                <div class="section">
+                  <div
+                    class="sattendance-topnav"
+                    style="margin-top: 20px; margin-bottom: 10px"
+                  >
+                    <div class="sattendance-links-container">
+                      <!--<a href="#summary" class="active" onclick="toggleAttendanceSection('sattendance-summary', this)">
+              <img src="img/fsdtab.png" alt="summary" width="18px" height="16px" />
+              <span>Summary</span>
+            </a> -->
+                      <a
+                        href="#event-report-download"
+                        class="active"
+                        onclick="toggleAttendanceSection('event-report-download' , this)"
+                      >
+                        <img
+                          src="img/activity.png"
+                          alt="activity"
+                          style="width: 15px; height: 15px"
+                        />
+                        <span>Summary</span>
+                      </a>
+                      <a
+                        href="#attendance-report"
+                        onclick="toggleAttendanceSection('sattendance-report', this)"
+                      >
+                        <img
+                          src="img/candidates.png"
+                          alt="report"
+                          style="width: 16px; height: 16px; padding-left: 5px"
+                        />
+                        <span>Attendance Report</span>
+                      </a>
+                      <a
+                        href="#inactive-students"
+                        onclick="toggleAttendanceSection('inactivestudents-events' , this)"
+                      >
+                        <img
+                          src="img/activity.png"
+                          alt="activity"
+                          style="width: 15px; height: 15px"
+                        />
+                        <span
+                          >Inactive Students: <span id="rowCountDisplay"></span
+                        ></span>
+                      </a>
+                    </div>
+                  </div>
+                  <!--
+        <div class="sattendance" id="sattendance-summary">
+          <div class="stuattend">
+            <div class="stuattend-left-card1">
+              <div class="stuattend-header">
+                <span class="stuattend-title">IIDT FSD Daily Test Report</span>
+                
+                </span>
+              </div>
+              <canvas id="stuattend-dailyTestChart" width="100" height="50"></canvas>
+              
+              <div style="display: flex; flex-direction: row; justify-content: space-between; padding: 0 20px;">
+                <div class="stuattend-legend">
+                  <span class="stuattend-legend-color"></span> Events
+                </div>
+                <div class="stuattend-date-range"> May 05 - 12 </div>
+              </div>
+            </div>
+
+            <div class="stuattend-right-card1">
+              <h3 style="padding-top: 20px; text-align: center;">Summary Data Table</h3>
+             
+              <div class="stuattend-tablecontainer4"></div>
+            </div>
+            
+          </div>
+        </div> 
+
+      -->
+
+                  <div class="sattendance" id="event-report-download">
+                    <div class="dt-tablecontainer2">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Session Title</th>
+                            <th>Total Students</th>
+                            <th>Present Students</th>
+                            <th>Absent Students</th>
+                            <th>Hours Covered</th>
+                            <th>Attendance Rate (%)</th>
+                            <th>Average Feedback</th>
+                            <th>Interactiveness (%)</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody id="event-data">
+                          <!-- Event data will be inserted here by JavaScript -->
+                        </tbody>
+                      </table>
+                    </div>
+                    <div
+                      class="pagination"
+                      id="event-report-pagination-controls"
+                    >
+                      <button
+                        id="eventReportPrevPage"
+                        onclick="eventReportPrevPage()"
+                        style="font-size: 14px"
+                      >
+                        Previous
+                      </button>
+                      <div id="eventReportPageNumbers"></div>
+                      <button
+                        id="eventReportNextPage"
+                        onclick="eventReportNextPage()"
+                        style="font-size: 14px"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="sattendance" id="sattendance-report">
+                    <div class="attendreportcontainer">
+                      <table>
+                        <tbody class="attendreporttable"></tbody>
+                      </table>
+                    </div>
+                    <div
+                      class="pagination"
+                      id="sattendance-pagination-controls"
+                    >
+                      <button
+                        id="sattendancePrevPage"
+                        onclick="sattendancePrevPage()"
+                        style="font-size: 14px"
+                      >
+                        Previous
+                      </button>
+                      <div id="sattendancePageNumbers"></div>
+                      <button
+                        id="sattendanceNextPage"
+                        onclick="sattendanceNextPage()"
+                        style="font-size: 14px"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="sattendance" id="inactivestudents-events">
+                    <div class="dt-tablecontainer2">
+                      <table>
+                        <thead
+                          class="dthead"
+                          id="inactivestudentseventstable-head"
+                        ></thead>
+                        <tbody id="inactivestudentseventstable-body"></tbody>
+                      </table>
+                    </div>
+                    <div
+                      class="pagination"
+                      id="inactivestudents-events-pagination-controls"
+                    >
+                      <button
+                        id="inactivestudentsEventsPrevPage"
+                        onclick="inactivestudentsEventsPrevPage()"
+                        style="font-size: 14px"
+                      >
+                        Previous
+                      </button>
+                      <div id="inactivestudentsEventsPageNumbers"></div>
+                      <button
+                        id="inactivestudentsEventsNextPage"
+                        onclick="inactivestudentsEventsNextPage()"
+                        style="font-size: 14px"
+                      >
+                        Next
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="logoutModal" class="modal" style="display: none">
+                <div class="modal-content">
+                  <p class="question">Are you sure you want to logout?</p>
+                  <div class="logout-div"></div>
+                  <div class="modal-buttons">
+                    <button id="cancelLogout">Cancel</button>
+                    <button id="confirmLogout">Yes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let domainId;
+
+      async function fetchPhaseDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        domainId = urlParams.get("domain_id");
+
+        if (!domainId) {
+          document.getElementById("domain-title").textContent =
+            "Invalid domain ID";
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `/api/internship_domain_analysis_report/domain_details/${domainId}`
+          );
+          if (response.status !== 200) {
+            document.getElementById("domain-title").textContent =
+              "Error fetching domain details";
+            return;
+          }
+
+          const domain = await response.json();
+          renderPhaseDetails(domain);
+        } catch (error) {
+          console.error("Error fetching phase details:", error);
+          document.getElementById("domain-title").textContent =
+            "Error fetching phase details";
+        }
+
+        fetchInternshipID(domainId);
+        fetchLiveSessionCount(domainId);
+        fetchLiveSessionTopData(domainId);
+        fetchAttendanceGraphData(domainId);
+        fetchEmployabilityGraphData(domainId);
+        // Call the second fetch with domainId
+        fetchEnrolledStudents(domainId);
+
+        // Call the function with the phase ID
+        fetchData(domainId);
+        fetchAttendanceData(domainId);
+        fetchDailyTestData(domainId);
+        fetchGrandTestData(domainId);
+        fetchAttendanceDataAndUpdateChart(domainId);
+        fetchEmpTestData(domainId);
+        fetchInactiveStudentsAssessments(domainId);
+        fetchInactiveStudentsEvents(domainId);
+      }
+
+      function renderPhaseDetails(domain) {
+        document.getElementById("domain-title").textContent = domain.title;
+        document.getElementById("title").textContent = domain.title;
+      }
+
+      function fetchInternshipID(domainId) {
+        fetch(
+          `/api/internship_domain_analysis_report/internship_id/${domainId}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.internship_id) {
+              const internshipId = data.internship_id;
+              const linkElement = document.getElementById("internshipLink");
+              linkElement.href = `internshipReport?id=${internshipId}`;
+            } else {
+              console.error("Internship ID not found");
+            }
+          })
+          .catch((error) =>
+            console.error("Error fetching internship ID:", error)
+          );
+      }
+
+      function fetchLiveSessionCount(domainId) {
+        fetch(
+          `/api/internship_domain_analysis_report/live_session_count/${domainId}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            if (data && data.live_session_count !== undefined) {
+              document.getElementById(
+                "live-session-count"
+              ).textContent = `${data.live_session_count}`;
+            } else {
+              document.getElementById("live-session-count").textContent = "0"; // Default to 0 if no data is returned
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching live session count:", error);
+            document.getElementById("live-session-count").textContent = "Error"; // Handle error state
+          });
+      }
+
+      function fetchLiveSessionTopData(domainId) {
+        fetch(
+          `/api/internship_domain_analysis_report/live_sessions_topdata/${domainId}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the UI with the fetched data
+            document.getElementById(
+              "overall-feedback"
+            ).textContent = `${data.overall_average_feedback} / 5`;
+            document.getElementById(
+              "session-interactiveness"
+            ).textContent = `${data.overall_avg_interactiveness_percentage} / 100`;
+            document.getElementById("absentees").textContent =
+              data.absent_students_domain;
+            document.getElementById("hours-covered").textContent =
+              data.total_hours_covered;
+          })
+          .catch((error) => {
+            console.error("Error fetching live session top data:", error);
+          });
+      }
+
+      function fetchAttendanceGraphData(domainId) {
+        fetch(
+          `/api/internship_domain_analysis_report/assessment_graph_details/${domainId}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            document.getElementById("a-assessments").textContent =
+              parseInt(data.daily_tests) +
+              parseInt(data.assignments) +
+              parseInt(data.grand_tests);
+            document.getElementById("a-dailyTests").textContent =
+              data.daily_tests;
+            document.getElementById("a-assignments").textContent =
+              data.assignments;
+            document.getElementById("a-grandTests").textContent =
+              data.grand_tests;
+
+            const assessmentLabels = [
+              "Daily Test",
+              "Assignments",
+              "Grand Test",
+            ];
+            const assessmentData = [
+              parseInt(data.daily_tests),
+              parseInt(data.assignments),
+              parseInt(data.grand_tests),
+            ];
+
+            // Update the chart with the new data
+            const assessmentChart = new Chart(
+              document.getElementById("myChart-assessment").getContext("2d"),
+              {
+                type: "doughnut",
+                data: {
+                  labels: assessmentLabels,
+                  datasets: [
+                    {
+                      data: assessmentData,
+                      backgroundColor: ["#FB923C", "#C084FC", "#CCF6A4"],
+                      borderWidth: 1,
+                    },
+                  ],
+                },
+                options: {
+                  cutout: "70%", // Adjust the size of the center hole
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                  },
+                  responsive: true,
+                  maintainAspectRatio: false,
+                },
+                plugins: [
+                  {
+                    id: "labelInsidePlugin",
+                    afterDatasetsDraw(chart) {
+                      const {
+                        ctx,
+                        chartArea: { width, height },
+                      } = chart;
+                      const centerX = width / 2;
+                      const centerY = height / 2;
+                      const totalValue = assessmentData.reduce(
+                        (total, value) => total + value,
+                        0
+                      );
+                      ctx.save();
+                      ctx.textAlign = "center";
+                      ctx.textBaseline = "iddle";
+                      ctx.font = "bold 16px Arial";
+                      ctx.fillStyle = "#000";
+                      ctx.fillText(`Total: ${totalValue}`, centerX, centerY);
+                      ctx.restore();
+                    },
+                  },
+                ],
+              }
+            );
+          })
+          .catch((error) => {
+            console.error("Error fetching assessment graph details:", error);
+          });
+      }
+
+      let employability_labels = [];
+      let employability_data = [];
+      let emp_data2 = [];
+      let employability_myChart; // Declare employability_myChart at a higher scope
+
+      const employability_color = "#2563EB";
+      const employability_colors = "#FB923C";
+
+      const employability_ctx = document
+        .getElementById("myChart-employability")
+        .getContext("2d");
+
+      function updateChart() {
+        if (employability_labels.length === 0) {
+          // No data available, hide canvas, show error message
+          document.getElementById("myChart-employability").style.display =
+            "none";
+          document.getElementById("chart-error-message").style.display =
+            "block";
+        } else {
+          // Data available, show canvas, hide error message
+          document.getElementById("myChart-employability").style.display =
+            "block";
+          document.getElementById("chart-error-message").style.display = "none";
+
+          // Initialize or update the chart
+          if (!employability_myChart) {
+            employability_myChart = new Chart(employability_ctx, {
+              type: "bar",
+              data: {
+                labels: employability_labels,
+                datasets: [
+                  {
+                    label: "Average Emp Test",
+                    data: employability_data,
+                    backgroundColor: employability_color,
+                    borderRadius: Number.MAX_VALUE,
+                    borderWidth: 0,
+                    borderSkipped: false,
+                    barThickness: 15,
+                  },
+                  {
+                    label: "Students Attempted",
+                    data: emp_data2,
+                    backgroundColor: employability_colors,
+                    borderRadius: Number.MAX_VALUE,
+                    borderWidth: 0,
+                    borderSkipped: false,
+                    barThickness: 15,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    ticks: {
+                      beginAtZero: true,
+                      stepSize: 100, // Step size for y-axis
+                      max: 400, // Maximum value for y-axis
+                      // Hide y-axis labels
+                    },
+                    grid: {
+                      display: true,
+                    },
+                  },
+                  x: {
+                    barPercentage: 0.5, // Adjust the width of the bars
+                    categoryPercentage: 1.0, // Adjust the space between the bars
+                    grid: {
+                      display: false,
+                    },
+                  },
+                },
+                plugins: {
+                  legend: {
+                    display: true,
+                    position: "top",
+                    clickable: false,
+                    labels: {
+                      color: "rgba(0,0,0,0.7)",
+                      padding: 15,
+                      usePointStyle: true,
+                      pointStyle: "rectRounded",
+                    },
+                  },
+                  tooltip: {
+                    enabled: false,
+                  },
+                },
+                interaction: {
+                  mode: "nearest",
+                  intersect: false,
+                  enabled: false,
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+              },
+            });
+          } else {
+            // Update the chart with new data
+            employability_myChart.data.labels = employability_labels;
+            employability_myChart.data.datasets[0].data = employability_data;
+            employability_myChart.data.datasets[1].data = emp_data2;
+            employability_myChart.update();
+          }
+        }
+      }
+
+      async function fetchEmployabilityGraphData(domainId) {
+        const apiUrl = `api/internship_domain_analysis_report/employability_graph_details/${domainId}`;
+
+        try {
+          const response = await fetch(apiUrl);
+          if (response.status !== 200) {
+            console.error("Error fetching employability graph data");
+            return;
+          }
+
+          const data = await response.json();
+          employability_labels = data.map((item) => item.title);
+          employability_data = data.map(
+            (item) => item.average_100_equivalent_score
+          );
+          emp_data2 = data.map((item) => item.students_attempted);
+
+          // Update the row count display
+          const testCount = data.length;
+          document.getElementById("employability_count").textContent =
+            testCount;
+
+          // Update the chart with the new data
+          updateChart();
+        } catch (error) {
+          console.error("Error fetching employability graph data:", error);
+        }
+      }
+
+      updateChart();
+
+      let data;
+      let pageSize = 10;
+      let totalPages;
+      let currentPagee = 1;
+
+      function fetchEnrolledStudents(domainId) {
+        fetch(
+          `/api/internship_domain_analysis_report/enrolled_students/${domainId}`
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("No data is available");
+            }
+            return response.json();
+          })
+          .then((fetchedData) => {
+            data = fetchedData;
+            if (data.length === 0) {
+              showNoDataMessage();
+              return;
+            }
+            totalPages = Math.ceil(data.length / pageSize);
+            currentPage = 1;
+
+            updatePaginationUI();
+            renderTable();
+
+            // Hide pagination controls if total pages are less than or equal to 1
+            if (totalPages <= 1) {
+              document.getElementById("pagination").style.display = "none";
+            } else {
+              document.getElementById("pagination").style.display = "flex";
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching enrolled students:", error);
+            showNoDataMessage();
+          });
+      }
+      function showNoDataMessage() {
+        document.querySelector(".table-header").style.display = "none";
+        document.getElementById("pagination").style.display = "none";
+        document.getElementById("candidates-table").innerHTML =
+          '<p class="nodata">No data is available</p>';
+      }
+
+      function updatePaginationUI() {
+        const prevPageButton = document.getElementById("prev-page");
+        const nextPageButton = document.getElementById("next-page");
+        const pageNumbersDiv = document.getElementById("pageNos");
+
+        prevPageButton.disabled = currentPagee === 1;
+        nextPageButton.disabled = currentPagee === totalPages;
+
+        pageNumbersDiv.innerHTML = "";
+
+        let startPage = Math.max(1, currentPagee - 3);
+        let endPage = Math.min(totalPages, currentPagee + 3);
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let page = startPage; page <= endPage; page++) {
+          const pageButton = document.createElement("span");
+          pageButton.textContent = page;
+          pageButton.className = "page-btn";
+          if (page === currentPagee) {
+            pageButton.classList.add("active");
+          }
+          pageButton.addEventListener("click", () => {
+            currentPagee = page;
+            updatePaginationUI();
+            renderTable();
+          });
+          pageNumbersDiv.appendChild(pageButton);
+        }
+      }
+
+      function renderTable() {
+        const startIndex = (currentPagee - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
+        const tableRows = data
+          .slice(startIndex, endIndex)
+          .map((student, index) => {
+            const serialNumber = startIndex + index + 1;
+
+            return `
+      <li class="table-row">
+        <div class="col col-1" data-label="Basic Info" ">
+          <div style="display: flex; align-items: center">
+            <div style="display: flex; align-items: center;">
+              <p style="margin-right: 10px">${serialNumber}</p>
+             <img 
+    src="${student.image ? student.image : "img/sidebarLogo.png"}" 
+    alt="User Image" 
+    style="width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;" 
+    onerror="this.onerror=null; this.src='img/sidebarLogo.png';" 
+  />
+            </div>
+            <div>
+              <p class="emp-name">${student.name}</p>
+              <p class="emp-email">${student.email}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col col-2" data-label="Domain">${student.title}</div>
+        <div class="col col-3" data-label="Employability Band" style:"text-content:center;">${
+          student.employability_band
+        }</div>
+        <div class="col col-4" data-label="Employability Score">${
+          student.emp_score
+        } / 100</div>
+        <div class="col col-5" data-label="Enrolled Date">${new Date(
+          student.start_date
+        ).toLocaleDateString()}</div>
+      </li>
+    `;
+          });
+
+        const candidatesTable = document.getElementById("candidates-table");
+        candidatesTable.innerHTML = tableRows.join("");
+      }
+
+      // Event listeners for the pagination buttons
+      document.getElementById("prev-page").addEventListener("click", () => {
+        if (currentPagee > 1) {
+          currentPagee--;
+          updatePaginationUI();
+          renderTable();
+        }
+      });
+
+      document.getElementById("next-page").addEventListener("click", () => {
+        if (currentPagee < totalPages) {
+          currentPagee++;
+          updatePaginationUI();
+          renderTable();
+        }
+      });
+
+      const attendReportTable = document.querySelector(".attendreporttable");
+      const paginationControls = document.getElementById(
+        "sattendance-pagination-controls"
+      );
+      let attendReportTableData = [];
+      let attendReportRowsPerPage = 10;
+      let attendReportCurrentPage = 1;
+
+      async function fetchData(domainId) {
+        try {
+          const response = await fetch(
+            `/api/internship_domain_analysis_report/data/${domainId}`
+          );
+          const data = await response.json();
+
+          if (data.error) {
+            attendReportTableData = [];
+            displayNoDataMessage(data.message || "No data is available");
+          } else {
+            attendReportTableData = data;
+            renderAttendReportData();
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          displayNoDataMessage("No data is available");
+        }
+      }
+
+      function displayNoDataMessage(message) {
+        attendReportTable.innerHTML = `<tr><td colspan="100%" class="nodata">${message}</td></tr>`;
+        paginationControls.style.display = "none";
+      }
+
+      function renderAttendReportData() {
+        attendReportTable.innerHTML = "";
+        paginationControls.style.display = "flex";
+
+        if (attendReportTableData.length === 0) {
+          displayNoDataMessage("No data is available");
+          return;
+        }
+
+        const start = (attendReportCurrentPage - 1) * attendReportRowsPerPage;
+        const end = start + attendReportRowsPerPage;
+        const pageData = attendReportTableData.slice(start, end);
+
+        const headerRow = document.createElement("tr");
+        headerRow.className = "ar-table-header";
+
+        const headers = Object.keys(attendReportTableData[0]);
+        headers.forEach((header) => {
+          const headerCell = document.createElement("th");
+          headerCell.textContent = header;
+          headerRow.appendChild(headerCell);
+        });
+
+        attendReportTable.appendChild(headerRow);
+
+        pageData.forEach((row) => {
+          const rowElement = document.createElement("tr");
+          rowElement.className = "ar-table-row";
+
+          Object.values(row).forEach((cellValue) => {
+            const cellElement = document.createElement("td");
+            cellElement.textContent = cellValue;
+            rowElement.appendChild(cellElement);
+          });
+
+          attendReportTable.appendChild(rowElement);
+        });
+
+        const totalPages = Math.ceil(
+          attendReportTableData.length / attendReportRowsPerPage
+        );
+        updateAttendReportPaginationControls(totalPages);
+      }
+
+      function updateAttendReportPaginationControls(totalPages) {
+        const pageNumbersElement = document.getElementById(
+          "sattendancePageNumbers"
+        );
+        const prevPageButton = document.getElementById("sattendancePrevPage");
+        const nextPageButton = document.getElementById("sattendanceNextPage");
+
+        if (totalPages <= 1) {
+          pageNumbersElement.style.display = "none";
+          prevPageButton.style.display = "none";
+          nextPageButton.style.display = "none";
+          return;
+        }
+
+        pageNumbersElement.innerHTML = "";
+        prevPageButton.disabled = attendReportCurrentPage === 1;
+        nextPageButton.disabled = attendReportCurrentPage === totalPages;
+
+        let startPage = Math.max(attendReportCurrentPage - 3, 1);
+        let endPage = Math.min(attendReportCurrentPage + 3, totalPages);
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else if (endPage === totalPages) {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageNumber = document.createElement("span");
+          pageNumber.textContent = i;
+          pageNumber.style.fontWeight =
+            i === attendReportCurrentPage ? "bold" : "normal";
+          pageNumber.style.backgroundColor =
+            i === attendReportCurrentPage ? "#7962BD" : "#D3FB52";
+          pageNumber.style.color =
+            i === attendReportCurrentPage ? "#fff" : "#000";
+          pageNumber.onclick = () => goToAttendReportPage(i);
+          pageNumbersElement.appendChild(pageNumber);
+        }
+      }
+
+      function goToAttendReportPage(page) {
+        attendReportCurrentPage = page;
+        renderAttendReportData();
+        updateAttendReportPaginationControls(
+          Math.ceil(attendReportTableData.length / attendReportRowsPerPage)
+        );
+      }
+
+      function sattendancePrevPage() {
+        if (attendReportCurrentPage > 1) {
+          attendReportCurrentPage--;
+          renderAttendReportData();
+          updateAttendReportPaginationControls(
+            Math.ceil(attendReportTableData.length / attendReportRowsPerPage)
+          );
+        }
+      }
+
+      function sattendanceNextPage() {
+        const totalPages = Math.ceil(
+          attendReportTableData.length / attendReportRowsPerPage
+        );
+        if (attendReportCurrentPage < totalPages) {
+          attendReportCurrentPage++;
+          renderAttendReportData();
+          updateAttendReportPaginationControls(totalPages);
+        }
+      }
+
+      async function fetchDailyTestData(domainId) {
+        try {
+          const response = await fetch(
+            `/api/internship_domain_analysis_report/daily_test/${domainId}`
+          );
+          const data = await response.json();
+
+          if (data.message === "No data is available") {
+            // Handle case where no data is available
+            document.getElementById("dailytesttable-head").style.display =
+              "none";
+            document.getElementById("daily-pagination-controls").style.display =
+              "none";
+            document.getElementById("dailytesttable-body").innerHTML =
+              '<tr><td colspan="6" class="nodata">No data is available</td></tr>';
+            return;
+          }
+
+          const hackathonTests = Object.keys(data[0].hackathon_scores);
+          tableData = data.map((item) => {
+            const hackathonScores = hackathonTests.map((test) =>
+              item.hackathon_scores[test] !== undefined
+                ? item.hackathon_scores[test]
+                : "Absent"
+            );
+            return {
+              ...item,
+              ...Object.fromEntries(
+                hackathonTests.map((test, i) => [test, hackathonScores[i]])
+              ),
+            };
+          });
+          dailyTestTableData = tableData; // store data in global variable
+          renderDailyTestData();
+        } catch (error) {
+          console.error("Error fetching daily test data:", error);
+        }
+      }
+
+      let dailyTestRowsPerPage = 10;
+      let dailyTestCurrentPage = 1;
+      let dailyTestTableData = [];
+
+      function renderDailyTestData() {
+        const tableBody = document.getElementById("dailytesttable-body");
+        const tableHead = document.getElementById("dailytesttable-head");
+        tableBody.innerHTML = "";
+        tableHead.innerHTML = "";
+
+        if (dailyTestTableData.length === 0) {
+          return;
+        }
+
+        // Collect all unique test names from all users
+        let uniqueTestNames = new Set();
+        dailyTestTableData.forEach((user) => {
+          Object.keys(user.hackathon_scores || {}).forEach((test) => {
+            uniqueTestNames.add(test);
+          });
+        });
+
+        uniqueTestNames = Array.from(uniqueTestNames); // Convert Set to Array
+
+        function formatTestName(testName) {
+          const keywords = [
+            "Alpha",
+            "Beta",
+            "Premium",
+            "Assessment",
+            "Gamma",
+            "Delta",
+          ]; // Add more keywords as needed
+          for (const keyword of keywords) {
+            if (testName.includes(keyword)) {
+              return testName.replace(keyword, `<br>${keyword}`);
+            }
+          }
+          return testName;
+        }
+
+        const tableHeaderRow = document.createElement("tr");
+        tableHeaderRow.innerHTML = `
+    <th>S.No</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Registration No</th>
+    <th>Average Score</th>
+    ${uniqueTestNames
+      .map((test) => `<th>${formatTestName(test)}</th>`)
+      .join("")}
+  `;
+        tableHead.appendChild(tableHeaderRow);
+
+        const start = (dailyTestCurrentPage - 1) * dailyTestRowsPerPage;
+        const end = start + dailyTestRowsPerPage;
+        const pageData = dailyTestTableData.slice(start, end);
+
+        pageData.forEach((row, index) => {
+          const tableRow = document.createElement("tr");
+
+          tableRow.innerHTML = `
+      <td>${start + index + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.regno}</td>
+      <td><span class="percentage">${row.test_score}%</span></td>
+      ${uniqueTestNames
+        .map((test) => {
+          const score =
+            row.hackathon_scores[test] !== undefined
+              ? row.hackathon_scores[test]
+              : "Absent";
+          return `<td>${score}</td>`;
+        })
+        .join("")}
+    `;
+          tableBody.appendChild(tableRow);
+        });
+
+        const dailyTestTotalPages = Math.ceil(
+          dailyTestTableData.length / dailyTestRowsPerPage
+        );
+        updateDailyTestPaginationControls(dailyTestTotalPages);
+      }
+
+      function updateDailyTestPaginationControls(totalPages) {
+        const dailyTestPageNumbersElement =
+          document.getElementById("dailypageNumbers");
+        const dailyTestPrevPageButton =
+          document.getElementById("dailyprevPage");
+        const dailyTestNextPageButton =
+          document.getElementById("dailynextPage");
+
+        dailyTestPageNumbersElement.innerHTML = "";
+        dailyTestPrevPageButton.disabled = dailyTestCurrentPage === 1;
+        dailyTestNextPageButton.disabled = dailyTestCurrentPage === totalPages;
+
+        if (totalPages <= 1) {
+          // Hide pagination controls if total pages are less than or equal to 1
+          dailyTestPageNumbersElement.style.display = "none";
+          dailyTestPrevPageButton.style.display = "none";
+          dailyTestNextPageButton.style.display = "none";
+        } else {
+          dailyTestPageNumbersElement.style.display = "inline-block";
+          dailyTestPrevPageButton.style.display = "inline-block";
+          dailyTestNextPageButton.style.display = "inline-block";
+
+          let dailyTestStartPage = Math.max(dailyTestCurrentPage - 3, 1);
+          let dailyTestEndPage = Math.min(dailyTestCurrentPage + 3, totalPages);
+
+          if (dailyTestEndPage - dailyTestStartPage < 6) {
+            if (dailyTestStartPage === 1) {
+              dailyTestEndPage = Math.min(dailyTestStartPage + 6, totalPages);
+            } else if (dailyTestEndPage === totalPages) {
+              dailyTestStartPage = Math.max(dailyTestEndPage - 6, 1);
+            }
+          }
+
+          for (let i = dailyTestStartPage; i <= dailyTestEndPage; i++) {
+            const dailyTestPageNumber = document.createElement("span");
+            dailyTestPageNumber.textContent = i;
+            dailyTestPageNumber.style.fontWeight =
+              i === dailyTestCurrentPage ? "bold" : "normal";
+            dailyTestPageNumber.style.backgroundColor =
+              i === dailyTestCurrentPage ? "#7962BD" : "#D3FB52";
+            dailyTestPageNumber.style.color =
+              i === dailyTestCurrentPage ? "#fff" : "#000";
+            dailyTestPageNumber.onclick = () => goToDailyTestPage(i);
+            dailyTestPageNumbersElement.appendChild(dailyTestPageNumber);
+          }
+        }
+      }
+
+      function goToDailyTestPage(page) {
+        dailyTestCurrentPage = page;
+        renderDailyTestData();
+        updateDailyTestPaginationControls(
+          Math.ceil(dailyTestTableData.length / dailyTestRowsPerPage)
+        );
+      }
+
+      function dataprevPage() {
+        if (dailyTestCurrentPage > 1) {
+          dailyTestCurrentPage--;
+          renderDailyTestData();
+          updateDailyTestPaginationControls(
+            Math.ceil(dailyTestTableData.length / dailyTestRowsPerPage)
+          );
+        }
+      }
+
+      function datanextPage() {
+        const dailyTestTotalPages = Math.ceil(
+          dailyTestTableData.length / dailyTestRowsPerPage
+        );
+        if (dailyTestCurrentPage < dailyTestTotalPages) {
+          dailyTestCurrentPage++;
+          renderDailyTestData();
+          updateDailyTestPaginationControls(dailyTestTotalPages);
+        }
+      }
+
+      async function fetchGrandTestData(domainId) {
+        try {
+          const response = await fetch(
+            `/api/internship_domain_analysis_report/grand_test/${domainId}`
+          );
+          const data = await response.json();
+
+          if (data.message && data.message === "Grand Test Details not found") {
+            // Display message on frontend
+            const resultMessage = document.getElementById("result-message");
+            // resultMessage.innerHTML = "";
+            const tableBody = document.getElementById("grandtesttable-body");
+            const tableHead = document.getElementById("grandtesttable-head");
+            tableBody.innerHTML = "";
+            tableHead.innerHTML = "";
+            const paginationControls = document.getElementById(
+              "grand-pagination-controls"
+            );
+            paginationControls.style.display = "none";
+          } else {
+            // Process the data as usual
+            const hackathonTests = Object.keys(data[0].hackathon_scores);
+            grandTestTableData = data.map((item) => {
+              const hackathonScores = hackathonTests.map(
+                (test) => item.hackathon_scores[test]
+              );
+              return {
+                ...item,
+                ...Object.fromEntries(
+                  hackathonTests.map((test, i) => [test, hackathonScores[i]])
+                ),
+              };
+            });
+            renderGrandTestData();
+          }
+        } catch (error) {
+          console.error("Error fetching grand test data:", error);
+        }
+      }
+      let grandTestRowsPerPage = 10;
+      let grandTestCurrentPage = 1;
+      let grandTestTableData = [];
+
+      function renderGrandTestData() {
+        const tableBody = document.getElementById("grandtesttable-body");
+        const tableHead = document.getElementById("grandtesttable-head");
+        const paginationControls = document.getElementById(
+          "grand-pagination-controls"
+        );
+
+        // Clear existing content
+        tableBody.innerHTML = "";
+        tableHead.innerHTML = "";
+        paginationControls.style.display = "block"; // Ensure pagination controls are visible initially
+
+        if (grandTestTableData.length === 0) {
+          // Display "No data is available" message and hide headers and pagination
+          const noDataMessage = document.createElement("div");
+          noDataMessage.textContent = "No data is available";
+          noDataMessage.style.textAlign = "center";
+          noDataMessage.style.marginTop = "10px";
+          tableBody.appendChild(noDataMessage);
+
+          tableHead.style.display = "none";
+          paginationControls.style.display = "none";
+          return;
+        }
+
+        const hackathonTests = Object.keys(
+          grandTestTableData[0].hackathon_scores
+        );
+
+        // Render table headers
+        const tableHeaderRow = document.createElement("tr");
+        tableHeaderRow.innerHTML = `
+    <th>Serial No</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Reg No</th>
+    <th>Test Score</th>
+    ${hackathonTests.map((test) => `<th>${test}</th>`).join("")}
+  `;
+        tableHead.appendChild(tableHeaderRow);
+
+        // Calculate pagination data
+        const start = (grandTestCurrentPage - 1) * grandTestRowsPerPage;
+        const end = start + grandTestRowsPerPage;
+        const pageData = grandTestTableData.slice(start, end);
+
+        // Render table rows
+        pageData.forEach((row, index) => {
+          const tableRow = document.createElement("tr");
+          tableRow.innerHTML = `
+      <td>${start + index + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.regno}</td>
+      <td><span class="percentage">${row.test_score}%</span></td>
+      ${hackathonTests.map((test) => `<td>${row[test]}</td>`).join("")}
+    `;
+          tableBody.appendChild(tableRow);
+        });
+
+        // Update pagination controls
+        const grandTestTotalPages = Math.ceil(
+          grandTestTableData.length / grandTestRowsPerPage
+        );
+        updateGrandTestPaginationControls(grandTestTotalPages);
+      }
+
+      function updateGrandTestPaginationControls(totalPages) {
+        const grandTestPageNumbersElement =
+          document.getElementById("grandpageNumbers");
+        const grandTestPrevPageButton =
+          document.getElementById("grandprevPage");
+        const grandTestNextPageButton =
+          document.getElementById("grandnextPage");
+
+        grandTestPageNumbersElement.innerHTML = "";
+        grandTestPrevPageButton.disabled = grandTestCurrentPage === 1;
+        grandTestNextPageButton.disabled = grandTestCurrentPage === totalPages;
+
+        if (totalPages <= 1) {
+          // Hide pagination controls if total pages are less than or equal to 1
+          grandTestPageNumbersElement.style.display = "none";
+          grandTestPrevPageButton.style.display = "none";
+          grandTestNextPageButton.style.display = "none";
+        } else {
+          grandTestPageNumbersElement.style.display = "inline-block";
+          grandTestPrevPageButton.style.display = "inline-block";
+          grandTestNextPageButton.style.display = "inline-block";
+
+          let grandTestStartPage = Math.max(grandTestCurrentPage - 3, 1);
+          let grandTestEndPage = Math.min(grandTestCurrentPage + 3, totalPages);
+
+          if (grandTestEndPage - grandTestStartPage < 6) {
+            if (grandTestStartPage === 1) {
+              grandTestEndPage = Math.min(grandTestStartPage + 6, totalPages);
+            } else if (grandTestEndPage === totalPages) {
+              grandTestStartPage = Math.max(grandTestEndPage - 6, 1);
+            }
+          }
+
+          for (let i = grandTestStartPage; i <= grandTestEndPage; i++) {
+            const grandTestPageNumber = document.createElement("span");
+            grandTestPageNumber.textContent = i;
+            grandTestPageNumber.style.fontWeight =
+              i === grandTestCurrentPage ? "bold" : "normal";
+            grandTestPageNumber.style.backgroundColor =
+              i === grandTestCurrentPage ? "#7962BD" : "#D3FB52";
+            grandTestPageNumber.style.color =
+              i === grandTestCurrentPage ? "#fff" : "#000";
+            grandTestPageNumber.onclick = () => goToGrandTestPage(i);
+            grandTestPageNumbersElement.appendChild(grandTestPageNumber);
+          }
+        }
+      }
+
+      function goToGrandTestPage(page) {
+        grandTestCurrentPage = page;
+        renderGrandTestData();
+        updateGrandTestPaginationControls(
+          Math.ceil(grandTestTableData.length / grandTestRowsPerPage)
+        );
+      }
+
+      function grandprevPage() {
+        if (grandTestCurrentPage > 1) {
+          grandTestCurrentPage--;
+          renderGrandTestData();
+          updateGrandTestPaginationControls(
+            Math.ceil(grandTestTableData.length / grandTestRowsPerPage)
+          );
+        }
+      }
+
+      function grandnextPage() {
+        const grandTestTotalPages = Math.ceil(
+          grandTestTableData.length / grandTestRowsPerPage
+        );
+        if (grandTestCurrentPage < grandTestTotalPages) {
+          grandTestCurrentPage++;
+          renderGrandTestData();
+          updateGrandTestPaginationControls(grandTestTotalPages);
+        }
+      }
+
+      /* Employability Test*/
+      async function fetchEmpTestData(domainId) {
+        try {
+          const response = await fetch(
+            `/api/internship_domain_analysis_report/employability_students_data/${domainId}`
+          );
+          const data = await response.json();
+          const hackathonTests = Object.keys(data[0].hackathon_scores);
+          empTestTableData = data.map((item) => {
+            const hackathonScores = hackathonTests.map(
+              (test) => item.hackathon_scores[test]
+            );
+            return {
+              ...item,
+              ...Object.fromEntries(
+                hackathonTests.map((test, i) => [test, hackathonScores[i]])
+              ),
+            };
+          });
+          renderEmpTestData();
+        } catch (error) {
+          console.error("Error fetching emp test data:", error);
+        }
+      }
+
+      let empTestRowsPerPage = 10;
+      let empTestCurrentPage = 1;
+      let empTestTableData = [];
+
+      function renderEmpTestData() {
+        const tableBody = document.getElementById("emptesttable-body");
+        const tableHead = document.getElementById("emptesttable-head");
+        tableBody.innerHTML = "";
+        tableHead.innerHTML = "";
+
+        if (empTestTableData.length === 0) {
+          return;
+        }
+
+        // Collect all unique test names from all users
+        let uniqueTestNames = new Set();
+        empTestTableData.forEach((user) => {
+          Object.keys(user.hackathon_scores || {}).forEach((test) => {
+            uniqueTestNames.add(test);
+          });
+        });
+
+        uniqueTestNames = Array.from(uniqueTestNames); // Convert Set to Array
+
+        const tableHeaderRow = document.createElement("tr");
+        tableHeaderRow.innerHTML = `
+    <th>Serial No</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Reg No</th>
+    <th>Test Score</th>
+    ${uniqueTestNames.map((test) => `<th>${test}</th>`).join("")}
+  `;
+        tableHead.appendChild(tableHeaderRow);
+
+        const start = (empTestCurrentPage - 1) * empTestRowsPerPage;
+        const end = start + empTestRowsPerPage;
+        const pageData = empTestTableData.slice(start, end);
+
+        pageData.forEach((row, index) => {
+          const tableRow = document.createElement("tr");
+
+          tableRow.innerHTML = `
+      <td>${start + index + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.regno}</td>
+      <td><span class="percentage">${row.test_score}%</span></td>
+      ${uniqueTestNames
+        .map((test) => {
+          const score =
+            row.hackathon_scores[test] !== undefined
+              ? row.hackathon_scores[test]
+              : "Absent";
+          return `<td>${score}</td>`;
+        })
+        .join("")}
+    `;
+          tableBody.appendChild(tableRow);
+        });
+
+        const empTestTotalPages = Math.ceil(
+          empTestTableData.length / empTestRowsPerPage
+        );
+        updateEmpTestPaginationControls(empTestTotalPages);
+      }
+
+      function updateEmpTestPaginationControls(totalPages) {
+        const empTestPageNumbersElement =
+          document.getElementById("emppageNumbers");
+        const empTestPrevPageButton = document.getElementById("empprevPage");
+        const empTestNextPageButton = document.getElementById("empnextPage");
+
+        empTestPageNumbersElement.innerHTML = "";
+        empTestPrevPageButton.disabled = empTestCurrentPage === 1;
+        empTestNextPageButton.disabled = empTestCurrentPage === totalPages;
+
+        if (totalPages <= 1) {
+          // Hide pagination controls if total pages are less than or equal to 1
+          empTestPageNumbersElement.style.display = "none";
+          empTestPrevPageButton.style.display = "none";
+          empTestNextPageButton.style.display = "none";
+        } else {
+          empTestPageNumbersElement.style.display = "inline-block";
+          empTestPrevPageButton.style.display = "inline-block";
+          empTestNextPageButton.style.display = "inline-block";
+
+          let empTestStartPage = Math.max(empTestCurrentPage - 3, 1);
+          let empTestEndPage = Math.min(empTestCurrentPage + 3, totalPages);
+
+          if (empTestEndPage - empTestStartPage < 6) {
+            if (empTestStartPage === 1) {
+              empTestEndPage = Math.min(empTestStartPage + 6, totalPages);
+            } else if (empTestEndPage === totalPages) {
+              empTestStartPage = Math.max(empTestEndPage - 6, 1);
+            }
+          }
+
+          for (let i = empTestStartPage; i <= empTestEndPage; i++) {
+            const empTestPageNumber = document.createElement("span");
+            empTestPageNumber.textContent = i;
+            empTestPageNumber.style.fontWeight =
+              i === empTestCurrentPage ? "bold" : "normal";
+            empTestPageNumber.style.backgroundColor =
+              i === empTestCurrentPage ? "#7962BD" : "#D3FB52";
+            empTestPageNumber.style.color =
+              i === empTestCurrentPage ? "#fff" : "#000";
+            empTestPageNumber.onclick = () => goToEmpTestPage(i);
+            empTestPageNumbersElement.appendChild(empTestPageNumber);
+          }
+        }
+      }
+
+      function goToEmpTestPage(page) {
+        empTestCurrentPage = page;
+        renderEmpTestData();
+        updateEmpTestPaginationControls(
+          Math.ceil(empTestTableData.length / empTestRowsPerPage)
+        );
+      }
+
+      function empprevPage() {
+        if (empTestCurrentPage > 1) {
+          empTestCurrentPage--;
+          renderEmpTestData();
+          updateEmpTestPaginationControls(
+            Math.ceil(empTestTableData.length / empTestRowsPerPage)
+          );
+        }
+      }
+
+      function empnextPage() {
+        const empTestTotalPages = Math.ceil(
+          empTestTableData.length / empTestRowsPerPage
+        );
+        if (empTestCurrentPage < empTestTotalPages) {
+          empTestCurrentPage++;
+          renderEmpTestData();
+          updateEmpTestPaginationControls(empTestTotalPages);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const domainId = urlParams.get("domain_id");
+
+        let absenteesTableData = [];
+        let absenteesRowsPerPage = 10;
+        let absenteesCurrentPage = 1;
+
+        // Generate table header
+        const tableHeader = document.getElementById("table-header");
+        const headerRow = document.createElement("tr");
+        const headers = [
+          " Title",
+          "Total Students",
+          "Present Students",
+          "Absent Students",
+          "Attendance Rate (%)",
+          "Average Score",
+          "Absentees Report",
+        ];
+
+        headers.forEach((header) => {
+          const th = document.createElement("th");
+          th.textContent = header;
+          headerRow.appendChild(th);
+        });
+        tableHeader.appendChild(headerRow);
+
+        // Fetch and populate event data
+        fetch(`/api/internship_assessment_absentees/overview/${domainId}`)
+          .then((response) => response.json())
+          .then((assessments) => {
+            absenteesTableData = assessments; // Store the fetched data
+            renderAbsenteesAssessments();
+          })
+          .catch((error) =>
+            console.error("Error fetching assessment data:", error)
+          );
+
+        function renderAbsenteesAssessments() {
+          const eventTableBody = document.getElementById("assessment-data");
+          eventTableBody.innerHTML = "";
+
+          const start = (absenteesCurrentPage - 1) * absenteesRowsPerPage;
+          const end = start + absenteesRowsPerPage;
+          const pageData = absenteesTableData.slice(start, end);
+
+          pageData.forEach((assessment) => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+        <td>${assessment.title}</td>
+        <td>${assessment.total_students}</td>
+        <td>${assessment.present_students}</td>
+        <td>${assessment.absent_students}</td>
+        <td>${assessment.attendance_rate}</td>
+        <td>${assessment.average_100_equivalent_score}</td>
+        <td><a href="/api/internship_assessment_absentees/download-absentees/${assessment.id}">Download Absentees</a></td>
+      `;
+
+            eventTableBody.appendChild(row);
+          });
+
+          const absenteesTotalPages = Math.ceil(
+            absenteesTableData.length / absenteesRowsPerPage
+          );
+          updateAbsenteesPaginationControls(absenteesTotalPages);
+        }
+
+        function updateAbsenteesPaginationControls(totalPages) {
+          const absenteesPageNumbersElement = document.getElementById(
+            "assessmentabsenteespageNumbers"
+          );
+          const absenteesPrevPageButton = document.getElementById(
+            "assessmentabsenteesprevPage"
+          );
+          const absenteesNextPageButton = document.getElementById(
+            "assessmentabsenteesnextPage"
+          );
+
+          absenteesPageNumbersElement.innerHTML = "";
+          absenteesPrevPageButton.disabled = absenteesCurrentPage === 1;
+          absenteesNextPageButton.disabled =
+            absenteesCurrentPage === totalPages;
+
+          if (totalPages <= 1) {
+            // Hide pagination controls if total pages are less than or equal to 1
+            absenteesPageNumbersElement.style.display = "none";
+            absenteesPrevPageButton.style.display = "none";
+            absenteesNextPageButton.style.display = "none";
+          } else {
+            absenteesPageNumbersElement.style.display = "inline-block";
+            absenteesPrevPageButton.style.display = "inline-block";
+            absenteesNextPageButton.style.display = "inline-block";
+
+            let absenteesStartPage = Math.max(absenteesCurrentPage - 3, 1);
+            let absenteesEndPage = Math.min(
+              absenteesCurrentPage + 3,
+              totalPages
+            );
+
+            if (absenteesEndPage - absenteesStartPage < 6) {
+              if (absenteesStartPage === 1) {
+                absenteesEndPage = Math.min(absenteesStartPage + 6, totalPages);
+              } else if (absenteesEndPage === totalPages) {
+                absenteesStartPage = Math.max(absenteesEndPage - 6, 1);
+              }
+            }
+
+            for (let i = absenteesStartPage; i <= absenteesEndPage; i++) {
+              const absenteesPageNumber = document.createElement("span");
+              absenteesPageNumber.textContent = i;
+              absenteesPageNumber.style.fontWeight =
+                i === absenteesCurrentPage ? "bold" : "normal";
+              absenteesPageNumber.style.backgroundColor =
+                i === absenteesCurrentPage ? "#7962BD" : "#D3FB52";
+              absenteesPageNumber.style.color =
+                i === absenteesCurrentPage ? "#fff" : "#000";
+              absenteesPageNumber.onclick = () => goToAbsenteesPage(i);
+              absenteesPageNumbersElement.appendChild(absenteesPageNumber);
+            }
+          }
+        }
+        function goToAbsenteesPage(page) {
+          absenteesCurrentPage = page;
+          renderAbsenteesAssessments();
+          updateAbsenteesPaginationControls(
+            Math.ceil(absenteesTableData.length / absenteesRowsPerPage)
+          );
+        }
+
+        function absenteesPrevPage() {
+          if (absenteesCurrentPage > 1) {
+            absenteesCurrentPage--;
+            renderAbsenteesAssessments();
+            updateAbsenteesPaginationControls(
+              Math.ceil(absenteesTableData.length / absenteesRowsPerPage)
+            );
+          }
+        }
+
+        function absenteesNextPage() {
+          const absenteesTotalPages = Math.ceil(
+            absenteesTableData.length / absenteesRowsPerPage
+          );
+          if (absenteesCurrentPage < absenteesTotalPages) {
+            absenteesCurrentPage++;
+            renderAbsenteesAssessments();
+            updateAbsenteesPaginationControls(absenteesTotalPages);
+          }
+        }
+      });
+      // public/script.js
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const domainId = urlParams.get("domain_id");
+
+        fetchEventData(domainId);
+      });
+
+      const eventTableBody = document.getElementById("event-data");
+      let eventTableData = [];
+      let eventRowsPerPage = 10;
+      let eventCurrentPage = 1;
+
+      async function fetchEventData(domainId) {
+        try {
+          const response = await fetch(
+            `/api/internship_event_absentees/overview/${domainId}`
+          );
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          eventTableData = data; // Assuming data is already in the required format
+          renderEventTable();
+        } catch (error) {
+          console.error("Error fetching event data:", error);
+        }
+      }
+
+      function renderEventTable() {
+        eventTableBody.innerHTML = "";
+
+        if (eventTableData.length === 0) {
+          return;
+        }
+
+        const start = (eventCurrentPage - 1) * eventRowsPerPage;
+        const end = start + eventRowsPerPage;
+        const pageData = eventTableData.slice(start, end);
+
+        pageData.forEach((event, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+      <td>${event.event_title}</td>
+      <td>${event.total_students}</td>
+      <td>${event.present_students}</td>
+      <td>${event.absent_students}</td>
+      <td>${event.hours_covered}</td>
+      <td>${event.attendance_rate}</td>
+      <td>${event.average_feedback} / 5</td>
+      <td>${event.avg_interactiveness_percentage}</td>
+      <td><a href="/api/internship_event_absentees/download-absentees/${event.id}">Download Absentees</a></td>
+    `;
+          eventTableBody.appendChild(row);
+        });
+
+        const totalPages = Math.ceil(eventTableData.length / eventRowsPerPage);
+        updateEventPaginationControls(totalPages);
+      }
+
+      function updateEventPaginationControls(totalPages) {
+        if (totalPages <= 1) {
+          const pageNumbersElement = document.getElementById(
+            "eventReportPageNumbers"
+          );
+          const prevPageButton = document.getElementById("eventReportPrevPage");
+          const nextPageButton = document.getElementById("eventReportNextPage");
+
+          pageNumbersElement.style.display = "none";
+          prevPageButton.style.display = "none";
+          nextPageButton.style.display = "none";
+          return;
+        }
+
+        const pageNumbersElement = document.getElementById(
+          "eventReportPageNumbers"
+        );
+        const prevPageButton = document.getElementById("eventReportPrevPage");
+        const nextPageButton = document.getElementById("eventReportNextPage");
+
+        pageNumbersElement.innerHTML = "";
+        prevPageButton.disabled = eventCurrentPage === 1;
+        nextPageButton.disabled = eventCurrentPage === totalPages;
+
+        let startPage = Math.max(eventCurrentPage - 3, 1);
+        let endPage = Math.min(eventCurrentPage + 3, totalPages);
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else if (endPage === totalPages) {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageNumber = document.createElement("span");
+          pageNumber.textContent = i;
+          pageNumber.style.fontWeight =
+            i === eventCurrentPage ? "bold" : "normal";
+          pageNumber.style.backgroundColor =
+            i === eventCurrentPage ? "#7962BD" : "#D3FB52";
+          pageNumber.style.color = i === eventCurrentPage ? "#fff" : "#000";
+          pageNumber.onclick = () => goToEventPage(i);
+          pageNumbersElement.appendChild(pageNumber);
+        }
+      }
+
+      function goToEventPage(page) {
+        eventCurrentPage = page;
+        renderEventTable();
+        updateEventPaginationControls(
+          Math.ceil(eventTableData.length / eventRowsPerPage)
+        );
+      }
+
+      function eventReportPrevPage() {
+        if (eventCurrentPage > 1) {
+          eventCurrentPage--;
+          renderEventTable();
+          updateEventPaginationControls(
+            Math.ceil(eventTableData.length / eventRowsPerPage)
+          );
+        }
+      }
+
+      function eventReportNextPage() {
+        const totalPages = Math.ceil(eventTableData.length / eventRowsPerPage);
+        if (eventCurrentPage < totalPages) {
+          eventCurrentPage++;
+          renderEventTable();
+          updateEventPaginationControls(totalPages);
+        }
+      }
+
+      async function fetchInactiveStudentsAssessments(domainId) {
+        try {
+          const response = await fetch(
+            `/api/internshipDomainInactiveStudents/assessments/${domainId}`
+          );
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          inactiveTableData = data;
+          inactiveTableAssignmentStudentsCount = data.length; // Assuming data is already in the required format
+          document.getElementById(
+            "rowCount"
+          ).textContent = ` ${inactiveTableAssignmentStudentsCount}`;
+          renderInactiveStudentsAssessments();
+        } catch (error) {
+          console.error("Error fetching inactive students data:", error);
+        }
+      }
+
+      let inactiveRowsPerPage = 10;
+      let inactiveCurrentPage = 1;
+      let inactiveTableData = [];
+
+      function renderInactiveStudentsAssessments() {
+        const tableBody = document.getElementById(
+          "inactivestudentsassessmentstable-body"
+        );
+        const tableHead = document.getElementById(
+          "inactivestudentsassessmentstable-head"
+        );
+        tableBody.innerHTML = "";
+        tableHead.innerHTML = "";
+
+        if (inactiveTableData.length === 0) {
+          return;
+        }
+
+        const tableHeaderRow = document.createElement("tr");
+        tableHeaderRow.innerHTML = `
+    <th>Serial No</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Reg No</th>
+    <th>Assessments Attended</th>
+  `;
+        tableHead.appendChild(tableHeaderRow);
+
+        const start = (inactiveCurrentPage - 1) * inactiveRowsPerPage;
+        const end = start + inactiveRowsPerPage;
+        const pageData = inactiveTableData.slice(start, end);
+
+        pageData.forEach((row, index) => {
+          const tableRow = document.createElement("tr");
+
+          tableRow.innerHTML = `
+      <td>${start + index + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.regno}</td>
+      <td>${row.response_count}</td>
+    `;
+
+          tableBody.appendChild(tableRow);
+        });
+
+        const inactiveTotalPages = Math.ceil(
+          inactiveTableData.length / inactiveRowsPerPage
+        );
+        updateInactivePaginationControls(inactiveTotalPages);
+      }
+
+      function updateInactivePaginationControls(totalPages) {
+        if (totalPages <= 1) {
+          const inactivePageNumbersElement = document.getElementById(
+            "inactivepageNumbers"
+          );
+          const inactivePrevPageButton =
+            document.getElementById("inactiveprevPage");
+          const inactiveNextPageButton =
+            document.getElementById("inactivenextPage");
+
+          inactivePageNumbersElement.style.display = "none";
+          inactivePrevPageButton.style.display = "none";
+          inactiveNextPageButton.style.display = "none";
+          return;
+        }
+
+        const inactivePageNumbersElement = document.getElementById(
+          "inactivepageNumbers"
+        );
+        const inactivePrevPageButton =
+          document.getElementById("inactiveprevPage");
+        const inactiveNextPageButton =
+          document.getElementById("inactivenextPage");
+
+        inactivePageNumbersElement.innerHTML = "";
+        inactivePrevPageButton.disabled = inactiveCurrentPage === 1;
+        inactiveNextPageButton.disabled = inactiveCurrentPage === totalPages;
+
+        let inactiveStartPage = Math.max(inactiveCurrentPage - 3, 1);
+        let inactiveEndPage = Math.min(inactiveCurrentPage + 3, totalPages);
+
+        if (inactiveEndPage - inactiveStartPage < 6) {
+          if (inactiveStartPage === 1) {
+            inactiveEndPage = Math.min(inactiveStartPage + 6, totalPages);
+          } else if (inactiveEndPage === totalPages) {
+            inactiveStartPage = Math.max(inactiveEndPage - 6, 1);
+          }
+        }
+
+        for (let i = inactiveStartPage; i <= inactiveEndPage; i++) {
+          const inactivePageNumber = document.createElement("span");
+          inactivePageNumber.textContent = i;
+          inactivePageNumber.style.fontWeight =
+            i === inactiveCurrentPage ? "bold" : "normal";
+          inactivePageNumber.style.backgroundColor =
+            i === inactiveCurrentPage ? "#7962BD" : "#D3FB52";
+          inactivePageNumber.style.color =
+            i === inactiveCurrentPage ? "#fff" : "#000";
+          inactivePageNumber.onclick = () => goToInactivePage(i);
+          inactivePageNumbersElement.appendChild(inactivePageNumber);
+        }
+      }
+
+      function goToInactivePage(page) {
+        inactiveCurrentPage = page;
+        renderInactiveStudentsAssessments();
+        updateInactivePaginationControls(
+          Math.ceil(inactiveTableData.length / inactiveRowsPerPage)
+        );
+      }
+
+      function inactiveprevPage() {
+        if (inactiveCurrentPage > 1) {
+          inactiveCurrentPage--;
+          renderInactiveStudentsAssessments();
+          updateInactivePaginationControls(
+            Math.ceil(inactiveTableData.length / inactiveRowsPerPage)
+          );
+        }
+      }
+
+      function inactivenextPage() {
+        const inactiveTotalPages = Math.ceil(
+          inactiveTableData.length / inactiveRowsPerPage
+        );
+        if (inactiveCurrentPage < inactiveTotalPages) {
+          inactiveCurrentPage++;
+          renderInactiveStudentsAssessments();
+          updateInactivePaginationControls(inactiveTotalPages);
+        }
+      }
+
+      const inactivestudentsEventsTableBody = document.getElementById(
+        "inactivestudentseventstable-body"
+      );
+      const inactivestudentsEventsTableHead = document.getElementById(
+        "inactivestudentseventstable-head"
+      );
+      let inactivestudentsEventsTableData = [];
+      let inactivestudentsEventsRowCount = 0;
+      let inactivestudentsEventsRowsPerPage = 10;
+      let inactivestudentsEventsCurrentPage = 1;
+
+      async function fetchInactiveStudentsEvents(domainId) {
+        try {
+          const response = await fetch(
+            `/api/internshipDomainInactiveStudents/events/${domainId}`
+          );
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+
+          // Check if response contains a message indicating no data
+          if (data.message === "No data is available") {
+            // Display "No data is available" message
+            inactivestudentsEventsTableBody.innerHTML =
+              '<tr><td colspan="4" class="nodata">No data is available</td></tr>';
+            // Optionally hide headers and pagination controls
+            inactivestudentsEventsTableHead.style.display = "none";
+            document.getElementById(
+              "inactivestudents-events-pagination-controls"
+            ).style.display = "none";
+            return;
+          }
+
+          inactivestudentsEventsTableData = data; // Assuming data is already in the required format
+          inactivestudentsEventsRowCount = data.length;
+          document.getElementById(
+            "rowCountDisplay"
+          ).textContent = ` ${inactivestudentsEventsRowCount}`;
+
+          renderInactiveStudentsEvents();
+        } catch (error) {
+          console.error("Error fetching inactive students data:", error);
+        }
+      }
+
+      function renderInactiveStudentsEvents() {
+        inactivestudentsEventsTableBody.innerHTML = "";
+        inactivestudentsEventsTableHead.innerHTML = "";
+
+        if (inactivestudentsEventsTableData.length === 0) {
+          return;
+        }
+
+        const start =
+          (inactivestudentsEventsCurrentPage - 1) *
+          inactivestudentsEventsRowsPerPage;
+        const end = start + inactivestudentsEventsRowsPerPage;
+        const pageData = inactivestudentsEventsTableData.slice(start, end);
+
+        const tableHeaderRow = document.createElement("tr");
+        tableHeaderRow.innerHTML = `
+    <th>Serial No</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Reg No</th>
+  `;
+        inactivestudentsEventsTableHead.appendChild(tableHeaderRow);
+
+        pageData.forEach((row, index) => {
+          const tableRow = document.createElement("tr");
+          tableRow.innerHTML = `
+      <td>${start + index + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.regno}</td>
+    `;
+          inactivestudentsEventsTableBody.appendChild(tableRow);
+        });
+
+        const totalPages = Math.ceil(
+          inactivestudentsEventsTableData.length /
+            inactivestudentsEventsRowsPerPage
+        );
+        updateInactiveStudentsEventsPaginationControls(totalPages);
+      }
+
+      function updateInactiveStudentsEventsPaginationControls(totalPages) {
+        if (totalPages <= 1) {
+          const pageNumbersElement = document.getElementById(
+            "inactivestudentsEventsPageNumbers"
+          );
+          const prevPageButton = document.getElementById(
+            "inactivestudentsEventsPrevPage"
+          );
+          const nextPageButton = document.getElementById(
+            "inactivestudentsEventsNextPage"
+          );
+          const paginationControls = document.getElementById(
+            "inactivestudents-events-pagination-controls"
+          );
+
+          pageNumbersElement.style.display = "none";
+          prevPageButton.style.display = "none";
+          nextPageButton.style.display = "none";
+          paginationControls.style.display = "none";
+          return;
+        }
+
+        const pageNumbersElement = document.getElementById(
+          "inactivestudentsEventsPageNumbers"
+        );
+        const prevPageButton = document.getElementById(
+          "inactivestudentsEventsPrevPage"
+        );
+        const nextPageButton = document.getElementById(
+          "inactivestudentsEventsNextPage"
+        );
+
+        pageNumbersElement.innerHTML = "";
+        prevPageButton.disabled = inactivestudentsEventsCurrentPage === 1;
+        nextPageButton.disabled =
+          inactivestudentsEventsCurrentPage === totalPages;
+
+        let startPage = Math.max(inactivestudentsEventsCurrentPage - 3, 1);
+        let endPage = Math.min(
+          inactivestudentsEventsCurrentPage + 3,
+          totalPages
+        );
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else if (endPage === totalPages) {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageNumber = document.createElement("span");
+          pageNumber.textContent = i;
+          pageNumber.style.fontWeight =
+            i === inactivestudentsEventsCurrentPage ? "bold" : "normal";
+          pageNumber.style.backgroundColor =
+            i === inactivestudentsEventsCurrentPage ? "#7962BD" : "#D3FB52";
+          pageNumber.style.color =
+            i === inactivestudentsEventsCurrentPage ? "#fff" : "#000";
+          pageNumber.onclick = () => goToInactiveStudentsEventsPage(i);
+          pageNumbersElement.appendChild(pageNumber);
+        }
+      }
+
+      function goToInactiveStudentsEventsPage(page) {
+        inactivestudentsEventsCurrentPage = page;
+        renderInactiveStudentsEvents();
+        updateInactiveStudentsEventsPaginationControls(
+          Math.ceil(
+            inactivestudentsEventsTableData.length /
+              inactivestudentsEventsRowsPerPage
+          )
+        );
+      }
+
+      function inactivestudentsEventsPrevPage() {
+        if (inactivestudentsEventsCurrentPage > 1) {
+          inactivestudentsEventsCurrentPage--;
+          renderInactiveStudentsEvents();
+          updateInactiveStudentsEventsPaginationControls(
+            Math.ceil(
+              inactivestudentsEventsTableData.length /
+                inactivestudentsEventsRowsPerPage
+            )
+          );
+        }
+      }
+
+      function inactivestudentsEventsNextPage() {
+        const totalPages = Math.ceil(
+          inactivestudentsEventsTableData.length /
+            inactivestudentsEventsRowsPerPage
+        );
+        if (inactivestudentsEventsCurrentPage < totalPages) {
+          inactivestudentsEventsCurrentPage++;
+          renderInactiveStudentsEvents();
+          updateInactiveStudentsEventsPaginationControls(totalPages);
+        }
+      }
+
+      // Call fetchDailyTestData with the desired domainId when needed
+      // fetchDailyTestData(domainId);
+
+      async function fetchAttendanceData(phaseId) {
+        try {
+          const response = await fetch(
+            `/api/internship_domain_analysis_report/attendance_count/${domainId}`
+          );
+          console.log(response.headers.get("Content-Type"));
+          const data = await response.json();
+
+          const tableContainer = document.querySelector(
+            ".stuattend-tablecontainer4"
+          );
+          tableContainer.innerHTML = ""; // Clear any previous content
+
+          if (!data || data.length === 0) {
+            console.error("No attendance data found");
+            tableContainer.innerHTML =
+              '<p class="nodata">No data available</p>';
+            return;
+          }
+
+          let tableHTML = `
+      <table class="attendance-data-table">
+        <thead>
+          <tr class="stua-table-row" style="background-color:rgb(121, 98, 189); color:white">
+            <th>Days</th>
+            <th>Event</th>
+            <th>Event Count</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          ${data
+            .map(
+              (row, index) => `
+            <tr class="stua-table-row" style="${
+              index >= 4 ? "display: none" : ""
+            }">
+              <td>${index + 1}</td>
+              <td>${row.event_title}</td>
+              <td>${row.count}</td>
+            </tr>
+          `
+            )
+            .join("")}
+        </tbody>
+      </table>
+      <div class="show-more-container">
+        <button class="show-more-btn" onclick="showMoreRows(this, ${
+          data.length
+        })">Show more</button>
+      </div>
+    `;
+          tableContainer.innerHTML = tableHTML;
+        } catch (error) {
+          console.error("Error fetching attendance data:", error);
+          document.querySelector(".stuattend-tablecontainer4").innerHTML =
+            '<p class="nodata">No data available</p>';
+        }
+      }
+
+      function showMoreRows(btn, totalRows) {
+        const tableBody = btn.parentNode.parentNode.querySelector("tbody");
+        const rows = Array.from(tableBody.querySelectorAll(".stua-table-row"));
+        const hiddenRows = rows.slice(4);
+
+        if (btn.textContent === "Show more") {
+          hiddenRows.forEach((row) => (row.style.display = "flex"));
+          btn.textContent = "Show less";
+        } else {
+          hiddenRows.forEach((row) => (row.style.display = "none"));
+          btn.textContent = "Show more";
+        }
+      }
+
+      async function fetchAttendanceDataAndUpdateChart(domainId) {
+        const dailyTestCtx = document
+          .getElementById("stuattend-dailyTestChart")
+          .getContext("2d");
+        const dailyTestChart = new Chart(dailyTestCtx, {
+          type: "bar",
+          data: {
+            labels: [],
+            datasets: [
+              {
+                label: "Events",
+                data: [],
+                backgroundColor: "#2f4cff",
+                borderWidth: 1,
+                borderRadius: 20,
+                barThickness: 20,
+                borderSkipped: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+
+                ticks: {
+                  stepSize: 10,
+                },
+                grid: {
+                  display: false,
+                },
+              },
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+          },
+        });
+
+        // Make a GET request to your route
+        fetch(
+          `/api/internship_domain_analysis_report/attendance_count/${domainId}`,
+          {
+            method: "GET",
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the chart data
+            const labels = data.map((item) => {
+              const dateString = item.event_title;
+              const dayIndex = dateString.lastIndexOf("Day");
+              const dayNumber = dateString.substring(dayIndex + 4);
+              return `Day ${dayNumber}`;
+            });
+            const counts = data.map((item) => item.count);
+            dailyTestChart.data.labels = labels;
+            dailyTestChart.data.datasets[0].data = counts;
+            dailyTestChart.update();
+          })
+          .catch((error) =>
+            console.error("Error fetching Attendance Data:", error)
+          );
+      }
+
+      window.onload = fetchPhaseDetails;
+
+      function downloadTableAsExcel(tableId, filename) {
+        const table = document.getElementById(tableId);
+        const workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+        XLSX.writeFile(workbook, filename);
+      }
+
+      function addLoadersToSections(sectionIds) {
+        sectionIds.forEach((id) => {
+          const section = document.getElementById(id);
+          if (section) {
+            const loader = document.createElement("div");
+            loader.className = "loader";
+            section.appendChild(loader);
+          }
+        });
+
+        // Remove loaders after a certain time (optional)
+        window.addEventListener("load", function () {
+          setTimeout(function () {
+            sectionIds.forEach((id) => {
+              const section = document.getElementById(id);
+              if (section) {
+                const loader = section.querySelector(".loader");
+                if (loader) {
+                  loader.style.display = "none";
+                }
+              }
+            });
+          }, 3000); // Adjust the timeout duration as needed
+        });
+      }
+
+      // IDs of the sections where loaders will be added
+      const sectionIds = [
+        "live-session-count",
+        "a-assessments",
+        "employability_count",
+        "absentees",
+        "hours-covered",
+        "dailytesttable",
+        "grandtesttable-body",
+        "emptesttable-body",
+        "inactivestudentsassessmentstable-body",
+        "assessment-data",
+        "attendreporttable",
+        "inactivestudentseventstable-body",
+        "event-data",
+      ];
+
+      // Call the function to add loaders to the sections
+      addLoadersToSections(sectionIds);
+    </script>
+
+    <!-----------User Details Fetching---------------------->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Function to get the value of a cookie by name
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+
+        // Get the JWT token from the cookie
+        const token = getCookie("userAdminToken");
+
+        if (token) {
+          // Decode the JWT token
+          const decoded = jwt_decode(token);
+
+          // Display the username and role
+          document.querySelector(".userN").textContent = decoded.email;
+          document.querySelector(".userR").textContent = decoded.role;
+        } else {
+          // Handle the case where the token is not found
+          document.querySelector(".userN").textContent = "No user logged in";
+          document.querySelector(".userR").textContent = "";
+        }
+      });
+    </script>
+
+    <!---------Logout module----------->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const logoutButton = document.getElementById("logoutButton");
+        const logoutModal = document.getElementById("logoutModal");
+        const modalContent = logoutModal.querySelector(".modal-content");
+        const confirmLogoutButton =
+          modalContent.querySelector("#confirmLogout");
+        const cancelLogoutButton = modalContent.querySelector("#cancelLogout");
+
+        logoutButton.addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default behavior of the button
+
+          // Show the modal
+          logoutModal.style.display = "block";
+
+          // Add event listeners to the modal buttons
+          confirmLogoutButton.addEventListener("click", function () {
+            // If user confirms, navigate to /logout
+            window.location.href = "/logout";
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          cancelLogoutButton.addEventListener("click", function () {
+            // If user cancels, hide the modal
+            logoutModal.style.display = "none";
+            logoutButton.style.display = "none";
+          });
+
+          // Add event listener to the close span
+          closeSpan.addEventListener("click", function () {
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          // Add event listener to the modal itself to close when clicked outside
+          window.addEventListener("click", function (event) {
+            if (event.target === logoutModal) {
+              logoutModal.style.display = "none"; // Hide the modal
+            }
+          });
+        });
+      });
+    </script>
+    <script src="js/domain_analysis.js"></script>
+  </body>
+</html>

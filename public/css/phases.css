@@ -1,0 +1,527 @@
+
+      @media (max-width: 767px) {
+      .bottombar {
+      position: fixed;
+      top:90%;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      padding: 4px 0;
+      display: flex;
+      justify-content: space-between;
+      background-color: #000;
+      border-top: 1px solid #fff; /* Optional: Add a border at the top */
+      }
+      
+      .logo{
+      display: none;
+      }
+      .bottombar .menu-item {
+      display: flex;
+      flex-direction: column;
+      justify-content:space-between;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      color: #fff;
+      
+      }
+      
+      .bottombar .menu-item img {
+      margin-bottom: 5px;
+      }
+      }
+      
+        .containerfull {
+        margin-top: 40px;
+        width:100%;
+        }
+      
+        .paging {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          margin-top: 40px;
+      }
+      
+      .reg_icon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+      }
+      
+      .circle {
+          width: 10px;
+          height: 10px;
+          border: 4px solid #ccc;
+          display: flex;
+          justify-content: center;
+          border-radius: 50%;
+          align-items: center;
+          padding: 27px;
+      }
+      .circle.completed {
+          background-color: #7962BD;
+          border: 4px solid #c3b5ec;
+      }
+      
+      
+      .circle.active {
+          background-color: #7962BD;
+          border: 4px solid #c3b5ec;
+      }
+      
+      .horizontal-line {
+          width: 15%;
+          height: 4px;
+          margin: 0 20px;
+          background-color: #c3b5ec;
+          border-radius: 50px;
+      }
+      
+      .paging p {
+          font-size: 13px;
+      }
+      
+      .reg_icon {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+      
+      .horizontal-line {
+          align-self: center;
+          position: relative;
+          top: -15px; /* Adjust this value based on the height of your circle */
+      }
+
+       
+
+.training-details-p2{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 97%;
+ 
+}
+
+.left-section{
+  width: 40%;
+  margin-top: 40px;
+}
+
+.col-md-12{
+  width: 100%;
+  margin: 20px;
+}
+
+
+
+.training-details-p2 input[type="text"],
+.training-details-p2 input[type="number"],
+.training-details-p2 input[type="date"],
+.right-section input[type="file"],
+select.form-control {
+margin-top: 15px;
+margin-bottom: 20px;
+min-width: 100%;
+/* Adjusting padding to remove top and bottom padding */
+/* Remove default border */
+}
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="file"]:focus,
+select.form-control:focus {
+outline: none; /* Remove the outline */
+box-shadow: none; /* Remove the box-shadow */
+}
+.right-section{
+  width: 50%;
+  margin-top: 30px;
+}
+
+#batchSelect-1{
+  width: 100%;
+}
+  .left-half,
+  .right-half {
+  flex: 1;
+  }
+  .left-half {
+  background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+  padding: 20px;
+  margin:0;
+  }
+  .right-half {
+  padding: 20px;
+  }
+ 
+  .training-details input[type="text"]{
+    width: 80%;
+  }
+  .banner-img{
+    border-radius: 10px;
+    border: 2px dashed rgba(0, 0, 0, 0.5);
+    background-color: rgba(196, 196, 196, 0.2);
+     height: 300px;
+     display: flex;
+     padding: 20px;
+     flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .banner-preview{
+    width: 50%;
+    height: 100px;
+    border: 1px dashed rgb(36, 36, 48);
+    border-radius: 10px;
+  }
+      .section {
+        margin-bottom: 80px;
+        background-color: white;
+      }
+      .phase-container, .mock-interview-container, .webinar-container, .student-review-container {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        background-color: rgba(204, 187, 254, 0.2)
+      }
+
+      .live{
+        background-color: rgba(204, 187, 254, 0.2);
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        min-height: 200px;
+        margin-bottom: 100px;
+        height: 380px;
+      }
+
+      .live label{
+        font-weight: 600;
+      }
+      .live-session-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px;
+      }
+
+      .live-session-container .col-md-6{
+        width: 48%;
+      }
+
+      .assessment-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px;
+      }
+      .assessment-container .col-md-6{
+        width: 48%;
+      }
+
+      .phase-container h2{
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .phase-container label{
+        font-size: 14px;
+        font-weight: bold;
+        margin-right: 20px;
+      }
+
+      .col-md-6{
+        align-items: center;
+    
+      }
+      select{
+        width: 100%;
+      }
+
+      input[type="date"]{
+        width: 100%;
+      }
+
+
+      input[type="text"],
+      input[type="number"],
+       input[type="date"],
+      select{
+      height: 35px;
+      display: flex;
+      padding-left: 10px;
+      align-items: center;
+      background-color: rgba(196, 196, 196, 0.2);
+      border: 2px solid rgba(196, 196, 196, 1); 
+      border-radius: 5px;
+      }
+
+      .training-button{
+        padding: 10px 15px;
+        background-color: #D3FB52;
+        border-radius: 30px;
+        float: right;
+        cursor: pointer;
+      }
+
+      input
+      .delete-button, .save-button, .continue-button {
+        margin-top: 10px;
+        padding: 8px 16px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .delete-button {
+        border: 1px solid black;
+        padding: 8px 16px;
+        color: black;
+        border-radius: 20px;
+        cursor: pointer;
+      }
+      .delete-button:hover {
+        border: 2px solid #ba2e2e;
+        color: #b12222;
+      }
+      .save-button {
+        background-color: #7962BD;
+        border-radius: 30px;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        float: right;
+        
+      }
+      .save-button:hover {
+        background-color: #b1a1e1;
+        font-weight: 600;
+      }
+      .continue-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: pointer;
+        border: 1px solid rgba(196, 196, 196, 0.4);
+        border-radius: 30px;
+        background-color: #D3FB52;
+        color: black;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+      }
+      .continue-button:hover {
+        background-color: #c4b9e7;
+      }
+      .add-phase-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 12px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #7962BD;
+        color: white;
+        border: 1px solid rgba(196, 196, 196, 0.4);
+        border-radius: 30px;
+      }
+      .add-phase-button:hover {
+        background-color: #e6f9a7;
+        color: black;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+    }
+    .row{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    .column {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .field-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px; /* Adjust the spacing between fields */
+    }
+    
+    .field-group label {
+        flex: 0 0 200px; /* Fixed width for labels */
+        margin-right: 10px; /* Space between label and input */
+    }
+    
+    .field-group input {
+        flex: 1;
+    }
+    
+    .form-group-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px; /* Adjust as needed */
+  }
+  
+  .form-group-item label {
+      flex: 0 0 200px; /* Fixed width for labels */
+      margin-right: 10px; /* Space between label and input */
+  }
+  
+  .form-group-item input {
+      flex: 1;
+      min-width: 0;
+  }
+
+    .select {
+      height: 35px;
+      display: flex;
+      padding-left: 10px;
+      align-items: center;
+      text-wrap: nowrap;
+      border-radius: 5px;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+}
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-selection {
+    width: 100% !important;
+    max-width: 320px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+  
+  /* CSS for Select2 */
+.select2-container {
+width: 100px; /* Set a fixed width for the Select2 container */
+}
+
+.select2-selection--multiple {
+overflow-x: scroll; /* Enable horizontal scrolling for multi-select */
+white-space: nowrap; /* Prevent wrapping of items */
+}
+
+.select2-container--default .select2-selection--multiple.select2-selection--clearable{
+width: 350px;
+}
+/* Adjust scrollbar appearance */
+.select2-selection--multiple::-webkit-scrollbar {
+width: 2px; /* Width of the scrollbar */
+height: 2px;
+overflow: hidden;
+}
+
+.select2-selection--multiple::-webkit-scrollbar-track {
+background: #ffffff; /* Track color */
+}
+
+.select2-selection--multiple::-webkit-scrollbar-thumb {
+background: #fdfdfd; /* Thumb color */
+border-radius: 5px; /* Border radius of the thumb */
+}
+
+.select2-selection--multiple::-webkit-scrollbar-thumb:hover {
+background: #c3c3c3; /* Thumb color on hover */
+}
+
+.update-button{
+padding: 8px;
+border-radius: 30px;
+background-color: #D3FB52;
+cursor: pointer;
+}
+.toastify{
+  background-color: rgb(155, 255, 185); 
+         color: black;
+         border: 1px solid green; 
+         border-radius: 10px; display: none;
+}
+
+.update-button:hover{
+  background-color: #dffd7c;
+  font-weight: 600;
+}
+
+.submitbtn{
+  padding: 8px;
+  background-color: #D3FB52;
+  border-radius: 30px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  float: right;
+}
+
+.submitbtn:hover,
+.submitbtn:active{
+  font-weight: 600;
+}
+
+  .saved-sessions {
+    margin-top: 20px;
+    padding: 10px;
+    margin: 20px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 150px; /* Maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+
+    .saved-session {
+    position: relative;
+    width: 180px;
+    height: 40px;
+    padding: 10px;
+    padding-left: 20px;
+    margin: 10px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    background-color: rgba(121,98,189,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .saved-session p {
+    margin: 0 0 5px;
+  }
+
+
+  .saved-session:last-child {
+    border-bottom: none;
+  }
+  
+  .remove-session-button {
+    background-color: transparent;
+    /* Red background color */
+    color: #000; /* White text color */
+    border: none; /* Remove border */
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 30px; /* Center vertically */
+    cursor: pointer;
+    position: absolute;
+    top: 50%; /* Position at the vertical center of the parent */
+    right: 0; /* Position at the right edge of the parent */
+    transform: translateY(-50%); /* Adjust to center vertically */
+}
+
+.remove-session-button:hover {
+  font-weight: 700;
+}

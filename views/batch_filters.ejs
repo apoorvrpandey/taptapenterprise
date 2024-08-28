@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Results</title>
+    <!-- XLSX library script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+
+    <!-- FileSaver.js script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <link rel="stylesheet" href="css/emp_students_results.css" />
+    <link rel="stylesheet" href="css/nav_log.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="icon" type="image/x-icon" href="img/sidebarlogo.png" />
+    <script src="js/students_results.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script>
+      window.userRole = "<%= user.role %>";
+    </script>
+    <script src="js/rolebase.js"></script>
+    
+    <style>
+      .filter-card {
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: white;
+      }
+      .filter-card-header {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+      .checkbox-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .checkbox-container div {
+        margin-bottom: 5px;
+        font-size: 12px;
+      }
+      .show-more-button,
+      .show-less-button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        background-color: #f0f0f0;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+      .checkbox-container input[type="checkbox"] {
+        transform: scale(0.8); /* Adjust the scale as needed */
+        margin-right: 5px; /* Optional: Add some spacing between the checkbox and label */
+        margin-bottom: 0;
+      }
+
+      .table-container {
+        position: relative;
+        max-height: 1180px;
+      }
+
+      tbody td {
+        font-size: 12px;
+      }
+
+      .custom-button {
+        background-color: #d3fb52;
+        color: #333;
+        padding: 10px 15px;
+        border: 2px solid #a1c900;
+        border-radius: 50px;
+        cursor: pointer;
+        margin-right: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, box-shadow 0.3s;
+      }
+
+      .custom-button:hover {
+        background-color: #b7e300;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .custom-button:active {
+        background-color: #a1c900;
+        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* HTML: <div class="loader"></div> */
+      .loader {
+        width: 50px;
+        padding: 8px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #25b09b;
+        --_m: conic-gradient(#0000 10%, #000),
+          linear-gradient(#000 0 0) content-box;
+        -webkit-mask: var(--_m);
+        mask: var(--_m);
+        -webkit-mask-composite: source-out;
+        mask-composite: subtract;
+        animation: l3 1s infinite linear;
+        margin: 200px;
+      }
+      @keyframes l3 {
+        to {
+          transform: rotate(1turn);
+        }
+      }
+      .roww{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.marginr{
+    margin-right: 10px;
+}
+.grey{
+    color: rgba(0, 0, 0, 0.7);
+}
+.f14{
+    font-size: 14px;
+}
+.popupForm {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+        .popupForm-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 75%;
+           
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .submitbtn{
+    padding: 8px 15px;
+    background-color: #7962BD;
+    color: white;
+    border-radius: 30px;
+  }
+  .tofro{
+    padding: 8px 20px;
+    background-color: white;
+    color: black;
+    border-radius: 30px;
+    border:1px solid black
+  }
+  .tofro:hover{
+    background-color: #c2aefd;
+    color: white;
+    border:1px solid white
+  }
+  .clear{
+    padding: 8px 20px;
+    background-color: #bfaafd;
+    color: white;
+    border-radius: 30px;
+    border:1px solid white
+  }
+  .clear:hover{
+    background-color: #bfaafd;
+    color: white;
+    border:1px solid white
+  }
+  #batchSelect{
+  
+  border-radius: 10px;
+  border: 1px solid grey;
+  width: 100%;
+  height: 100%;
+  padding:8px
+
+}
+.batchbutton{
+  background-color: #D3FB52;
+  color: #333;
+  padding: 10px 15px;
+  border: 2px solid #A1C900;
+  border-radius: 50px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+#newBatchTitle{
+  border-radius: 10px;
+  border: 1px solid grey;
+  width: 100%;
+  height: 100%;
+  padding:8px
+}
+ 
+
+#selectedDataPreviewContainer::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: white;
+}
+
+#selectedDataPreviewContainer::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: white;
+}
+
+#selectedDataPreviewContainer::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #F5F5F5;
+}
+.select-all-button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 10px 20px; /* Some padding */
+    text-align: center; /* Center the text (if you want to align it) */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Some margin */
+    cursor: pointer; /* Pointer/hand icon on hover */
+    border-radius: 8px; /* Rounded corners */
+  }
+  
+  .select-all-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }
+
+
+
+
+  #data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#data-table th {
+    background-color: #4C4267;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+#data-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+#pagination {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#pagination button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-weight: bold;
+}
+
+#pagination button:disabled {
+    background-color: #fff;
+    cursor: not-allowed;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+
+.viewBatchDetails{
+  background-color: #d3fb52;
+    border: none;
+    padding: 10px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-size: 14px;
+    border-radius: 20px;
+}
+
+.downloadBtn{
+  background-color: #d3fb52;
+    color: #333;
+    padding: 10px 15px;
+    border: 2px solid #a1c900;
+    height: 35px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+       
+    </style>
+  </head>
+  <body>
+    <!--Sidebar-->
+    <div class="supercss">
+      <div class="sidebar">
+        <a
+          class="logo"
+          style="text-align: center; align-items: center; padding: 5px"
+        >
+          <img
+            src="img/sidebar logo.png"
+            alt="Logo"
+            style="width: 58px; max-width: 70px; height: 80px"
+          />
+        </a>
+        <a href="myDashboard" class="menu-item" id="dashboard-link">
+          <img
+            src="img/dash_white.png"
+            alt="dash"
+            style="max-width: 22px; height: 22px"
+          /><span style="color: white">Dashboard</span>
+        </a>
+        <a href="employabilityReport" class="menu-item">
+          <img
+            src="img/emp.png"
+            alt="dash"
+            style="max-width: 18px; height: 20px"
+          /><span>Employability</span>
+        </a>
+        <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+          <img
+            alt="Assessment icon"
+            src="img/assessment.png"
+            style="max-width: 19px; height: 19.5px"
+          />
+          <span>Assessments</span></a
+        >
+
+        <a href="jobsDashboard" class="menu-item">
+          <img
+            src="img/jobs.png"
+            alt="jobs"
+            style="max-width: 20px; height: 21px"
+          /><span>Jobs</span>
+        </a>
+        <a
+          href="https://admin.hackathon.blackbucks.me/createAndManageCourse/"
+          class="menu-item"
+        >
+          <img
+            alt="course icon"
+            src="img/course.png"
+            style="max-width: 19px; height: 20px"
+          />
+          <span>Course</span></a
+        >
+        <a
+          href="https://admin.hackathon.blackbucks.me/lessonPlan/"
+          class="menu-item"
+        >
+          <img
+            alt="lessonplan icon"
+            src="img/lessonplan.png"
+            style="max-width: 23px; height: 18px"
+          />
+          <span>Lesson Plan</span></a
+        >
+
+        <a
+          href="trainingsDashboard"
+          class="menu-item active"
+          style="background-color: #88eb4c"
+        >
+          <img
+            src="img/trainings_black.png"
+            alt="trainings"
+            style="max-width: 27px; height: 21px"
+          /><span style="color: black; font-weight: bold">Trainings</span>
+        </a>
+        <a href="internshipsDashboard" class="menu-item">
+          <img
+            src="img/internship_whiteicon.png"
+            alt="manage"
+            style="width: 20px; height: auto"
+            style="width: 20px; height: auto"
+          /><span>Internships</span>
+        </a>
+        <a
+          href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/"
+          class="menu-item"
+        >
+          <img
+            alt="vpl icon"
+            src="img/vpl.png"
+            style="max-width: 19px; height: 17px"
+          />
+          <span>VPL</span></a
+        >
+      </div>
+      <div class="css">
+        <div class="css0">
+          <div class="navbar">
+            <div class="nav1"></div>
+            <div class="nav2">
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageStudents/"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Manage Users"
+                    src="img/newManageUsers.svg"
+                    class="chakra-image css-0"
+                  />
+                </div>
+              </a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/tpCalendar/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Calendar"
+                    src="img/newCalenderNavIcon.svg"
+                    class="chakra-image css-0"
+                  /></div
+              ></a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageNotification/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <div class="css-1edim3w">
+                    <img
+                      alt="Notifications"
+                      src="img/newNotificationIcon.svg"
+                      class="chakra-image css-6su6fj"
+                    />
+                    <div class="css-1bac456">
+                      <div class="css-1rkwksi">1</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <button type="button" class="navbtn" id="userButton">
+                <span class="user-details">
+                  <div class="user">
+                    <span class="user-profile">
+                      <i
+                        class="fa-solid fa-circle-user"
+                        style="font-size: 30px"
+                      ></i>
+                    </span>
+                    <div class="username">
+                      <p class="userN"></p>
+                      <p class="userR"></p>
+                    </div>
+                  </div>
+                </span>
+                <span class="chakra-button__icon css-1hzyiq5">
+                  <svg
+                    viewBox="0 0 16 16"
+                    height="12px"
+                    width="12px"
+                    aria-hidden="true"
+                    focusable="false"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="black"
+                    class="css-1eamic5 ex0cdmw0"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    ></path>
+                  </svg>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="logoutbtn"
+                id="logoutButton"
+                style="display: none"
+              >
+                Log out
+              </button>
+            </div>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const userButton = document.getElementById("userButton");
+                const logoutButton = document.getElementById("logoutButton");
+
+                userButton.addEventListener("click", () => {
+                  if (logoutButton.style.display === "none") {
+                    logoutButton.style.display = "flex";
+                    logoutButton.style.top = `${
+                      userButton.offsetTop + userButton.offsetHeight
+                    }px`;
+                    logoutButton.style.left = `${userButton.offsetLeft}px`;
+                  } else {
+                    logoutButton.style.display = "none";
+                  }
+                });
+
+                logoutButton.addEventListener("click", () => {
+                  // Add your logout logic here
+                  console.log("User logged out");
+                });
+              });
+            </script>
+          </div>
+        </div>
+
+        <div class="css1">
+          <div class="main-container">
+            <div class="usercontainer">
+              <div class="usercard">
+                <div class="roww marginr" style="margin: 20px;">
+                  <img src="img/traininggrey.png" alt="internship icon" style="width: 14px; height: 14px; margin-right: 5px">
+                  <a href="trainingsDashboard" style="text-decoration: none;">
+                  <p class="grey f14 marginr" style="margin: 0;">
+                    Trainings <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                  </p></a>
+                  <a href="manageBatches" style="text-decoration: none;"><p class=" grey f14" style="margin: 0;padding-right: 3px;">Manage Batches</p></a>
+                  <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                  <a
+                  id="internshipLink"
+                  href="#"
+                  style="text-decoration: none; color: grey; font-size: 14px"
+                >
+                  <p
+                    class="f14 marginr "
+                    style="margin: 0; color:black"
+                  >
+                    Students Results
+                    <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                  </p>
+                </a>
+                </div>
+            
+          
+                <div class="usercard-header">
+                 
+                  <h2>STUDENT RESULTS</h2>
+                  <div>
+                  
+                  <button class="custom-button" id="popupFormBtn">Add to Batch</button>
+                </div>
+                </div>
+
+                <!--batches-->
+                <div id="popupForm" class="popupForm">
+                  <div class="popupForm-content">
+                    <div id="tableContainer">
+                      <span class="close">&times;</span><br><br>
+                      <div id="selectedDataPreviewContainer" style="max-height: 300px; overflow-y: auto;">
+                        <table id="selectedDataPreview" border="1" style="width: 100%; border-collapse: collapse;">
+                          <thead>
+                            <tr>
+                              <th style="background-color: #7962bd;color: white;">Name</th>
+                              <th style="background-color: #7962bd;color: white;">Email</th>
+                              <th style="background-color: #7962bd;color: white;">Reg No</th>
+                              <th style="background-color: #7962bd;color: white;">Phone</th>
+                              <th style="background-color: #7962bd;color: white;">College ID</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- Data rows will be populated dynamically -->
+                          </tbody>
+                        </table>
+                      </div><br>
+                      <button class="clear" type="button" id="clearDataBtn">Clear Data</button><br><br>
+                      <button class="tofro" type="button" id="leftButton">Back</button>
+                      <button class="tofro" style="float: right;" type="button" id="rightButton">Next</button>
+                    </div>
+                    <form id="batchDetailsForm" enctype="multipart/form-data" style="display: none;">
+                      <div class="selectcontainer">
+                        <label style="font-weight: bold;" for="batchSelect">Select Batch:</label><br><br>
+                        <select id="batchSelect">
+                          <option value="">-- Select Batch --</option>
+                        </select><br><br>
+                        <button class="batchbutton" type="button" id="addNewBatchBtn">+ Add New Batch</button><br><br>
+                      </div>
+                      <div id="newBatchContainer" style="display: none;">
+                        <label style="font-weight: bold;" for="newBatchTitle">New Batch Title:</label><br><br>
+                        <input type="text" id="newBatchTitle" name="newBatchTitle"><br><br>
+                        <button class="batchbutton" type="button" id="addBatchBtn">Create Batch</button><br><br>
+                      </div>
+                      <input type="hidden" id="batchIdInput" name="batch_id">
+                      <textarea id="selectedData" name="selectedData" rows="4" readonly style="display: none;"></textarea>
+                      <button type="submit" class="submitbtn">Submit</button>
+                    </form>
+                    <!-- Placeholder for success image -->
+                    <div id="successImageContainer" style="display: none;">
+                      <div style="align-items: center;text-align: center;justify-content: center;align-items: center;">
+                        <img id="successImage" src="img/success.jpg" alt="Success Image" style="width: 300px;height: auto;">
+                      </div>
+                      <p style="font-size: 24;font-weight: bold;align-items: center;text-align: center;justify-content: center;">
+                        Student details have been submitted successfully
+                      </p>
+                      
+                      <div style="display: flex;justify-content: center;">
+                        <button class="viewBatchDetails" id="viewBatchDetails" onclick="viewBatchDetails()">
+                          View Batch Details
+                      </button>
+                      </div>
+                      
+                    </div>
+
+                    <div id="batch-table-cont" style="display: none;">
+                      <div style="display: flex;justify-content: flex-end;">
+                        <button class="downloadBtn" id="downloadTableAsExcel2">Download</button>
+                      </div>
+                      <table id="Batch-table">
+                        <thead>
+                            <tr>
+                                <!-- Table headers will be populated dynamically -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table content will be populated dynamically -->
+                        </tbody>
+                      </table>
+                      <div id="pagination">
+                          <button id="prev-button" disabled>Previous</button>
+                          <button id="next-button" disabled>Next</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <script>
+                  document.addEventListener('DOMContentLoaded', function() {
+                    let selectedRows = [];
+                
+                    var popupForm = document.getElementById("popupForm");
+                    var btn = document.getElementById("popupFormBtn");
+                    var span = document.getElementsByClassName("close")[0];
+                
+                    btn.onclick = function() {
+                      if (selectedRows.length === 0) {
+                        alert("Please select at least one student to add to the batch.");
+                      } else {
+                        popupForm.style.display = "block";
+                        document.getElementById('tableContainer').style.display = 'block';
+                        document.getElementById('batchDetailsForm').style.display = 'none';
+                      }
+                    }
+                
+                    span.onclick = function() {
+                      popupForm.style.display = "none";
+                      document.getElementById('tableContainer').style.display = 'none';
+                      document.getElementById('batchDetailsForm').style.display = 'none';
+                      document.getElementById('successImageContainer').style.display = 'none';
+                    }
+                
+                    window.onclick = function(event) {
+                      if (event.target == popupForm) {
+                        popupForm.style.display = "none";
+                        document.getElementById('tableContainer').style.display = 'none';
+                        document.getElementById('batchDetailsForm').style.display = 'none';
+                        document.getElementById('successImageContainer').style.display = 'none';
+                      }
+                    }
+                
+                    fetch('api/batches/data')
+                      .then(response => response.json())
+                      .then(data => {
+                        const batchSelect = document.getElementById('batchSelect');
+                        data.forEach(batch => {
+                          const option = document.createElement('option');
+                          option.value = batch.id;
+                          option.textContent = batch.batch_title;
+                          batchSelect.appendChild(option);
+                        });
+                      });
+                
+                    document.getElementById('batchSelect').addEventListener('change', function() {
+                      document.getElementById('batchIdInput').value = this.value;
+                    });
+                
+                    document.getElementById('addNewBatchBtn').addEventListener('click', function() {
+                      document.querySelector('.selectcontainer').style.display = 'none';
+                      document.getElementById('newBatchContainer').style.display = 'block';
+                    });
+                
+                    document.getElementById('addBatchBtn').addEventListener('click', function() {
+                      const newBatchTitle = document.getElementById('newBatchTitle').value;
+                      if (newBatchTitle) {
+                        fetch('api/batches/add', {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json'
+                          },
+                          body: JSON.stringify({
+                            batch_title: newBatchTitle
+                          })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                          if (data.id) {
+                            const batchSelect = document.getElementById('batchSelect');
+                            const option = document.createElement('option');
+                            option.value = data.id;
+                            option.textContent = data.batch_title;
+                            batchSelect.appendChild(option);
+                            batchSelect.value = data.id;
+                            document.getElementById('batchIdInput').value = data.id;
+                
+                            document.querySelector('.selectcontainer').style.display = 'block';
+                            document.getElementById('newBatchContainer').style.display = 'none';
+                            document.getElementById('newBatchTitle').value = '';
+                          } else {
+                            console.error('Failed to Create batch:', data);
+                          }
+                        })
+                        .catch(error => {
+                          console.error('Error:', error);
+                        });
+                      } else {
+                        alert("Please enter a new batch title.");
+                      }
+                    });
+                
+                    document.getElementById('clearDataBtn').addEventListener('click', function() {
+                      document.getElementById('selectedData').value = '';
+                      selectedRows = [];
+                      updateCheckboxes();
+                      updateSelectedDataPreview();
+                    });
+                
+                    function updateCheckboxes() {
+                      const checkboxes = document.querySelectorAll("#data-table tbody input[type='checkbox']");
+                      checkboxes.forEach(checkbox => {
+                        const row = checkbox.closest('tr');
+                        const rowId = row.dataset.rowId;
+                        checkbox.checked = selectedRows.some(selectedRow => selectedRow.id === rowId);
+                      });
+                    }
+                
+                    function getSelectedRows() {
+                      const checkboxes = document.querySelectorAll("#data-table tbody input[type='checkbox']:checked");
+                      const newlySelectedRows = [];
+                      checkboxes.forEach(checkbox => {
+                        const row = checkbox.closest('tr');
+                        const rowData = {
+                          id: row.dataset.rowId,
+                          name: row.cells[1].textContent,
+                          email: row.cells[2].textContent,
+                          regno: row.cells[3].textContent,
+                          phone: row.cells[4].textContent,
+                          college_id: row.cells[5].textContent
+                        };
+                        newlySelectedRows.push(rowData);
+                      });
+                      return newlySelectedRows;
+                    }
+                
+                    function updateSelectedData() {
+                      const selectedDataTextarea = document.getElementById('selectedData');
+                      selectedDataTextarea.value = JSON.stringify(selectedRows, null, 2);
+                      updateSelectedDataPreview();
+                    }
+                
+                    function updateSelectedDataPreview() {
+                      const selectedDataPreviewTbody = document.getElementById('selectedDataPreview').querySelector('tbody');
+                      const rowsToRemove = [];
+                      Array.prototype.forEach.call(selectedDataPreviewTbody.rows, (tableRow) => {
+                        let rowFound = false;
+                        selectedRows.forEach((row) => {
+                          if (tableRow.cells[0].textContent === row.name &&
+                            tableRow.cells[1].textContent === row.email &&
+                            tableRow.cells[2].textContent === row.regno &&
+                            tableRow.cells[3].textContent === row.phone &&
+                            tableRow.cells[4].textContent === row.college_id) {
+                            rowFound = true;
+                          }
+                        });
+                        if (!rowFound) {
+                          rowsToRemove.push(tableRow);
+                        }
+                      });
+                      rowsToRemove.forEach((row) => {
+                        selectedDataPreviewTbody.removeChild(row);
+                      });
+                
+                      selectedRows.forEach((row) => {
+                        let existingRow = false;
+                        Array.prototype.forEach.call(selectedDataPreviewTbody.rows, (tableRow) => {
+                          if (tableRow.cells[0].textContent === row.name &&
+                            tableRow.cells[1].textContent === row.email &&
+                            tableRow.cells[2].textContent === row.regno &&
+                            tableRow.cells[3].textContent === row.phone &&
+                            tableRow.cells[4].textContent === row.college_id) {
+                            existingRow = true;
+                          }
+                        });
+                        if (!existingRow) {
+                          const tr = document.createElement('tr');
+                          tr.innerHTML =
+                            `<td>${row.name}</td>
+                             <td>${row.email}</td>
+                             <td>${row.regno}</td>
+                             <td>${row.phone}</td>
+                             <td>${row.college_id}</td>`;
+                          selectedDataPreviewTbody.appendChild(tr);
+                        }
+                      });
+                    }
+                
+                    document.addEventListener('change', function(event) {
+                      if (event.target.matches("#data-table tbody input[type='checkbox']")) {
+                        const newlySelectedRows = getSelectedRows();
+                        selectedRows = newlySelectedRows;
+                        updateSelectedData();
+                      }
+                    });
+                
+                    document.addEventListener('click', function(event) {
+                      if (event.target.matches("#selectAllButton")) {
+                        const checkboxes = document.querySelectorAll("#data-table tbody input[type='checkbox']");
+                        const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                        checkboxes.forEach((checkbox) => {
+                          checkbox.checked = !allChecked;
+                        });
+                        const newlySelectedRows = getSelectedRows();
+                        selectedRows = newlySelectedRows;
+                        updateSelectedData();
+                      }
+                    });
+                
+                    document.getElementById('leftButton').addEventListener('click', function() {
+                      popupForm.style.display = "none";
+                    });
+                
+                    document.getElementById('rightButton').addEventListener('click', function() {
+                      document.getElementById('tableContainer').style.display = 'none';
+                      document.getElementById('batchDetailsForm').style.display = 'block';
+                    });
+                
+
+
+                    document.getElementById('batchDetailsForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const batchId = document.getElementById('batchIdInput').value;
+    const newBatchTitle = document.getElementById('newBatchTitle').value;
+    const batchContainerDisplay = document.querySelector('.selectcontainer').style.display;
+    
+    if (!batchId && batchContainerDisplay!== 'none') {
+        alert("Please select a batch from the dropdown.");
+        return;
+    }
+    
+    if (batchContainerDisplay === 'none' &&!newBatchTitle) {
+        alert("Please provide a title for the new batch.");
+        return;
+    }
+    
+    fetch('api/batches/upload-batch-details', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          batch_id: batchId,
+          selected_data: selectedRows
+        })
+    })
+   .then(response => response.json())
+   .then(data => {
+        document.getElementById('tableContainer').style.display = 'none';
+        document.getElementById('batchDetailsForm').style.display = 'none';
+        document.getElementById('successImageContainer').style.display = 'block';
+        batchSelect = batchId; // Store the batch ID for later use
+    })
+   .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to upload batch details. Please try again.');
+    });
+});
+               
+                    function resetForm() {
+                      document.getElementById('tableContainer').style.display = 'block';
+                      document.getElementById('batchDetailsForm').style.display = 'none';
+                    }
+                  });
+
+
+
+                  function viewBatchDetails() {
+    document.getElementById('successImageContainer').style.display = 'none';
+    document.getElementById('batch-table-cont').style.display = 'block'; 
+    // document.getElementById('downloadTableAsExcel').style.display = 'block';
+
+    console.log(batchSelect)
+    const pageSize = 10; // Number of items per page
+    let currentPage = 1; // Current page number
+
+    function fetchDataAndPopulateTable() {
+        fetch(`/api/batches/Batchdata/${batchSelect}`)
+           .then(response => response.json())
+           .then(data => {
+                const tableHeaders = ['Name', 'Email', 'Registration Number'];
+
+                // Populate table headers
+                const thead = document.querySelector('#Batch-table thead tr');
+                thead.innerHTML = '';
+                tableHeaders.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header;
+                    thead.appendChild(th);
+                });
+
+                // Paginate data
+                const startIndex = (currentPage - 1) * pageSize;
+                const paginatedData = data.slice(startIndex, startIndex + pageSize);
+
+                // Populate table rows
+                const tbody = document.querySelector('#Batch-table tbody');
+                tbody.innerHTML = '';
+                paginatedData.forEach(item => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = 
+                        `<td>${item.name}</td>
+                         <td>${item.email}</td>
+                         <td>${item.regno || '-'}</td>`
+                    ;
+                    tbody.appendChild(tr);
+                });
+
+                updatePaginationButtons(data.length);
+            })
+           .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }
+
+    function updatePaginationButtons(totalItems) {
+        const totalPages = Math.ceil(totalItems / pageSize);
+        document.getElementById('prev-button').disabled = currentPage === 1;
+        document.getElementById('next-button').disabled = currentPage === totalPages;
+    }
+
+    document.getElementById('prev-button').addEventListener('click', () => {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchDataAndPopulateTable();
+        }
+    });
+
+    document.getElementById('next-button').addEventListener('click', () => {
+        currentPage++;
+        fetchDataAndPopulateTable();
+    });
+
+    fetchDataAndPopulateTable();
+}
+
+
+                  
+document.getElementById('downloadTableAsExcel2').addEventListener('click', () => {
+  fetch(`/api/batches/Batchdata/${batchSelect}`)
+    .then(response => response.json())
+    .then(data => {
+      const tableHeaders = ['Name', 'Email', 'Registration Number'];
+      const csvData = [tableHeaders.join(',')];
+
+      data.forEach(item => {
+        const rowData = [
+          item.name,
+          item.email,
+          item.regno || '-'
+        ];
+        csvData.push(rowData.join(','));
+      });
+
+      const csvString = csvData.join('\n');
+      const blob = new Blob([csvString], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `batch_data_${batchSelect}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+});
+
+</script>
+                
+
+                
+              
+              
+
+              
+              
+              
+              
+              
+            
+                <div class="userinnercard">
+                    <p style="font-size: 16px">FILTERS</p>
+                    <div class="frame">
+                      <div class="left-frame">
+                        <form>
+                          <div class="filters">
+                            <!-- Existing filter cards -->
+                  
+                            <div class="filter-card">
+                              <div class="filter-card-header">DEGREE</div>
+                              <div id="degree-filter" class="checkbox-container"></div>
+                            </div>
+                            <div class="filter-card">
+                              <div class="filter-card-header">BRANCH</div>
+                              <div id="branch-filter" class="checkbox-container"></div>
+                            </div>
+                            <div class="filter-card">
+                              <div class="filter-card-header">YEAR</div>
+                              <div id="year-filter" class="checkbox-container"></div>
+                            </div>
+                            <div class="filter-card">
+                              <div class="filter-card-header">EMPLOYBILITY BAND</div>
+                              <div id="emp-band-filter" class="checkbox-container"></div>
+                            </div>
+                            <div class="filter-card">
+                              <div class="filter-card-header">BEST EMPLOYBILITY BAND</div>
+                              <div id="emp-best-band-filter" class="checkbox-container"></div>
+                            </div>
+                            <div class="filter-card">
+                              <div class="filter-card-header">10TH PERCENTAGE</div>
+                              <input type="range" id="10th-percentage-slider" min="0" max="100" step="0.1" value="0" />
+                              <span id="10th-percentage-label"> 0</span>%
+                            </div>
+                            <div class="filter-card">
+                              <div class="filter-card-header">12TH PERCENTAGE</div>
+                              <input type="range" id="12th-percentage-slider" min="0" max="100" step="0.1" value="0" />
+                              <span id="12th-percentage-label"> 0</span>%
+                            </div>
+                            <div class="filter-card">
+                              <div class="filter-card-header">GRADUATION PERCENTAGE</div>
+                              <input type="range" id="grad-percentage-slider" min="0" max="100" step="0.1" value="0" />
+                              <span id="grad-percentage-label">0</span>%
+                            </div>
+                  
+                            <!-- New Top N filter card -->
+                            <div class="filter-card">
+                              <div class="filter-card-header">Top N Results</div>
+                              <select id="top-n-filter">
+                                <option value="">Select</option>
+                                <option value="10">Top 10</option>
+                                <option value="50">Top 50</option>
+                                <option value="100">Top 100</option>
+                              </select>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="right-frame">
+                       
+                        <div class="table-container" id="table-container">
+                          <table id="data-table">
+                            <thead>
+                              <tr>
+                                <!-- Table headers will be populated dynamically -->
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-- Table content will be populated dynamically -->
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div id="logoutModal" class="modal" style="display: none">
+                    <div class="modal-content">
+                      <p class="question">Are you sure you want to logout?</p>
+                      <div class="logout-div"></div>
+                      <div class="modal-buttons">
+                        <button id="cancelLogout">Cancel</button>
+                        <button id="confirmLogout">Yes</button>
+                      </div>                                                                                        
+                    </div>
+                  </div>
+                  
+                  <script>
+                  
+                    document.addEventListener("DOMContentLoaded", async () => {
+                      try {
+                        const filterOptions = await fetchFilterOptions();
+                        populateFilters(filterOptions);
+                        addFilterListeners();
+                        fetchDataAndPopulateTable(); // Initial data fetch and table population
+                      } catch (error) {
+                        console.error("Error:", error);
+                        alert("Failed to load data. Please try again later.");
+                      }
+                    });
+                  
+                    async function fetchFilterOptions() {
+                      const responses = await Promise.all([
+                        fetch("api/batch_data/filters/degrees"),
+                        fetch("api/batch_data/filters/branches"),
+                        fetch("api/batch_data/filters/years"),
+                        fetch("api/batch_data/filters/employabilityBands"),
+                        fetch("api/batch_data/filters/possibleEmployabilityBands"),
+                      ]);
+                      const filterOptions = await Promise.all(
+                        responses.map((response) => response.json())
+                      );
+                  
+                      return filterOptions;
+                    }
+                  
+                    function populateFilters(filterOptions) {
+                      const degreeFilter = document.getElementById("degree-filter");
+                      const branchFilter = document.getElementById("branch-filter");
+                      const yearFilter = document.getElementById("year-filter");
+                      const empBandFilter = document.getElementById("emp-band-filter");
+                      const empBestBandFilter = document.getElementById("emp-best-band-filter");
+                  
+                      addFilterOptions(degreeFilter, filterOptions[0]);
+                      addFilterOptions(branchFilter, filterOptions[1]);
+                      addFilterOptions(yearFilter, filterOptions[2]);
+                      addFilterOptions(empBandFilter, filterOptions[3], ["A++", "A+", "A", "B", "C", "F"]);
+                      addFilterOptions(empBestBandFilter, filterOptions[4], ["A++", "A+", "A", "B", "C", "F"]);
+                    }
+                  
+                    function addFilterOptions(container, options, customOrder) {
+                      const maxOptionsToShow = 5;
+                  
+                      // Sort options based on custom order if provided
+                      if (customOrder) {
+                        options.sort((a, b) => customOrder.indexOf(a) - customOrder.indexOf(b));
+                      }
+                  
+                      const initialOptions = options.slice(0, maxOptionsToShow);
+                  
+                      initialOptions.forEach((option) => addCheckbox(container, option));
+                  
+                      if (options.length > maxOptionsToShow) {
+                        addShowMoreButton(container, options.slice(maxOptionsToShow), customOrder);
+                      }
+                    }
+                  
+                    function addCheckbox(container, option) {
+                      if (!option) return; // Skip if the option is empty
+                      const checkbox = document.createElement("input");
+                      checkbox.type = "checkbox";
+                      checkbox.value = option;
+                      checkbox.id = `${option}-checkbox`;
+                  
+                      const label = document.createElement("label");
+                      label.htmlFor = `${option}-checkbox`;
+                      label.textContent = option;
+                  
+                      const div = document.createElement("div");
+                      div.appendChild(checkbox);
+                      div.appendChild(label);
+                  
+                      container.appendChild(div);
+                    }
+                  
+                    function addShowMoreButton(container, remainingOptions, customOrder) {
+                      const showMoreButton = document.createElement("button");
+                      showMoreButton.textContent = "Show More";
+                      showMoreButton.className = "show-more-button";
+                  
+                      showMoreButton.addEventListener("click", () => {
+                        remainingOptions.forEach((option) => {
+                          addCheckbox(container, option);
+                          const checkbox = document.getElementById(`${option}-checkbox`);
+                          if (checkbox) {
+                            checkbox.addEventListener("change", fetchDataAndPopulateTable);
+                          }
+                        });
+                        showMoreButton.remove();
+                        addShowLessButton(container, remainingOptions, customOrder);
+                      });
+                  
+                      container.appendChild(showMoreButton);
+                    }
+                  
+                    function addShowLessButton(container, addedOptions, customOrder) {
+                      const showLessButton = document.createElement("button");
+                      showLessButton.textContent = "Show Less";
+                      showLessButton.className = "show-less-button";
+                  
+                      showLessButton.addEventListener("click", () => {
+                        addedOptions.forEach((option) => {
+                          const checkbox = document.getElementById(`${option}-checkbox`);
+                          if (checkbox) {
+                            checkbox.parentElement.remove();
+                          }
+                        });
+                        showLessButton.remove();
+                        addShowMoreButton(container, addedOptions, customOrder);
+                      });
+                  
+                      container.appendChild(showLessButton);
+                    }
+                  
+                    function addFilterListeners() {
+                      const filters = document.querySelectorAll(".checkbox-container input[type='checkbox']");
+                      filters.forEach((filter) => {
+                        filter.addEventListener("change", fetchDataAndPopulateTable);
+                      });
+                  
+                      const sliders = [
+                        document.getElementById("10th-percentage-slider"),
+                        document.getElementById("12th-percentage-slider"),
+                        document.getElementById("grad-percentage-slider"),
+                      ];
+                  
+                      sliders.forEach((slider) => {
+                        slider.addEventListener("input", fetchDataAndPopulateTable);
+                      });
+                  
+                      const tenthSlider = document.getElementById("10th-percentage-slider");
+                      const twelfthSlider = document.getElementById("12th-percentage-slider");
+                      const gradSlider = document.getElementById("grad-percentage-slider");
+                  
+                      tenthSlider.addEventListener("input", () => {
+                        document.getElementById("10th-percentage-label").textContent =
+                          tenthSlider.value;
+                      });
+                      twelfthSlider.addEventListener("input", () => {
+                        document.getElementById("12th-percentage-label").textContent =
+                          twelfthSlider.value;
+                      });
+                      gradSlider.addEventListener("input", () => {
+                        document.getElementById("grad-percentage-label").textContent =
+                          gradSlider.value;
+                      });
+                  
+                      const topNFilter = document.getElementById("top-n-filter");
+                      topNFilter.addEventListener("change", fetchDataAndPopulateTable);
+                    }
+                  
+                    async function fetchDataAndPopulateTable() {
+  const tableContainer = document.getElementById("table-container");
+  const loader = document.createElement("div");
+  loader.className = "loader";
+  tableContainer.appendChild(loader);
+
+  try {
+    const queryParams = getQueryParams();
+    const url = "api/batch_data/emp_band_data" + queryParams;
+    const response = await fetch(url);
+    let data = await response.json();
+
+    // Sort data in descending order based on total_score
+    data.sort((a, b) => b.total_score - a.total_score);
+
+    // Apply top N filter if selected
+    const topN = document.getElementById("top-n-filter").value;
+    if (topN === "10" || topN === "50" || topN === "100") {
+      data = data.slice(0, parseInt(topN));
+    }
+
+    populateTable(data);
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to load data. Please try again later.");
+  } finally {
+    loader.remove();
+  }
+}
+
+                  
+                    function getQueryParams() {
+                      const degreeFilter = getSelectedCheckboxes(document.getElementById("degree-filter"));
+                      const branchFilter = getSelectedCheckboxes(document.getElementById("branch-filter"));
+                      const yearFilter = getSelectedCheckboxes(document.getElementById("year-filter"));
+                      const empBandFilter = getSelectedCheckboxes(document.getElementById("emp-band-filter"));
+                      const empBestBandFilter = getSelectedCheckboxes(document.getElementById("emp-best-band-filter"));
+                      const tenthPercentage = document.getElementById("10th-percentage-slider").value;
+                      const twelfthPercentage = document.getElementById("12th-percentage-slider").value;
+                      const gradPercentage = document.getElementById("grad-percentage-slider").value;
+                  
+                      const params = new URLSearchParams();
+                      if (degreeFilter.length > 0) params.append("degree", degreeFilter);
+                      if (branchFilter.length > 0) params.append("branch", branchFilter);
+                      if (yearFilter.length > 0) params.append("year", yearFilter);
+                      if (empBandFilter.length > 0) params.append("empBand", empBandFilter);
+                      if (empBestBandFilter.length > 0) params.append("empBestBand", empBestBandFilter);
+                      params.append("tenthPercentage", tenthPercentage);
+                      params.append("twelfthPercentage", twelfthPercentage);
+                      params.append("gradPercentage", gradPercentage);
+                  
+                      return "?" + params.toString();
+                    }
+                  
+                    function getSelectedCheckboxes(container) {
+                      const selectedCheckboxes = Array.from(container.querySelectorAll("input[type='checkbox']:checked"))
+                        .map((checkbox) => checkbox.value);
+                      return selectedCheckboxes.join(",");
+                    }
+                  
+                    const headerMapping = {
+                      name: "Name",
+                      email: "Email",
+                      roll_number: "Roll Number",
+                     phone: "Phone",
+                     college_id: "College id",
+                      yop: "YOP",
+                      btechdegree: "Degree",
+                      btechbranch: "Branch",
+                      total_score: "Total Score",
+                      aptitude: "Aptitude",
+                      coding: "Coding",
+                      english: "English",
+                      employability_band: "Employability Band",
+                      possible_employability_band: "Best Employability Band",
+                      profile_score: "Profile Score",
+                      github_id: "GitHub ID",
+                      linkedin_id: "LinkedIn ID",
+                      hacker_rank_id: "HackerRank ID",
+                      leet_code_id: "LeetCode ID",
+                      tenth_cgpa: "10th %",
+                      twelfth_cgpa: "12th %",
+                      btech_cgpa: "B.Tech %",
+                      codingscore: "Coding Score",
+                      codingaccuracy: "Coding Accuracy %",
+                      javascore: "Java Score",
+                      javaaccuracy: "Java Accuracy %",
+                      pythonscore: "Python Score",
+                      pythonaccuracy: "Python Accuracy",
+                      cscore: "C Score",
+                      caccuracy: "C Accuracy %",
+                      cppscore: "C++ Score",
+                      cppaccuracy: "C++ Accuracy %",
+                      sqlscore: "SQL Score",
+                      sqlaccuracy: "SQL Accuracy %",
+                      comment: "Comment",
+                      aptitude_improvement_suggestions: "Aptitude Improvement Suggestions",
+                      technical_improvement_suggestions: "Technical Improvement Suggestions",
+                      english_improvement_suggestions: "English Improvement Suggestions",
+                      // Add more mappings as needed
+                    };
+                  
+                    const defaultMessages = {
+                      coding: "NA",
+                      codingscore: "NA",
+                      codingaccuracy: "NA",
+                      javascore: "NA",
+                      javaaccuracy: "NA",
+                      pythonscore: "NA",
+                      pythonaccuracy: "NA",
+                      cscore: "NA",
+                      caccuracy: "NA",
+                      cppscore: "NA",
+                      cppaccuracy: "NA",
+                      sqlscore: "NA",
+                      sqlaccuracy: "NA",
+                      // Add more defaults as needed
+                    };
+                  
+                    function populateTable(data) {
+                      const table = document.getElementById("data-table");
+    const tableHead = table.querySelector("thead tr");
+    const tableBody = table.querySelector("tbody");
+
+    tableHead.innerHTML = "";
+    tableBody.innerHTML = "";
+
+    if (data.length > 0) {
+        const headers = Object.keys(data[0]);
+        const headersToDisplay = headers.filter((header) => header !== "id");
+
+        // Add a "Select All" button
+        const selectHeader = document.createElement("th");
+        const selectAllButton = document.createElement("button");
+        selectAllButton.id = "selectAllButton";
+        selectAllButton.textContent = "Select All";
+        selectAllButton.className = "tofro"; // Add this line
+        selectHeader.appendChild(selectAllButton);
+        tableHead.appendChild(selectHeader);
+
+        headersToDisplay.forEach((header) => {
+            const th = document.createElement("th");
+            th.textContent = headerMapping[header];
+            tableHead.appendChild(th);
+        });
+
+        data.forEach((rowData) => {
+            const row = document.createElement("tr");
+
+            // Add a checkbox for each row
+            const selectCell = document.createElement("td");
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.value = rowData.id; // Use a unique identifier for the row
+            checkbox.dataset.rowId = rowData.id; // Add data-row-id attribute
+            selectCell.appendChild(checkbox);
+            row.appendChild(selectCell);
+
+            headersToDisplay.forEach((header) => {
+                const cell = document.createElement("td");
+
+                if (header === "employability_band" || header === "possible_employability_band") {
+                    cell.textContent = rowData[header] || "NA";
+                } else if (header === "name" || header === "github_id" || header === "linkedin_id" || header === "hacker_rank_id" || header === "leet_code_id") {
+                    const anchor = document.createElement("a");
+                    anchor.href = rowData[header];
+                    anchor.textContent = rowData[header] || "NA";
+                    cell.appendChild(anchor);
+                } else {
+                    cell.textContent = rowData[header] !== null && rowData[header] !== undefined ? rowData[header] : "NA";
+                }
+
+                row.appendChild(cell);
+            });
+            tableBody.appendChild(row);
+        });
+    } else {
+        const noDataRow = document.createElement("tr");
+        const noDataCell = document.createElement("td");
+        noDataCell.textContent = "No data available";
+        noDataCell.colSpan = tableHead.children.length || 1;
+        noDataRow.appendChild(noDataCell);
+        tableBody.appendChild(noDataRow);
+    }
+}
+                  
+                    function downloadTableAsExcel(tableId, filename) {
+                      const table = document.getElementById(tableId);
+                      const workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+                      XLSX.writeFile(workbook, filename);
+                    }
+                  </script>
+                  
+
+                  
+    
+
+    <!-----------User Details Fetching---------------------->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Function to get the value of a cookie by name
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+
+        // Get the JWT token from the cookie
+        const token = getCookie("userAdminToken");
+
+        if (token) {
+          // Decode the JWT token
+          const decoded = jwt_decode(token);
+
+          // Display the username and role
+          document.querySelector(".userN").textContent = decoded.email;
+          document.querySelector(".userR").textContent = decoded.role;
+        } else {
+          // Handle the case where the token is not found
+          document.querySelector(".userN").textContent = "No user logged in";
+          document.querySelector(".userR").textContent = "";
+        }
+      });
+    </script>
+    <!---------Logout module----------->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const logoutButton = document.getElementById("logoutButton");
+        const logoutModal = document.getElementById("logoutModal");
+        const modalContent = logoutModal.querySelector(".modal-content");
+        const confirmLogoutButton =
+          modalContent.querySelector("#confirmLogout");
+        const cancelLogoutButton = modalContent.querySelector("#cancelLogout");
+
+        logoutButton.addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default behavior of the button
+
+          // Show the modal
+          logoutModal.style.display = "block";
+
+          // Add event listeners to the modal buttons
+          confirmLogoutButton.addEventListener("click", function () {
+            // If user confirms, navigate to /logout
+            window.location.href = "/logout";
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          cancelLogoutButton.addEventListener("click", function () {
+            // If user cancels, hide the modal
+            logoutModal.style.display = "none";
+          });
+
+          // Add event listener to the close span
+          closeSpan.addEventListener("click", function () {
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          // Add event listener to the modal itself to close when clicked outside
+          window.addEventListener("click", function (event) {
+            if (event.target === logoutModal) {
+              logoutModal.style.display = "none"; // Hide the modal
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>College Page</title>
+  <link rel="icon" type="image/x-icon" href="img/sidebar logo.png" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://fonts.GOOGLEapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/nav_log.css" />
+  <link rel="stylesheet" href="css/college.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+  <script>
+    window.userRole = "<%= user.role %>";
+  </script>
+  <script src="js/rolebase.js"></script>
+  
+</head>
+
+<body>
+  <div class="supercss">
+    <div class="sidebar">
+      <a class="logo" style="text-align: center; align-items: center; padding: 5px">
+        <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 100%; height: 90px" />
+      </a>
+      <a href="myDashboard" style="background-color: transparent">
+        <div class="menu-item active">
+          <img src="img/dash_white.png" alt="dash" style="max-width: 22px; height: 22px" />
+          <span style="color: white">Dashboard</span>
+        </div>
+      </a>
+      <a href="employabilityReport" class="menu-item">
+        <img src="img/emp.png" alt="employability" style="max-width: 18px; height: 20px" /><span>Employability</span>
+      </a>
+      <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+        <img alt="Assessment icon" src="img/assessment.png" style="max-width: 19px; height: 19.5px" />
+        <span>Assessments</span></a>
+
+      <a href="jobsDashboard" class="menu-item">
+        <img src="img/jobs.png" alt="jobs" style="max-width: 20px; height: 21px" /><span>Jobs</span>
+      </a>
+      <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/" class="menu-item">
+        <img alt="course icon" src="img/course.png" style="max-width: 19px; height: 20px" />
+        <span>Course</span></a>
+      <a href="https://admin.hackathon.blackbucks.me/lessonPlan/" class="menu-item">
+        <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width: 23px; height: 18px" />
+        <span>Lesson Plan</span></a>
+
+      <a href="trainingsDashboard" class="menu-item">
+        <img src="img/trainings.png" alt="trainings" style="max-width: 27px; height: 21px" /><span>Trainings</span>
+      </a>
+      <a href="internshipsDashboard" class="menu-item">
+        <img src="img/internship_whiteicon.png" alt="manage"
+          style="width: 20px; height: auto" /><span>Internships</span>
+      </a>
+      <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/" class="menu-item">
+        <img alt="vpl icon" src="img/vpl.png" style="max-width: 19px; height: 17px" />
+        <span>VPL</span></a>
+    </div>
+
+    <div class="css">
+      <div class="css0">
+        <div class="css0">
+          <div class="navbar">
+            <div class="nav1"></div>
+            <div class="nav2">
+              <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                <div class="chakra-stack css-nr8aow">
+                  <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0" />
+                </div>
+              </a>
+              <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem">
+                <div class="chakra-stack css-nr8aow">
+                  <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0" />
+                </div>
+              </a>
+              <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem">
+                <div class="chakra-stack css-nr8aow">
+                  <div class="css-1edim3w">
+                    <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj" />
+                    <div class="css-1bac456">
+                      <div class="css-1rkwksi">1</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <button type="button" class="navbtn" id="userButton">
+                <span class="user-details">
+                  <div class="user">
+                    <span class="user-profile">
+                      <i class="fa-solid fa-circle-user" style="font-size: 30px"></i>
+                    </span>
+                    <div class="username">
+                      <p class="userN"></p>
+                      <p class="userR"></p>
+                    </div>
+                  </div>
+                </span>
+                <span class="chakra-button__icon css-1hzyiq5">
+                  <svg viewBox="0 0 16 16" height="12px" width="12px" aria-hidden="true" focusable="false"
+                    fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                    <path fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z">
+                    </path>
+                  </svg>
+                </span>
+              </button>
+
+              <button type="button" class="logoutbtn" id="logoutButton" style="display: none">
+                Log out
+              </button>
+            </div>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const userButton = document.getElementById("userButton");
+                const logoutButton = document.getElementById("logoutButton");
+
+                userButton.addEventListener("click", () => {
+                  if (logoutButton.style.display === "none") {
+                    logoutButton.style.display = "flex";
+                    logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight
+                      }px`;
+                    logoutButton.style.left = `${userButton.offsetLeft}px`;
+                  } else {
+                    logoutButton.style.display = "none";
+                  }
+                });
+
+                logoutButton.addEventListener("click", () => {
+                  // Add your logout logic here
+                  console.log("User logged out");
+                });
+              });
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <div class="css1">
+        <div class="main-container">
+          <div class="galleryContainer">
+            <div class="banner">
+              <div class="logoo">
+                <img src="img/sidebar logo.png" alt="Logo">
+              </div>
+              <div class="info">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-video">
+                    <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                  </svg>
+                  5 Videos, 25 Photos
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="college-info">
+              <h2 style="margin-bottom: 0">Malla Reddy University</h2>
+              <div style="display: flex; align-items: center; margin-top: 5px;">
+                <img src="img/location.svg" alt="" width="15px" height="15px" style="margin-right: 5px;"> <p style="margin: 0; color: #505050; font-size: 12px">
+                Hyderabad, Telangana
+              </p></div>
+
+              <p class="institute">Private institute</p>
+              
+            </div>
+           
+          </div>
+
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="overview">
+              College Info
+            </button>
+            <button class="tab-btn" data-tab="courses">Courses</button>
+            <button class="tab-btn" data-tab="placements">Placements</button>
+            <button class="tab-btn" data-tab="ranking">Ranking</button>
+            <button class="tab-btn" data-tab="infrastructure">Infrastructure</button>
+          </div>
+
+          <div style="display: flex; flex-direction: row; justify-content: space-between;">
+            <div class="tab-content" style="width: 70%">
+              <!------------------Overview-------------------->
+              <div id="overview" class="tab-pane active">
+                <div style="
+                      display: flex;
+                      flex-direction: row;
+                      justify-content: space-between;
+                    ">
+                  <div class="ov1">
+
+                    <div class="ov01">
+                      <div class="college-name">
+                        <h2>Malla Reddy College</h2>
+                      </div>
+                      <p style="font-size: 12px;">Established in 1995, (blackbucks) is an autonomous institute under UGC. Blackbucks is affiliated with JNTU-Hyderabad. The institute offers UG, PG and PhD courses across multiple Engineering streams. Blackbucks offers these courses to students under various departments such as Automobile Engineering, Civil Engineering, Electrical and Electronics Engineering, Humanities and Sciences and Information Technology, among others.  offers professional expertise to its students through its trained & experienced faculty. Candidates can check the highlights of Blackbucks in the table provided below:</p>
+                    </div>
+
+
+                    <div class="ov11">
+                      <h2>Overview</h2>
+                      <hr>
+                      <div class="ov11-content" style="display: flex; flex-direction: column;">
+                        <div class="ov11cc" style="display: flex; flex-direction: row; justify-content: space-between;">
+                          <div class="Ov11-c">
+                           
+                            <div style="display: flex; flex-direction: column; text-align: left;">
+                              <p style="margin: 0; font-size: 12px;">Total Students in Taptap</p>
+                              <p style="margin: 0px; font-weight: 600; font-size: 16px;">1000</p>
+                            </div>
+                            <div>
+                              <span style=" background-color: rgba(121, 98, 189, 0.2);"><img src="img/ov1.svg" alt="Students" width="20px" height="20px"></span>
+                            </div>
+                          </div>
+                          <div class="Ov11-c">
+                            
+                            <div style="display: flex; flex-direction: column; text-align: left;">
+                              <p style="margin: 0; font-size: 12px;">Placed Students</p>
+                              <p style="margin: 0px; font-weight: 600; font-size: 16px;">200</p>
+                            </div>
+                            <div>
+                              <span style=" background-color: rgba(121, 98, 189, 0.2);"><img src="img/ov2.svg" alt="Students" width="20px" height="20px"></span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ov11cc" style="display: flex; flex-direction: row; justify-content: space-between;">
+                          <div class="Ov11-c">
+                            
+                            <div style="display: flex; flex-direction: column; text-align: left;">
+                              <p style="margin: 0; font-size: 12px;">Alumni</p>
+                              <p style="margin: 0px; font-weight: 600; font-size: 16px;">800</p>
+                            </div>
+                            <div>
+                              <span style=" background-color: rgba(121, 98, 189, 0.2);"><img src="img/ov3.svg" alt="Students" width="20px" height="20px"></span>
+                            </div>
+
+                          </div>
+                          <div class="Ov11-c">
+                           
+                            <div style="display: flex; flex-direction: column; text-align: left;">
+                              <p style="margin: 0; font-size: 12px;">Average Employability Score</p>
+                              <p style="margin: 0px; font-weight: 600; font-size: 16px;">80</p>
+                            </div>
+                            <div>
+                              <span style=" background-color: rgba(121, 98, 189, 0.2);"><img src="img/ov4.svg" alt="Students" width="20px" height="20px"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="ov12">
+                      <div style="display:flex;justify-content: space-between;">
+                        <h2>Placed Students</h2>
+
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                          <button class="cssbuttons-io"><span style="color: #000;">View more</span></button>
+                        </div>
+                      </div>
+                      <div class="placedStudentsContainer">
+                        <table class="styled-table">
+                          <thead>
+                              <tr>
+                                  <th>Name</th>
+                                  <th>Reg No</th>
+                                  <th>Branch</th>
+                                  <th>Year</th>
+                                  <th>Company</th>
+                                  <th>Salary</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td><div class="user-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                  </div><span>Kavitha Narnepati</span></td>
+                                  <td>123654789</td>
+                                  <td>CSE</td>
+                                  <td>2024</td>
+                                  <td>Google</td>
+                                  <td>12LPA</td>
+                              </tr>
+                              <tr>
+                                  <td><div class="user-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                  </div><span>Kavitha Narnepati</span></td>
+                                  <td>123654789</td>
+                                  <td>CSE</td>
+                                  <td>2024</td>
+                                  <td>Google</td>
+                                  <td>12LPA</td>
+                              </tr>
+                              <tr>
+                                  <td><div class="user-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                  </div><span>Kavitha Narnepati</span></td>
+                                  <td>123654789</td>
+                                  <td>CSE</td>
+                                  <td>2024</td>
+                                  <td>Google</td>
+                                  <td>12LPA</td>
+                              </tr>
+                              <tr>
+                                  <td><div class="user-icon">
+                                    <i class="fa-solid fa-user"></i>
+                                  </div><span>Kavitha Narnepati</span></td>
+                                  <td>123654789</td>
+                                  <td>CSE</td>
+                                  <td>2024</td>
+                                  <td>Google</td>
+                                  <td>12LPA</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                    </div>
+                      <div class="pagination">
+                          <a href="#">Previous</a>
+                          <a class="active" href="#">1</a>
+                          <a href="#">2</a>
+                          <a href="#">3</a>
+                          <a href="#">4</a>
+                          <span>.....</span>
+                          <a href="#">10</a>
+                          <a href="#">Next</a>
+                      </div>
+                    </div>
+                    <hr />
+
+                    <div class="ov13" style="padding: 10px;">
+                      <h2>Alumni</h2>
+                      
+                      <div class="al-container al-alumni">
+                        <div style="display: flex; flex-direction: row;  float: right;">
+                        <button class="al-prev-btn" style="margin-right: 4px;"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="al-next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+                      </div>
+                        <div class="al-carousel">
+                            
+                            <div class="al-cards">
+                                <div class="al-card">
+                                  <div class="al-bg">
+                                    <img src="img/background.svg" alt="background" class="al-bg-img">
+                                    <img src="img/user.svg" alt="Esther Howard" class="al-profile-img">
+                                </div>
+                                <div style="padding: 10px;">
+                                    <h3>Esther Howard</h3>
+                                    <p>Junior Software Development Engineer | Mern Stack | Web design</p>
+                                    <button class="al-profile-btn">View Profile</button>
+                                </div></div>
+                                <div class="al-card">
+                                  <div class="al-bg">
+                                    <img src="img/background.svg" alt="background" class="al-bg-img">
+                                    <img src="img/user.svg" alt="Esther Howard" class="al-profile-img">
+                                </div>
+                                <div style="padding: 10px;">
+                                  <h3>Esther Howard</h3>
+                                  <p>Junior Software Development Engineer | Mern Stack | Web design</p>
+                                  <button class="al-profile-btn">View Profile</button>
+                              </div></div>
+                                <div class="al-card">
+                                  <div class="al-bg">
+                                    <img src="img/background.svg" alt="background" class="al-bg-img">
+                                    <img src="img/user.svg" alt="Esther Howard" class="al-profile-img">
+                                </div>
+                                <div style="padding: 10px;">
+                                  <h3>Esther Howard</h3>
+                                  <p>Junior Software Development Engineer | Mern Stack | Web design</p>
+                                  <button class="al-profile-btn">View Profile</button>
+                              </div></div>
+                            </div>
+                        </div>
+                        <div class="al-pagination">
+                            <span class="al-dot al-active"></span>
+                            <span class="al-dot"></span>
+                            <span class="al-dot"></span>
+                        </div>
+                    </div>
+                
+                    </div>
+
+                    <hr />
+
+                    <div class="ov14">
+                      <h2>Total Students</h2>
+                      <div class="filters">
+                        <div class="branches button-container">
+                          <button class='branch' onclick="filterBranch('CSE')">CSE</button>
+                          <button class='branch' onclick="filterBranch('ECE')">ECE</button>
+                          <button class='branch' onclick="filterBranch('MECH')">MECH</button>
+                        </div>
+                        <div class="year-filter-container">
+                          <select id="year-filter" onchange="filterStudents()">
+                            <option value="">Current Year </option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="project1">
+                        <ul class="responsive-table">
+                          <li class="table-header">
+                            <div class="col col-1">Name</div>
+                            <div class="col col-2">Regno</div>
+                            <div class="col col-3">Branch</div>
+                            <div class="col col-4">Year</div>
+                            <div class="col col-5">Average Emp Score</div>
+                          </li>
+                          <li class="table-row">
+                            <div class="col col-1" data-label="Name">
+                              <img src="img/user.svg" alt="User Image">
+                              Kavitha Narnapati
+                            </div>
+                            <div class="col col-2" data-label="Regno">CRN001</div>
+                            <div class="col col-3" data-label="Branch">CRN001</div>
+                            <div class="col col-4" data-label="Year">2020</div>
+                            <div class="col col-5" data-label="Average Emp Score"><span class="marks">85%</span></div>
+                          </li>
+                          <li class="table-row">
+                            <div class="col col-1" data-label="Name">
+                              <img src="img/user.svg" alt="User Image">
+                              Kavitha Narnapati
+                            </div>
+                            <div class="col col-2" data-label="Regno">CRN001</div>
+                            <div class="col col-3" data-label="Branch">CRN001</div>
+                            <div class="col col-4" data-label="Year">2020</div>
+                            <div class="col col-5" data-label="Average Emp Score"><span class="marks">85%</span></div>
+                          </li>
+                          <li class="table-row">
+                            <div class="col col-1" data-label="Name">
+                              <img src="img/user.svg" alt="User Image">
+                              Kavitha Narnapati
+                            </div>
+                            <div class="col col-2" data-label="Regno">CRN001</div>
+                            <div class="col col-3" data-label="Branch">CRN001</div>
+                            <div class="col col-4" data-label="Year">2020</div>
+                            <div class="col col-5" data-label="Average Emp Score"><span class="marks">85%</span></div>
+                          </li>
+                          <li class="table-row">
+                            <div class="col col-1" data-label="Name">
+                              <img src="img/user.svg" alt="User Image">
+                              Kavitha Narnapati
+                            </div>
+                            <div class="col col-2" data-label="Regno">CRN001</div>
+                            <div class="col col-3" data-label="Branch">CRN001</div>
+                            <div class="col col-4" data-label="Year">2020</div>
+                            <div class="col col-5" data-label="Average Emp Score"><span class="marks">85%</span></div>
+                          </li>
+                          <!-- Repeat for other rows -->
+                        </ul>
+                        
+                      </div>
+
+                    </div>
+                    <hr />
+
+                    <div class="ov15" style="margin-bottom: 30px">
+                      <h2>Top 100 Students</h2>
+                      <div class="table-container">
+                        <div class="project1">
+                          <div class=" table-wrapper">
+                            <table id="studentTable">
+                              <thead>
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Email</th>
+                                  <th>Marks</th>
+                                  <th>Aptitude</th>
+                                  <th>English</th>
+                                  <th>Coding</th>
+                                  <th>Emp Band</th>
+                                  <th>Best Possible Band</th>
+                                  <th>Aptitude Improvement Suggestion</th>
+                                  <th>English Improvement Suggestion</th>
+                                  <th>Coding Improvement Suggestion</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>John Doe</td>
+                                  <td>john.doe@example.com</td>
+                                  <td><span class="marks">85</span></td>
+                                  <td>90</td>
+                                  <td>88</td>
+                                  <td>80</td>
+                                  <td>B</td>
+                                  <td>A</td>
+                                  <td>Practice more quantitative problems</td>
+                                  <td>Read more English literature</td>
+                                  <td>Participate in coding challenges</td>
+                                </tr>
+                                <tr>
+                                  <td>Jane Smith</td>
+                                  <td>jane.smith@example.com</td>
+                                  <td><span class="marks">78</span></td>
+                                  <td>75</td>
+                                  <td>80</td>
+                                  <td>85</td>
+                                  <td>C</td>
+                                  <td>B</td>
+                                  <td>Review algebra topics</td>
+                                  <td>Improve vocabulary</td>
+                                  <td>Work on data structures</td>
+                                </tr>
+                                <tr>
+                                  <td>Mark Wilson</td>
+                                  <td>mark.wilson@example.com</td>
+                                  <td><span class="marks">92</span></td>
+                                  <td>89</td>
+                                  <td>85</td>
+                                  <td>95</td>
+                                  <td>A</td>
+                                  <td>A</td>
+                                  <td>Practice logical reasoning</td>
+                                  <td>Enhance writing skills</td>
+                                  <td>Focus on algorithm efficiency</td>
+                                </tr>
+                                <tr>
+                                  <td>Linda Taylor</td>
+                                  <td>linda.taylor@example.com</td>
+                                  <td><span class="marks">88</span></td>
+                                  <td>82</td>
+                                  <td>90</td>
+                                  <td>87</td>
+                                  <td>B</td>
+                                  <td>A</td>
+                                  <td>Work on speed math</td>
+                                  <td>Read technical articles</td>
+                                  <td>Join coding bootcamps</td>
+                                </tr>
+                                <tr>
+                                  <td>David Brown</td>
+                                  <td>david.brown@example.com</td>
+                                  <td><span class="marks">81</span></td>
+                                  <td>85</td>
+                                  <td>86</td>
+                                  <td>82</td>
+                                  <td>B</td>
+                                  <td>A</td>
+                                  <td>Practice problem solving</td>
+                                  <td>Read novels</td>
+                                  <td>Build projects</td>
+                                </tr>
+                                <tr>
+                                  <td>Sarah Lee</td>
+                                  <td>sarah.lee@example.com</td>
+                                  <td><span class="marks">79</span></td>
+                                  <td>78</td>
+                                  <td>79</td>
+                                  <td>80</td>
+                                  <td>C</td>
+                                  <td>B</td>
+                                  <td>Improve math skills</td>
+                                  <td>Enhance grammar</td>
+                                  <td>Learn new languages</td>
+                                </tr>
+                                <tr>
+                                  <td>Paul Adams</td>
+                                  <td>paul.adams@example.com</td>
+                                  <td><span class="marks">91</span></td>
+                                  <td>92</td>
+                                  <td>90</td>
+                                  <td>93</td>
+                                  <td>A</td>
+                                  <td>A</td>
+                                  <td>Solve puzzles</td>
+                                  <td>Read scientific articles</td>
+                                  <td>Participate in hackathons</td>
+                                </tr>
+                                <tr>
+                                  <td>Emily Clark</td>
+                                  <td>emily.clark@example.com</td>
+                                  <td><span class="marks">84</span></td>
+                                  <td>83</td>
+                                  <td>87</td>
+                                  <td>85</td>
+                                  <td>B</td>
+                                  <td>A</td>
+                                  <td>Practice mental math</td>
+                                  <td>Watch documentaries</td>
+                                  <td>Contribute to open source</td>
+                                </tr>
+                                <tr>
+                                  <td>Michael Lewis</td>
+                                  <td>michael.lewis@example.com</td>
+                                  <td><span class="marks">86</span></td>
+                                  <td>88</td>
+                                  <td>85</td>
+                                  <td>89</td>
+                                  <td>B</td>
+                                  <td>A</td>
+                                  <td>Take online courses</td>
+                                  <td>Write essays</td>
+                                  <td>Solve coding problems</td>
+                                </tr>
+                                <tr>
+                                  <td>Olivia Harris</td>
+                                  <td>olivia.harris@example.com</td>
+                                  <td><span class="marks">90</span></td>
+                                  <td>91</td>
+                                  <td>92</td>
+                                  <td>88</td>
+                                  <td>A</td>
+                                  <td>A</td>
+                                  <td>Work on logic puzzles</td>
+                                  <td>Read research papers</td>
+                                  <td>Attend coding meetups</td>
+                                </tr>
+                                <tr>
+                                  <td>James Walker</td>
+                                  <td>james.walker@example.com</td>
+                                  <td><span class="marks">82</span></td>
+                                  <td>80</td>
+                                  <td>83</td>
+                                  <td>84</td>
+                                  <td>B</td>
+                                  <td>A</td>
+                                  <td>Practice pattern recognition</td>
+                                  <td>Read newspapers</td>
+                                  <td>Build mobile apps</td>
+                                </tr>
+                                <tr>
+                                  <td>Sophia Robinson</td>
+                                  <td>sophia.robinson@example.com</td>
+                                  <td><span class="marks">87</span></td>
+                                  <td>86</td>
+                                  <td>88</td>
+                                  <td>87</td>
+                                  <td>B</td>
+                                  <td>A</td>
+                                  <td>Solve brainteasers</td>
+                                  <td>Join a book club</td>
+                                  <td>Learn frameworks</td>
+                                </tr>
+                                <tr>
+                                  <td>William Hall</td>
+                                  <td>william.hall@example.com</td>
+                                  <td><span class="marks">89</span></td>
+                                  <td>90</td>
+                                  <td>91</td>
+                                  <td>90</td>
+                                  <td>A</td>
+                                  <td>A</td>
+                                  <td>Participate in math competitions</td>
+                                  <td>Write articles</td>
+                                  <td>Build web applications</td>
+                                </tr>
+                                <tr>
+                                  <td>Isabella Young</td>
+                                  <td>isabella.young@example.com</td>
+                                  <td><span class="marks">83</span></td>
+                                  <td>81</td>
+                                  <td>85</td>
+                                  <td>82</td>
+                                  <td>B</td>
+                                  <td>A</td>
+                                  <td>Study logic games</td>
+                                  <td>Read essays</td>
+                                  <td>Learn backend development</td>
+                                </tr>
+                                <tr>
+                                  <td>Henry King</td>
+                                  <td>henry.king@example.com</td>
+                                  <td><span class="marks">80</span></td>
+                                  <td>79</td>
+                                  <td>81</td>
+                                  <td>78</td>
+                                  <td>C</td>
+                                  <td>B</td>
+                                  <td>Improve numerical skills</td>
+                                  <td>Practice speaking</td>
+                                  <td>Work on coding challenges</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+
+                        </div>
+
+
+                      </div>
+
+                      <div id="paginationControlsStudent" class="pagination"></div>
+                    </div>
+                    <hr>
+                
+                  </div>
+                </div>
+
+                <p style="font-size: 12px; padding: 20px">
+                  <strong>Note:</strong> College profiles are based primarily
+                  on information supplied by the colleges themselves through
+                  participation in College Board's BigFuture College Profiles
+                  higher education data collection portal, with some data
+                  provided via federal and state agencies. Costs, dates,
+                  policies, and programs are subject to change, so please
+                  confirm important facts with college admission personnel.
+                </p>
+              </div>
+
+              <!--------------courses-------------->
+              <div id="courses" class="tab-pane">
+                <div class="course-card">
+                  <div class="course-header">
+                    <h3>B.Tech. in Computer Science and Engineering</h3>
+                    <div class="bookmark-btn">🕮</div>
+                  </div>
+                  <div class="course-details">
+                    <div class="rating" style="font-size: 12px;">
+                      <span>&#11088;</span> 4 years · <span class="rank">101-150 NIRF</span> · Degree by JNTUH - Jawaharlal Nehru Technological University, Hyd...
+                    </div>
+                    <hr>
+                    <div class="course-info">
+                      <div class="info-block">
+                        <p class="info-title">Seats Offered</p>
+                        <p class="info-detail">180</p>
+                      </div>
+                      <div class="info-block">
+                        <p class="info-title">Duration</p>
+                        <p class="info-detail">4 years</p>
+                      </div>
+                      <div class="info-block">
+                        <p class="info-title">Median Salary</p>
+                        <p class="info-detail">₹5 LPA </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="course-card">
+                  <div class="course-header">
+                    <h3>B.Tech. in Computer Science and Engineering</h3>
+                    <div class="bookmark-btn">🕮</div>
+                  </div>
+                  <div class="course-details">
+                    <div class="rating" style="font-size: 12px;">
+                      <span>&#11088;</span> 4 years · <span class="rank">101-150 NIRF</span> · Degree by JNTUH - Jawaharlal Nehru Technological University, Hyd...
+                    </div>
+                    <hr>
+                    <div class="course-info">
+                      <div class="info-block">
+                        <p class="info-title">Seats Offered</p>
+                        <p class="info-detail">180</p>
+                      </div>
+                      <div class="info-block">
+                        <p class="info-title">Duration</p>
+                        <p class="info-detail">4 years</p>
+                      </div>
+                      <div class="info-block">
+                        <p class="info-title">Median Salary</p>
+                        <p class="info-detail">₹5 LPA </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="course-card">
+                  <div class="course-header">
+                    <h3>B.Tech. in Computer Science and Engineering</h3>
+                    <div class="bookmark-btn">🕮</div>
+                  </div>
+                  <div class="course-details">
+                    <div class="rating" style="font-size: 12px;">
+                      <span>&#11088;</span> 4 years · <span class="rank">101-150 NIRF</span> · Degree by JNTUH - Jawaharlal Nehru Technological University, Hyd...
+                    </div>
+                    <hr>
+                    <div class="course-info">
+                      <div class="info-block">
+                        <p class="info-title">Seats Offered</p>
+                        <p class="info-detail">180</p>
+                      </div>
+                      <div class="info-block">
+                        <p class="info-title">Duration</p>
+                        <p class="info-detail">4 years</p>
+                      </div>
+                      <div class="info-block">
+                        <p class="info-title">Median Salary</p>
+                        <p class="info-detail">₹5 LPA </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+
+              <!-------------Placements--------->
+              <div id="placements" class="tab-pane">
+                <div class="ov01">
+                  <div class="college-name">
+                    <h4>Blackbucks Placements 2023:</h4>
+                  </div>
+                  <hr>
+                  <p style="color: #FF914D; font-size: 12px; margin: 0;">What's new regarding Blackbucks placements 2023? 
+                  </p>
+                  <p style="font-size: 12px;">
+                    The 2023 placement session concluded with 1,713 job offers rolled 110 participating companies. The highest package stood at INR 48 LPA and was offered by Google. Additionally, the internship/ PPO stipend offered was INR 87,000 per month. Amazon, Morgan Stanley, NCR Corporation, and other renowned companies participated in <span style="color: #7962BD;">Blackbucks</span> placements 2023.</p>
+                </div>
+
+                <div class="placement-report">
+                  <div class="report-header">
+                    <h4>Blackbucks Placement Report 2023: Highlights</h4>
+                    <select class="year-selector">
+                      <option value="2023">2023</option>
+                      <option value="2022">2022</option>
+                      <option value="2021">2021</option>
+                      <!-- Add more years as needed -->
+                    </select>
+                    
+                  </div>
+                  <ul class="report-table">
+                    <li class="table-header">
+                      <div class="col col-1">No</div>
+                      <div class="col col-2">Particulars</div>
+                      <div class="col col-3">Placement Statistics (2023)</div>
+                    </li>
+                    <li class="table-row">
+                      <div class="col col-1 number ">1</div>
+                      <div class="col col-2" data-label="Particulars">Offers Made</div>
+                      <div class="col col-3" data-label="Placement Statistics (2023)">2,476</div>
+                    </li>
+                    <li class="table-row">
+                      <div class="col col-1 number">2</div>
+                      <div class="col col-2" data-label="Particulars">Companies Offered Jobs</div>
+                      <div class="col col-3" data-label="Placement Statistics (2023)">INR 87,000 Per Month</div>
+                    </li>
+                    <li class="table-row">
+                      <div class="col col-1 number">3</div>
+                      <div class="col col-2" data-label="Particulars">Highest Package</div>
+                      <div class="col col-3" data-label="Placement Statistics (2023)">INR 87,000 Per Month</div>
+                    </li>
+                    <li class="table-row">
+                      <div class="col col-1 number">4</div>
+                      <div class="col col-2" data-label="Particulars">Lowest Package</div>
+                      <div class="col col-3" data-label="Placement Statistics (2023)">INR 87,000 Per Month</div>
+                    </li>
+                    <li class="table-row">
+                      <div class="col col-1 number">5</div>
+                      <div class="col col-2" data-label="Particulars">Highest Internship/ PPO Stipend</div>
+                      <div class="col col-3" data-label="Placement Statistics (2023)">INR 87,000 Per Month</div>
+                    </li>
+                    <li class="table-row">
+                      <div class="col col-1 number">6</div>
+                      <div class="col col-2" data-label="Particulars">Popular Recruiters</div>
+                      <div class="col col-3" data-label="Placement Statistics (2023)">Amazon, Goldman Sachs</div>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="pacakge-tables">
+                  <h4>Blackbucks Average Package 2023</h4>
+                  <p>The average package details for the 2023 drive are not disclosed as of now. However, the Blackbucks highest package and
+                    lowest package are released, which are as follows:</p>
+
+                    <div class="ov01">
+                      <ul class="report-table">
+                        <li class="table-header">
+                          <div class="col col-1">No</div>
+                          <div class="col col-2">Particulars</div>
+                          <div class="col col-3">Placement Statistics (2023)</div>
+                        </li>
+                        <li class="table-row">
+                          <div class="col col-1 number ">1</div>
+                          <div class="col col-2" data-label="Particulars">Highest Package</div>
+                          <div class="col col-3" data-label="Placement Statistics (2023)">INR 48 LPA</div>
+                        </li>
+                        <li class="table-row">
+                          <div class="col col-1 number">2</div>
+                          <div class="col col-2" data-label="Particulars">Lowest Package</div>
+                          <div class="col col-3" data-label="Placement Statistics (2023)">INR 48 LPA</div>
+                        </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="top-recruiters">
+                  <h4>Blackbucks Placements 2023: Top Recruiters</h4>
+                  <p style="font-size: 12px;">Some of the eminent companies that visited the institute campus during 2023 placements are listed below:</p>
+
+                  <div class="ov01">
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                      <h4 style="font-weight: 500;">Top 3 Companies</h4>
+
+                      <select class="year-selector">
+                        <option value="2023">By Highest Packages</option>
+                        <option value="2022">By Highest Placements</option>
+                        <!-- Add more years as needed -->
+                      </select>
+                    </div>
+
+                    <div>
+                      <p style="text-align: center; background-color: #4C4267; color: #fff; padding: 5px;">Blackbucks Placements 2023: Top Recruiters</p>
+                      <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                        <div class="ov01" style="display: flex;flex-direction: row; align-items: center; justify-content: space-between; padding: 10px 20px; width: 30%; margin: 10px;">
+                          <img src="img/google.svg" alt="google" >
+                          <p style="margin: 0; font-size: 14px;">Google</p>
+                        </div>
+                        <div class="ov01" style="display: flex;flex-direction: row; align-items: center; justify-content: space-between; padding: 10px 20px; width: 30%; margin: 10px;">
+                          <img src="img/google.svg" alt="google" >
+                          <p style="margin: 0; font-size: 14px;">Google</p>
+                        </div>
+                        <div class="ov01" style="display: flex;flex-direction: row; align-items: center; justify-content: space-between; padding: 10px 20px; width: 30%; margin: 10px;">
+                          <img src="img/google.svg" alt="google" >
+                          <p style="margin: 0; font-size: 14px;">Google</p>
+                        </div>
+                     </div>
+                    </div>
+                  </div>
+                        <hr>
+
+                        <div class="salary-alumini">
+                          <h4>Salary Data of Alumni</h4>
+
+                          <div class="ov01" style="margin-bottom: 20px;">
+                            <h4>Average Salary of Current Students and Alumni</h4>
+                            <hr>
+                            <div style="width: 600px; height: 300px;">
+                              <canvas id="salaryChart"></canvas>
+                          </div>
+                          </div>
+                            <div class="alumni-report">
+                              <h4>Employers & Industries of Alumni</h4>
+                              <hr>
+                              <div class="search-container1">
+                                  <div class="year-selection">
+                                      <div class="year">
+                                          <label for="start-year">Start Year : </label>
+                                          <button id="start-year">2020</button>
+                                      </div>
+                                      <div class="year">
+                                          <label for="end-year">End Year : </label>
+                                          <button id="end-year">2021</button>
+                                      </div>
+                                  </div>
+                              </div>
+                              <p style="font-weight: 600; font-size: 14px;">124587 Alumni's are working</p>
+                              <div class="statistics">
+                                  <div class="stat-section">
+                                      <h5>Their current Organizations</h5>
+                                      <div class="stat-item">
+                                          <span>9.09% | Thomson Reuters</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 9.09%;"></div></div>
+                                      </div>
+                                      <div class="stat-item">
+                                          <span>9.09% | Adroit Infotech</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 9.09%;"></div></div>
+                                      </div>
+                                      <div class="stat-item">
+                                          <span>9.09% | Cognizant Technologies Solutions</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 9.09%;"></div></div>
+                                      </div>
+                                      <div class="stat-item">
+                                          <span>9.09% | LeanIX</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 9.09%;"></div></div>
+                                      </div>
+                                      <div class="stat-item">
+                                          <span>9.09% | My Home Constructions</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 9.09%;"></div></div>
+                                      </div>
+                                  </div>
+                                  <div class="stat-section">
+                                      <h5>Their Industry</h5>
+                                      <div class="stat-item">
+                                          <span>54.55% | IT-Software/Software Services</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 54.55%;"></div></div>
+                                      </div>
+                                      <div class="stat-item">
+                                          <span>9.09% | Construction/Engineering/Cement/Metals</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 9.09%;"></div></div>
+                                      </div>
+                                      <div class="stat-item">
+                                          <span>9.09% | Industrial Products/Heavy Machinery</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 9.09%;"></div></div>
+                                      </div>
+                                  </div>
+                                  <div class="stat-section">
+                                      <h5>Their Organization type</h5>
+                                      <div class="stat-item">
+                                          <span>18.18% | Foreign MNC</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 18.18%;"></div></div>
+                                      </div>
+                                      <div class="stat-item">
+                                          <span>18.18% | Corporates</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 18.18%;"></div></div>
+                                      </div>
+                                      <div class="stat-item">
+                                          <span>9.09% | Indian MNC (Large Cap)</span>
+                                          <div class="progress"><div class="progress-bar" style="width: 9.09%;"></div></div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                         
+                        </div>
+                        
+                        
+                    
+                   
+                </div>
+                
+              </div>
+
+              <!---------------Ranking-------------->
+              <div id="ranking" class="tab-pane">
+                <div class="ov01">
+                  <div style="display: flex;flex-direction: row; align-items: center;">
+                    <img src="img/bbrank.svg" alt="blackbucks">
+                    <div style="display: flex; flex-direction: column;">
+                    <p style="font-weight: 500; color: gray; margin: 0; font-size: 8px;">Blackbucks</p>
+                    <h4 style="margin: 0;">Ranking Highlight</h4></div>
+                  </div>
+                 <div style="padding:0 20px 20px;">
+                  <p style="font-size: 12px; margin:0;"><span style="color: #7962BD;">Blackbucks </span>holds rankings across diverse categories from various prominent national ranking entities, namely NIRF, India Today, Outlook, etc. These renouned ranking bodies have given VNR VJIET good ranks. Students can view the table to learn more about the VNR VJIET rankings:</p>
+
+                  <div>
+                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                      <p style="color: gray; font-weight: 600; font-size: 12px; margin-bottom: 4px;">Rank publisher & Category</p>
+                      <p style="color: gray; font-weight: 600; font-size: 12px; margin-bottom: 4px;">Rank</p>
+                    </div>
+                    <hr>
+
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+                        <div style="display: flex;flex-direction: row; align-items: center;">
+                          <img src="img/nirf.svg" alt="blackbucks">
+                          <div style="display: flex; flex-direction: column; margin: 10px;">
+                          <p style="font-weight: 600; margin: 0; font-size: 12px;">B.E / B.Tech</p>
+                          <p style="margin: 0; font-size: 12px;">NIRF, 2023</p></div>
+                        </div>
+
+                        <p style="font-size: 14px; font-weight: 600;">#101-150</p>
+
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
+
+              <!-----------------Campus------------------>
+              <div id="infrastructure" class="tab-pane">
+                <div class="ov01">
+                  <h4>Infrastructure</h4>
+                  <hr>
+                  <div id="library" style="display: flex; flex-direction: row; align-items: center;">
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0;  width: 5%;">
+                      <img src="img/library.svg" alt="Library" width="40px" height="40px">
+                      <p style="font-size: 12px; font-weight: 600; margin: 0;">Library</p>
+                    </div>
+                    <p style="font-size: 12px;  margin: 10px 20px 0; width: 80%;">Blackbucks has library with a collection of 15444 titles, 73212 volumes and 13861 reference
+                      books. It is upgraded with Dspace Digital Library Package comprising of more than 2500 e-books
+                      and e-articles. It also has the membership of DELNET and British Library for resource sharing.</p>
+                    
+                  </div>
+
+                  <hr>
+
+                  <div id="hostel" style="display: flex; flex-direction: row; align-items: center;">
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0;  width: 5%;">
+                      <img src="img/hostel.svg" alt="Hostel" width="40px" height="40px">
+                      <p style="font-size: 12px; font-weight: 600; margin: 0;">Hostel</p>
+                    </div>
+                    <p style="font-size: 12px;  margin: 10px 20px 0; width: 80%;">Boys Hostel | Girls Hostel</p>
+                  </div>
+                  <hr>
+
+                  <div id="sports" style="display: flex; flex-direction: row; align-items: center;">
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0; width: 5%;">
+                      <img src="img/sports.svg" alt="Sports" width="40px" height="40px">
+                      <p style="font-size: 12px; font-weight: 600; margin: 0; ">Sports Complex</p>
+                    </div>
+                    <p style="font-size: 12px;  margin: 10px 20px 0; width: 80%;">Available Facilities: Badminton Court | Basketball Court | Cricket Ground | Football Ground | Tennis Court | Hockey Court | Volleyball Court |  Throw-Ball Court | Running Track</p>
+                  </div>
+                  <hr>
+                  <div id="labs" style="display: flex; flex-direction: row; align-items: center;">
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0;  width: 5%;">
+                      <img src="img/labs.svg" alt="Labs" width="40px" height="40px" >
+                      <p style="font-size: 12px; font-weight: 600; margin: 0;"> Labs</p>
+                    </div>
+                    <p style="font-size: 12px;  margin: 10px 20px 0; width: 80%;">Available Facilities: Civil Engineering Lab | Mechanical Lab | Physics Lab | Concrete Technology Lab | Geotechnical Engineering Lab | Control System Lab | Thermodynamics Lab |  Software Engineering Lab | Data Structures Lab</p>
+                  </div>
+                  <hr>
+
+                  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0; width: 5%;">
+                      <img src="img/cafeteria.svg" alt="cafeteria" width="40px" height="40px">
+                      <p style="font-size: 12px; font-weight: 600; margin: 0; ">Cafeteria</p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0; width: 5%;">
+                      <img src="img/gym.svg" alt="Gym" width="40px" height="40px">
+                      <p style="font-size: 12px; font-weight: 600; margin: 0; ">Gym</p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0; width: 5%; align-items: center;">
+                      <img src="img/hospital.svg" alt="hospital" width="40px" height="40px">
+                      <p style="font-size: 12px; font-weight: 600; margin: 0; text-wrap: nowrap; ">Medical Facilities</p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0; width: 5%;">
+                      <img src="img/wifi.svg" alt="wifi" width="40px" height="40px">
+                      <p style="font-size: 12px; font-weight: 600; margin: 0; ">Wifi</p>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column;  margin: 10px 20px 0; width: 5%;">
+                      <img src="img/bus.svg" alt="bus" width="40px" height="40px">
+                      <p style="font-size: 12px; font-weight: 600; margin: 0; ">Bus</p>
+                    </div> 
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <!---------Recomendatoins--------->
+            <div class="ov2">
+              <div class="overlay" id="overlay"></div>
+
+              <div class="ov21" id="ov21">
+                <div class="ov2-card">
+                  <div style="
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        
+                      ">
+                    <span class="ov2-icon">
+                      <i class="fa-solid fa-graduation-cap" style="font-size: 40px; color: #443572;"></i>
+                    </span>
+                  </div>
+
+
+
+                  <h3 style="text-align: center">
+                    Top 10 Students
+                  </h3>
+                  <div class="student-container">
+
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="top-card">
+                      
+                      <div class="top-textBox">
+                        <div class="top-textContent">
+                          <p class="top-h1">Sushma K</p>
+                          <p class="top-p">Employability Score: 89%</p>
+                        </div>
+                        <div>
+                          <span class="top-span">
+                            <i class="fa-solid fa-user-graduate" onclick="toggleTooltip(this)"></i>
+                            <p class="tooltip-text">View Profile</p>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const tabs = document.querySelectorAll(".tab-btn");
+      const panes = document.querySelectorAll(".tab-pane");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // Remove active class from all tabs and panes
+          tabs.forEach((t) => t.classList.remove("active"));
+          panes.forEach((p) => p.classList.remove("active"));
+
+          // Add active class to the clicked tab and corresponding pane
+          tab.classList.add("active");
+          document.getElementById(tab.dataset.tab).classList.add("active");
+        });
+      });
+    });
+ </script>
+
+  <script src="js/college_tables.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/internships.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/internships_common.css">
+    
+   </head>
+   <body>
+    <script>
+        window.userRole = "<%= user.role %>";
+      </script>
+      <script src="js/rolebase.js"></script>
+      
+    <div class="sidebar bottombar">
+        <div class="logo" style="text-align: center; margin-bottom: 35px;align-items:center;padding:5px">
+            <img src="img/sidebar logo.png" alt="Logo" style="width: 90%; max-width: 120px;height:auto;">
+        </div>
+        <a href="myDashboard" class="menu-item">
+            <img src="img/dash_white.png" alt="trainings" style="width: 20px; height: 20px;"><span>My Dashboard</span>
+        </a>
+        <a href="employabilityReport" class="menu-item">
+            <img src="img/emp.png" alt="dash" style="width: 20px; height: 20px;"><span>Employbility</span>
+        </a>
+        <a href="trainingsDashboard" class="menu-item">
+            <img src="img/trainings.png" alt="trainings" style="width: 20px; height: 20px;"><span>Customized Trainings</span>
+        </a>
+        <a href="jobsDashboard" class="menu-item">
+            <img src="img/jobs.png" alt="jobs" style="width: 20px; height: 19px;"><span>Jobs</span>
+        </a>
+        <a href="internshipsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+            <img src="img/internships_black.png" alt="manage" style="width: 25px; height: auto" /><span style="color: black;font-weight:bold">Internships</span>
+        </a>
+    </div>
+      <div class="navbar"></div>
+      <div class="main-container">
+        <div class="roww marginr" style="margin: 20px;">
+            <img src="img/edit.png" alt="internship icon" style="width: 14px; height: 14px; margin-right: 5px">
+            <a href="manage_internships" style="text-decoration: none;">
+                <p class="grey f14 marginr" style="margin: 0;">
+                  Internships <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                </p></a>
+            <p class="f14" style="margin-bottom: 0;">Create New Internship</p>
+          </div>
+
+    <div class="containerfull">
+        <div class="jumbotron">
+            <br>
+            <form id="registrationForm" action="/submit" method="post" enctype="multipart/form-data">
+                <div class="internship-details">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="internship_title">Internship Title<span class="compulsory-mark">*</span></label>
+                            <input type="text" class="form-control" id="internship_title" name="internship_title" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="internship_description">Description of Internship<span class="compulsory-mark">*</span></label>
+                            <input type="text" class="form-control" id="internship_description" name="internship_description" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="internship_hours">No of Hours<span class="compulsory-mark">*</span></label>
+                            <input type="number" class="form-control" id="internship_hours" name="internship_hours" required>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="internship-details-p2">
+                   <div class="left-section">
+                    <div class="col-md-11" style="margin-bottom: 60px;">
+                        <div class="form-group">
+                            <label for="internshiptype"   style="margin-bottom: 20px;">Training Type<span class="compulsory-mark">*</span></label>
+                            <select id="internshiptypeInput" name="internshiptypeInput" class="form-control" required 
+                            >
+                                <option value="" >Search or select your Internship type</option>
+                            </select>
+                            <input type="hidden" id="selectedinternshiptypeId" name="selectedinternshiptypeId">
+                        </div>
+  
+                    </div>
+                    <div class="col-md-11" style="margin-bottom: 25px;">
+                    <div class="row" >
+                        <div class="col-md-6"  style="margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="internship_start_date" >Internship Start Date<span class="compulsory-mark">*</span></label>
+                                <input type="date" class="form-control" id="internship_start_date" name="internship_start_date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6"  style="margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="internship_end_date">Internship End Date<span class="compulsory-mark">*</span></label>
+                                <input type="date" class="form-control" id="internship_end_date" name="internship_end_date" required>
+                            </div>
+                        </div>
+                    </div></div>
+
+                    <script>
+                        // Get the current date
+                        var currentDate = new Date().toISOString().split('T')[0];
+                    
+                        // Set the minimum value for both start and end date inputs to the current date
+                        document.getElementById("internship_start_date").setAttribute("min", currentDate);
+                        document.getElementById("internship_end_date").setAttribute("min", currentDate);
+                    
+                        // Add event listener to the start date input to update the minimum value of the end date input
+                        document.getElementById("internship_start_date").addEventListener("change", function() {
+                            var startDate = this.value;
+                            document.getElementById("internship_end_date").setAttribute("min", startDate);
+                        });
+                    </script>
+                    
+                
+                </div>
+                    <div class="right-section">
+                       
+                    <div class="form-group">
+                        <label for="banner_image">Banner Image<span class="compulsory-mark">*</span></label>
+                        <div class="banner-img">
+                            <div class="upload-container">
+                                <!-- Wrap the image inside a label element -->
+                                <label for="banner_image" class="image-label" style="cursor: pointer;">
+                                    <img id="preview_image" src="img/Frame.png" alt="Upload Icon">
+                                    <p>Drag & Drop your image here or <span class="browse-btn" style="color: cornflowerblue;">click here to browse</span></p>
+                                </label>
+                                <!-- Hide the file input element -->
+                                <input type="file" class="form-control-file" id="banner_image" name="banner_image" style="display: none;" required>
+                            </div>
+                        </div>  
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="banner_image">Logo Image<span class="compulsory-mark">*</span></label>
+                        <div class="banner-img">
+                            <div class="upload-container">
+                                Wrap the image inside a label element -->
+                                <!--<label for="banner_image" class="image-label" style="cursor: pointer;">
+                                    <img id="preview_image" src="img/Frame.png" alt="Upload Icon">
+                                    <p>Drag & Drop your image here or <span class="browse-btn" style="color: cornflowerblue;">click here to browse</span></p>
+                                </label>
+                                 Hide the file input element -->
+                               <!-- <input type="file" class="form-control-file" id="banner_image" name="banner_image" style="display: none;" required>
+                            </div>
+                        </div>  
+                    </div>-->
+                </div>
+                <script>
+                    // Function to display the selected image
+                    function displayImage(input) {
+                        var file = input.files[0];
+                        var reader = new FileReader();
+                
+                        reader.onload = function(e) {
+                            // Set the source of the preview image to the selected image
+                            document.getElementById('preview_image').src = e.target.result;
+                        }
+                
+                        reader.readAsDataURL(file);
+                    }
+                
+                    // Add event listener to file input
+                    document.getElementById('banner_image').addEventListener('change', function() {
+                        displayImage(this);
+                    });
+                </script>
+                
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary-submit">Save & Next</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Select2 for college dropdown
+
+            // Initialize Select2 for internship type dropdown
+            function initInternshipTypeSelect2() {
+                $('#internshiptypeInput').select2({
+                    placeholder: 'Search or select your internship type',
+                    ajax: {
+                        url: '/api/internship_type/data',
+                        processResults: function(data) {
+                            return {
+                                results: data.map(internship => ({
+                                    id: internship.internshiptypeID,
+                                    text: internship.internshiptypeName
+                                }))
+                            };
+                        }
+                    }
+                }).on('change', function(e) {
+                    document.getElementById('selectedinternshiptypeId').value = e.target.value;
+                });
+            }
+            initInternshipTypeSelect2();
+        });
+
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Create a FormData object to collect form data
+            const formData = new FormData(this);
+
+            // Send form data to the server using XMLHttpRequest
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/internship_submit');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    window.location.href = '/success'; // Redirect to a success page
+                } else {
+                    displayErrorMessage('An error occurred while submitting the form.');
+                }
+            };
+            xhr.onerror = function() {
+                displayErrorMessage('Network error occurred while submitting the form.');
+            };
+            xhr.send(formData);
+        });
+
+        function displayErrorMessage(message) {
+            // Create a popup element
+            const popup = document.createElement('div');
+            popup.classList.add('error-popup');
+
+            // Create a close button
+            const closeButton = document.createElement('span');
+            closeButton.classList.add('close-button');
+            closeButton.textContent = '×'; // Use '×' for the close icon
+            closeButton.addEventListener('click', closePopup);
+            popup.appendChild(closeButton);
+
+            const errorImage = document.createElement('img');
+            errorImage.src = 'path/to/errorimg.png'; // Replace with the path to your error image
+            errorImage.alt = 'Error'; // Alt text for accessibility
+            errorImage.classList.add('error-image');
+            popup.appendChild(errorImage);
+
+            // Add error message to the popup
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = message;
+            popup.appendChild(errorMessage);
+
+            // Add popup to the document body
+            document.body.appendChild(popup);
+
+            // Function to close the popup
+            function closePopup() {
+                document.body.removeChild(popup);
+            }
+        }
+    </script>
+</body>
+</html>
+
+      <!-- Add jQuery (required by Select2) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Add Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+   </body>
+</html> 

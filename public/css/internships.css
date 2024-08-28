@@ -1,0 +1,555 @@
+
+body {
+    background-color: #e9e8e8;
+    margin:0;
+    padding:0;
+    font-family: 'Roboto', sans-serif;
+    }
+    .sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+  height: 100%;
+  width: 90px;
+  background-color: #000;
+  color: #fff;
+  padding-top: 20px;
+  z-index: 1000;
+  }
+  .sidebar span{
+  text-align: center;
+  padding: 5px;
+  }
+  
+  .menu-item {
+  color: #fff; /* White text */
+  text-decoration: none;
+  padding: 5px;
+  margin: 10px;
+  font-weight: 600;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: background-color 0.3s ease;
+  font-size:10px;
+  font-family: inherit;
+  margin-bottom:30px;
+  }
+  
+  .menu-item .active{
+  background-color: #88EB4C;
+  }
+  
+  .menu-item:hover {
+  background-color: #88EB4C; /* Slightly darker blue */
+  }
+  
+  .menu-item:not(:focus) ~ .menu-item:focus {
+  background-color: initial; /* Set the default background color when another item is clicked */
+  }
+  /* Media query for screens smaller than 768px (typical tablets and phones) */
+  @media (max-width: 767px) {
+  .bottombar {
+  position: fixed;
+  top:90%;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  padding: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  background-color: #000;
+  border-top: 1px solid #fff; /* Optional: Add a border at the top */
+  }
+  
+  .logo{
+  display: none;
+  }
+  .bottombar .menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  
+  }
+  
+  .bottombar .menu-item img {
+  margin-bottom: 5px;
+  }
+  }
+  .navbar{
+  width: 100%;
+  height: 70px;
+  background-color: white;
+  }
+  
+  .main-container{
+  width: 90%;
+  margin-left: 120px;
+  margin-top: 10px;
+  background-color: white;
+  padding: 10px 40px;
+  border-radius: 5px;
+  margin-right: 20px;
+  }
+    .containerfull {
+    margin-top: 40px;
+    width:100%;
+    }
+  
+    .paging {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  .reg_icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  .circle {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #ccc;
+      display: flex;
+      justify-content: center;
+      border-radius: 50%;
+      align-items: center;
+      padding: 27px;
+  }
+  
+  .circle.active {
+      background-color: #7962BD;
+      border: 4px solid #c3b5ec;
+  }
+  
+  .horizontal-line {
+      width: 15%;
+      height: 4px;
+      margin: 0 20px;
+      background-color: #c3b5ec;
+      border-radius: 50px;
+  }
+  
+  .paging p {
+      font-size: 13px;
+  }
+  
+  .reg_icon {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  
+  .horizontal-line {
+      align-self: center;
+      position: relative;
+      top: -15px; /* Adjust this value based on the height of your circle */
+  }
+  
+  .training-details{
+    display: flex;
+    flex-direction: row;
+    width: 65%;
+    justify-content: space-between;
+  }
+  
+  .training-details-p2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+   
+  }
+  
+  .left-section{
+    width: 50%;
+    margin-top: 40px;
+  }
+  /* Set font size and padding for the Select2 container */
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-size: 13px;
+    padding: 5px; /* Adjust padding as needed */
+    line-height: 1.5; /* Adjust line height as needed */
+    height: auto; /* Make sure height adjusts to content */
+  }
+  
+  /* Set height for the Select2 selection box */
+  .select2-container--default .select2-selection--single {
+    height: 40px; /* Adjust height as needed */
+    display: flex;
+    align-items: center;
+    background-color: rgba(196, 196, 196, 0.2); /* 20% opacity of #C4C4C4 */
+    border: 1px solid rgba(196, 196, 196, 1);
+  }
+  /* Hide default arrow */
+  .select2-container--default .select2-selection__arrow {
+    display: none;
+  }
+  
+  /* Create custom arrow */
+  .select2-container--default .select2-selection__rendered:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent; /* Adjust size as needed */
+    border-right: 6px solid transparent; /* Adjust size as needed */
+    border-top: 6px solid rgba(0, 0, 0, 0.5); /* Color of the arrow */
+    position: absolute;
+    right: 10px; /* Adjust position as needed */
+    top: calc(50% - 3px); /* Adjust position as needed */
+    pointer-events: none;
+  }
+  
+  /* Set font size, padding, and background color for the dropdown options */
+  .select2-container--default .select2-results__option {
+    font-size: 13px;
+    padding: 5px; /* Adjust padding as needed */
+    background-color: rgba(196, 196, 196, 0.2); /* 20% opacity of #C4C4C4 */
+    /* Change to desired background color */
+  }
+  
+  /* Optional: Change the background color on hover */
+  .select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #d0d0d0; /* Change to desired hover background color */
+  }
+  
+  .right-section{
+    width: 50%;
+    margin-top: 30px;
+  }
+  
+  
+    .left-half,
+    .right-half {
+    flex: 1;
+    }
+    .left-half {
+    background: linear-gradient(90deg, #e3ffe7 0%, #d9e7ff 100%);
+    padding: 20px;
+    margin:0;
+    }
+    .right-half {
+    padding: 20px;
+    }
+    .jumbotron {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1px;
+    }
+    .text-primary {
+    color: #7962BD;
+    }
+    label {
+    font-size: 16px;
+    }
+  
+    input[type="text"]{
+      width: 80%;
+    }
+  
+  
+    input[type="date"]{
+      background-color: rgba(196, 196, 196, 0.2); 
+      font-size: 13px;
+      height: 40px;
+    }
+   
+  .banner-img{
+    border-radius: 10px;
+    border: 2px dashed rgba(0, 0, 0, 0.5);
+    background-color: rgba(196, 196, 196, 0.2);
+     height: 150px;
+     display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="password"],
+    select.form-control {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    padding: 10px 0; /* Adjusting padding to remove top and bottom padding */
+    border: none; /* Remove default border */
+    border-bottom: 2px solid grey; /* Add bottom border */
+    min-height: 44px; /* Minimum height to accommodate longer values */
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    input[type="date"]:focus,
+    input[type="password"]:focus,
+    input[type="file"]:focus,
+    select.form-control:focus {
+    outline: none; /* Remove the outline */
+    box-shadow: none; /* Remove the box-shadow */
+    }
+    .btn-primary {
+    background-color: #7962BD;
+    border: 1px solid black; /* Change border color to black */
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: bold;
+    position: relative; /* Position relative for icon positioning */
+    color:black;
+    width:25%;
+    }
+    .btn-primary:hover {
+    background-color: #0077cc;
+    }
+    .btn-primary-submit {
+    background-color: #D3FB52;
+    border: 1px solid black; /* Change border color to black */
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: bold;
+    position: relative; /* Position relative for icon positioning */
+    color:black;
+    width:25%;
+    }
+    .btn-primary-submit:hover {
+    background-color: #0077cc;
+    }
+    .form-group {
+    margin-bottom: 30px; /* Adding space between form groups */
+    }
+    /* Styling for the custom file input */
+    .custom-file-input {
+    display: none; /* Hide the default file input */
+    }
+    .custom-file-button {
+    background-color: #D3FB52;
+    border: 1px solid black; /* Change border color to black */
+    border-radius: 25px;
+    color: black;
+    padding: 5px 10px; /* Making it smaller */
+    font-weight: bold;
+    cursor: pointer;
+    width: fit-content; /* Adjusting width to fit content */
+    text-align: center;
+    }
+    /* Styling for the dropdown */
+    select.form-control {
+    appearance: none; /* Remove default arrow in Chrome/Safari */
+    -webkit-appearance: none; /* Remove default arrow in Chrome/Safari */
+    -moz-appearance: none; /* Remove default arrow in Firefox */
+    background-image: none; /* Remove default arrow */
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 20px); /* Adjust position */
+    background-position-y: center;
+    padding-right: 25px; /* Adjust the padding to accommodate the custom indicator */
+    position: relative; /* Position relative to enable positioning of the custom indicator */
+    }
+    /* Custom indicator for the dropdown */
+    select.form-control::after {
+    content: '▼'; /* Unicode downward triangle character */
+    position: absolute; /* Position absolutely within the select */
+    top: 50%; /* Vertically center the indicator */
+    right: 5px; /* Adjust horizontal position */
+    transform: translateY(-50%); /* Adjust vertical position */
+    color: #000; /* Color of the indicator */
+    font-size: 12px; /* Adjust size of the indicator */
+    }
+    .comment {
+    color: grey;
+    font-weight: normal;
+    font-size:12px;
+    }
+    /* Compulsory mark */
+    .compulsory-mark {
+    color: #000;
+    margin-left: 3px;
+    }
+    .card {
+    background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 100%; /* Adjust the width as needed */
+    max-width: 600px; /* Set a maximum width if necessary */
+    }
+    .internship-streams {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    }
+   
+    .stream {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+    background-color: #fffec8;
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center; /* Align items vertically */
+    font-size: 11px;
+    }
+    
+    .streamrow{
+        margin-bottom:10px;
+    }
+    .stream img {
+    width: 17px;
+    height: 17px;
+    margin-right: 8px;
+    }
+    .stream:hover {
+    background-color: #c5e1a5;
+    }
+    .about {
+    margin-bottom: 2px;
+    }
+    .account-details {
+    padding: 20px;
+    border-radius: 10px;
+    background:#BA5370;  /* fallback for old browsers */
+    background-image: linear-gradient(45deg, #F8FFAE, #43C6AC);
+    background-size: 200% 200%; /* Increase the size to cover the animation area */
+    animation: gradientAnimation 1s infinite alternate; /* Animation properties */
+    }
+    /* Keyframes for the gradient animation */
+    @keyframes gradientAnimation {
+    0% {
+    background-position: 0% 0%; /* Start position of the gradient */
+    }
+    100% {
+    background-position: 100% 100%; /* End position of the gradient */
+    }
+    }
+    .center-text {
+    text-align: center;
+    color: grey; /* Change color to grey */
+    }
+    .heading{
+    font-size:16px;
+    }
+    .card {
+    max-width:100%;
+    }
+   
+    .heading p{
+    font-size:12px;
+    }
+    table {
+    width: 100%;
+    border-bottom:none;
+    border-collapse: collapse;
+    }
+    table td {
+    padding: 4px;
+    font-size: 12px;
+    }
+    table td:first-child {
+    font-weight: bold;
+    width: 40%;
+    }
+    .table{
+    background-color:white;
+    border-radius:10px;
+    border:1px solid white;
+    }
+    .image-container {
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    }
+    .image-container img {
+    width: 100px; /* Set width of each image */
+    height: auto; /* Maintain aspect ratio */
+    margin: 5px; /* Add some margin between images */
+    border-radius:15px;
+    }
+    @media only screen and (max-width: 600px) {
+    /* CSS rules for smaller screens */
+    .containerfull {
+    flex-direction: column;
+    }
+    /* Add more responsive styles as needed */
+    }
+  
+    .hover-option {
+  padding: 8px 12px;
+  cursor: pointer;
+  }
+  
+  .hover-option:hover {
+  background-color: rgb(88, 88, 249);
+  border-radius: 5px;
+  color: #fff;
+  }
+  
+  .error-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  width: 400px;
+  text-wrap: wrap;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  }
+  
+  .error-image {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+  }
+  .close-button {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 24px;
+  color: red;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .internship-streams {
+    display: flex;
+    flex-direction:column; /* Display streams in a column */
+    align-items: center; /* Center items horizontally */
+    }
+    .stream {
+    width: 100%; /* Each stream occupies the full width */
+    margin-bottom: 10px; /* Add some margin between streams */
+    }
+    .btn-primary{
+    width:75%;
+    }
+    .btn-primary-submit{
+    width:75%;
+    }
+    }
+  
+    .about p{
+        font-size:12px;
+    }
+  
+  

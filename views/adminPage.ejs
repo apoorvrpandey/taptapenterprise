@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+</head>
+<body>
+    <h1>Welcome to the Admin Page</h1>
+    <% if (username && code) { %>
+        <p>Username: <%= username %></p>
+        <p>Code: <%= code %></p>
+    <% } else { %>
+        <p>Error: Missing username or code</p>
+    <% } %>
+</body>
+</html>

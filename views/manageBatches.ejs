@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon">
+<title>Batch Details Form</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="css/manage_trainings.css">
+<link rel="stylesheet" href="css/trainings_common.css">
+<link rel="stylesheet" href="css/nav_log.css">
+<script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+</head>
+<style>
+  .submitbtn{
+    padding: 10px 25px;
+    background-color: #8470bd;
+    color: white;
+    border-radius: 30px;
+    border: 1px solid black;
+  }
+
+  #data-table,#duplicate-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#data-table th {
+    background-color: #4C4267;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+#data-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+#duplicate-table th {
+    background-color: #4C4267;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+#duplicate-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+#pagination {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+#pagination button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#pagination button:disabled {
+    background-color: #fff;
+    cursor: not-allowed;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+
+.viewBatchDetails{
+  background-color: #d3fb52;
+    border: none;
+    padding: 15px;
+    padding-left: 24px;
+    padding-right: 24px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+.downloadBtn{
+  background-color: #d3fb52;
+    color: #333;
+    padding: 10px 15px;
+    border: 2px solid #a1c900;
+    height: 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+}
+
+#downloadDuplicateTable,#downloadBatchTable{
+  background-color: #d3fb52;
+    color: #333;
+    padding: 10px 15px;
+    border: 2px solid #a1c900;
+    height: 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-top: 20px;
+}
+#backButton,#backToPreviewBtn{
+  padding: 8px 20px;
+    background-color: white;
+    color: black;
+    border-radius: 30px;
+    border: 1px solid black;
+}
+
+#pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-btn {
+  background-color: grey;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background-color: #007bff;
+}
+
+.page-btn:disabled {
+  background-color: lightgrey;
+  cursor: not-allowed;
+}
+
+#pageNumbers {
+  display: flex;
+  align-items: center;
+}
+
+.page-number {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  margin: 0 5px;
+  cursor: pointer;
+  background-color: lightgrey;
+}
+
+.page-number.active {
+  background-color: #007bff;
+  color: white;
+}
+#batch-table {
+      height: 300px;
+      overflow-y: scroll;
+    }
+    #duplicate-table{
+      height: 100px;
+      overflow-y: scroll;
+    }
+
+</style>
+<body>
+  <script>
+    window.userRole = "<%= user.role %>";
+  </script>
+  <script src="js/rolebase.js"></script>
+  
+  <div class="supercss">
+    <div class="sidebar">
+        <a class="logo" style="text-align: center;align-items:center;padding:5px">
+           <img src="img/sidebar logo.png" alt="Logo" style="width: 64px; max-width: 120px;height:73px;">
+        </a>
+       <a href="myDashboard" class="menu-item" id="dashboard-link">
+            <img src="img/dash_white.png" alt="dash" style="width: 20px; height: 20px"><span style="color:white">Dashboard</span>
+        </a>
+         <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="dash" style="width: 20px; height: 20px;"><span>Employability</span>
+            </a>
+        <a href="https://admin.hackathon.blackbucks.me"  class="menu-item" >
+            <img alt="Assessment icon" src="img/assessment.png" style="width: 20px; height: 20px;">
+            <span>Assessments</span></a>
+       
+         <a href="jobsDashboard" class="menu-item">
+           <img src="img/jobs.png" alt="jobs" style="width: 20px; height: 20px;"><span>Jobs</span>
+        </a>
+        <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/"  class="menu-item" >
+            <img alt="course icon" src="img/course.png" style="width: 20px; height: 20px;"> 
+            <span>Course</span></a>
+        <a href="https://admin.hackathon.blackbucks.me/lessonPlan/"  class="menu-item" >
+            <img alt="lessonplan icon" src="img/lessonplan.png" style="width: 20px; height: 20px;">
+            <span>Lesson Plan</span></a>
+        
+                <a href="trainingsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+            <img src="img/trainings_black.png" alt="trainings" style="width: 20px; height: 20px;"><span style="color: black;font-weight:bold">Trainings</span>
+        </a>
+                 <a href="internshipsDashboard" class="menu-item">
+                    <img
+                      src="img/internship_whiteicon.png"
+                      alt="manage"
+                      style="width: 20px; height: auto"
+                    /><span>Internships</span>
+                  </a>
+                <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/"  class="menu-item" >
+                    <img alt="vpl icon" src="img/vpl.png" style="width: 20px; height: 20px;">
+                    <span>VPL</span></a>
+       
+         
+
+             
+     </div>
+     <div class="css">
+      <div class="css0">
+        <div class="navbar">
+         <div class="nav1"></div>
+         <div class="nav2">
+             <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                 <div class="chakra-stack css-nr8aow">
+                     <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                 </div>
+             </a>
+             <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                 <div class="chakra-stack css-nr8aow">
+                     <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0"></div></a>
+             <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                 <div class="chakra-stack css-nr8aow">
+                     <div class="css-1edim3w">
+                         <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj">
+                         <div class="css-1bac456">
+                             <div class="css-1rkwksi">1</div>
+                         </div>
+                     </div>
+                 </div>
+             </a>
+             <button type="button" class="navbtn" id="userButton">
+                 <span class="user-details">
+                     <div class="user">
+                         <span class="user-profile">
+                             <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                         </span>
+                         <div class="username">
+                             <p class="userN"></p>
+                             <p class="userR"></p>
+                         </div>
+                     </div>
+                 </span>
+                 <span class="chakra-button__icon css-1hzyiq5">
+                     <svg viewBox="0 0 16 16" style="height:12px !important; width: 12px !important;"  aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                         <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                     </svg>
+                 </span>
+             </button>
+             
+             <button type="button" class="logoutbtn" id="logoutButton" style="display: none;">
+                 Log out
+             </button>
+             
+            
+         </div>
+       
+  <script>
+     document.addEventListener('DOMContentLoaded', () => {
+     const userButton = document.getElementById('userButton');
+     const logoutButton = document.getElementById('logoutButton');
+  
+     userButton.addEventListener('click', () => {
+         if (logoutButton.style.display === 'none') {
+             logoutButton.style.display = 'flex';
+             logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+             logoutButton.style.left = `${userButton.offsetLeft}px`;
+         } else {
+             logoutButton.style.display = 'none';
+         }
+     });
+  
+     logoutButton.addEventListener('click', () => {
+         // Add your logout logic here
+         console.log('User logged out');
+     });
+  });
+  
+  </script>
+        </div>
+     </div>
+     <div class="css1">
+  <div class="main-container">
+    <div class="roww marginr" style="margin: 20px;">
+      <img src="img/traininggrey.png" alt="internship icon" style="width: 14px; height: 14px; margin-right: 5px">
+      <a href="trainingsDashboard" style="text-decoration: none;">
+      <p class="grey f14 marginr" style="margin: 0;">
+        Trainings <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+      </p></a>
+      <p class="f14" style="margin: 0;">Manage Batches</p>
+    </div>
+
+    <div style="padding: 30px;">
+      <div style="display: flex;flex-direction: row;justify-content: space-between;">
+        <h1>Manage Batches</h1>
+        <button id="downloadTableAsExcel" class="downloadBtn" style="display: none;">Download</button>
+      </div>
+<div class="container" style="padding: 10px; margin-bottom: 10px; display: flex; flex-direction: row; gap: 30px;">
+  <div id="csvUploadContainer" style="padding: 30px; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; margin-bottom: 20px; width: 530px; height: auto; cursor: pointer;">
+    <form>
+      <div style="align-items: center; justify-content: center; text-align: center;">
+        <img src="img/csv.png" alt="Logo" style="width: 70px; max-width: 130px; height: 73px; align-items: center;">
+      </div>
+      <p style="align-items: center; justify-content: center; text-align: center; font-size: 24px; font-weight: bold;">Create Batch using CSV</p>
+      <div style="align-items: center; justify-content: center; text-align: center;">
+       
+      </div>
+    </form>
+  </div>
+
+  <a href="batch_filters" style="text-decoration: none;"><div id="filterStudentsContainer" style="padding: 30px; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px; margin-bottom: 20px; width: 530px; height: auto;">
+    <form>
+      <div style="align-items: center; justify-content: center; text-align: center;">
+        <img src="img/sidebar logo.png" alt="Logo" style="width: 70px; max-width: 130px; height: 73px; align-items: center;">
+      </div>
+      <p style="align-items: center; justify-content: center; text-align: center; font-size: 24px; font-weight: bold;">Create Cohort using TAPTAP</p>
+      <div style="align-items: center; justify-content: center; text-align: center;">
+        
+      </div>
+    </form>
+  </div></a>
+</div>
+
+
+<form id="batchDetailsForm" enctype="multipart/form-data" style="display: none;">
+  <div id="selectsection" class="selectsection">
+    <label for="batchSelect" style="font-weight: bold;">Select Batch:</label><br><br>
+    <select id="batchSelect">
+      <option value="">-- Select Batch --</option>
+      <!-- Add options here -->
+    </select><br><br>
+    <button class="batchbutton" type="button" id="addNewBatchBtn">+ Create New Batch</button><br><br>
+  </div>
+
+  <div id="newBatchContainer" style="display: none;">
+    <label style="font-weight: bold;" for="newBatchTitle">New Batch Title:</label><br><br>
+    <input type="text" id="newBatchTitle" name="newBatchTitle"><br><br>
+    <button type="button" id="addBatchBtn">Create Batch</button><br><br>
+  </div>
+
+  <input type="hidden" id="batchIdInput" name="batch_id">
+
+  <div class="file-container" id="fileContainer">
+    <div style="align-items: center;text-align: center;justify-content: center;">
+      <img src="img/uploadcloud.png" style="width: 200px;height:auto">
+    </div>
+  
+    <input type="file" id="csvFile" name="csvFile" accept=".csv" class="hidden">
+   
+    <span id="fileName" style="font-size: 20;font-weight: bold;">Upload CSV</span>
+  </div>
+
+  <div style="display: flex; justify-content: space-between;">
+    <div><button class="submitbtn" type="button" id="backButton" style="margin-bottom: 10px;align-items: start;">Back</button></div>
+    <div style="float: right; align-items: end;"><button type="submit" class="submitbtn">Submit</button></div>
+  </div><br><br>
+
+  <a href="https://docs.google.com/spreadsheets/d/19yMsnM8wE9pWIY_32EzobbQ9vQS7h8Psju-ZTv9Fp8s/edit?usp=sharing">Uploading Format</a>
+</form>
+
+<div id="successContainer" style="display: none; text-align: center;">
+  <img id="successImage" src="img/success.jpg" alt="Success" style="width: 300px; height: auto;">
+  <p id="successMessage" style="font-size: 24px; font-weight: bold;">Batch Details have been submitted successfully</p>
+  <button class="viewBatchDetails" id="viewBatchDetails" onclick="viewBatchDetails()">
+    View Batch Details
+  </button>
+</div>
+
+<div id="previewContainer" style="display: none;">
+  <div style="display: flex; flex-direction: row;justify-content: space-between;">
+
+    <div style="display: flex;flex-direction: row">
+    <div id="uniqueRowsDetails" style="text-align: center; font-size: 16px; color: grey;">
+      <p id="uniqueRowsCount"></p>
+    </div>
+    <div id="duplicateDetails" style="padding-left: 20px; text-align: center; font-size: 16px; color: grey; display: flex; flex-direction: row;">
+      <p id="duplicateCount"></p>
+    </div></div>
+
+
+      <div style="display: flex;flex-direction: row;justify-content: end;float: right;align-items: end;margin-bottom: 10px;">
+      <div><button class="batchbutton" id="viewDuplicatesBtn" style="margin-left: 10px;">View Duplicates</button></div>
+      <div ><button id="downloadBatchTable">Download</button></div>
+    </div>
+    
+  </div>
+  <div id="batch-table">
+    <table id="data-table">
+      <thead>
+        <tr>
+          <!-- Table headers will be populated dynamically -->
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Table content will be populated dynamically -->
+      </tbody>
+    </table>
+    <div id="pagination" style="display: none;">
+      <button id="prev-button" class="page-btn" disabled>Previous</button>
+      <div id="page-numbers"></div>
+      <button id="next-button" class="page-btn" disabled>Next</button>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+      
+    </div>
+  </div>
+</div>
+
+<div id="duplicatesContainer" style="display: none;">
+  <div style="display: flex;flex-direction: row;justify-content: space-between">
+  <div style="text-align: left; font-size: 18px; color: black;">
+    <p style="font-weight: bold;font-size: 16px;">Duplicate Records</p>
+  </div>
+  <div style="float: right;align-items: end;justify-content: center;align-items: center;margin-bottom: 10px;"><button id="downloadDuplicateTable" style="justify-content: center;align-items: center;margin-bottom: 10px;">Download </button></div>
+</div>
+  <table id="duplicate-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Registration Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Duplicate content will be populated dynamically -->
+    </tbody>
+  </table>
+  <div id="pagination" style="text-align: center; margin-top: 20px;display: none;">
+    <button id="prevPageBtn" class="page-btn">Previous</button>
+    <div id="pageNumbers"></div>
+    <button id="nextPageBtn" class="page-btn">Next</button>
+  </div>
+  <div style="text-align:left; margin-top: 20px;">
+    <button id="backToPreviewBtn" >Back</button>
+   
+  </div>
+</div>
+
+<script>
+  document.getElementById('downloadBatchTable').addEventListener('click', () => {
+  downloadTableAsCSV('data-table', 'batch_table_data.csv');
+});
+
+document.getElementById('downloadDuplicateTable').addEventListener('click', () => {
+  downloadTableAsCSV('duplicate-table', 'duplicate_table_data.csv');
+});
+
+function downloadTableAsCSV(tableId, filename) {
+  const table = document.getElementById(tableId);
+  const rows = table.querySelectorAll('tr');
+  const csvData = [];
+
+  rows.forEach((row, rowIndex) => {
+    const cells = row.querySelectorAll('th, td');
+    const rowData = Array.from(cells).map(cell => cell.textContent.trim());
+    csvData.push(rowData.join(','));
+  });
+
+  const csvString = csvData.join('\n');
+  const blob = new Blob([csvString], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+</script>
+
+
+<script>
+let isBatchAdded = false;
+let batchSelect;
+
+document.getElementById('csvUploadContainer').addEventListener('click', function() {
+  document.getElementById('batchDetailsForm').style.display = 'block';
+  document.getElementById('filterStudentsContainer').style.display = 'none';
+  this.style.display = 'none';
+});
+
+document.getElementById('addNewBatchBtn').addEventListener('click', function() {
+  document.getElementById('selectsection').style.display = 'none';
+  document.getElementById('newBatchContainer').style.display = 'block';
+});
+
+document.getElementById('addBatchBtn').addEventListener('click', function() {
+  var newBatchTitle = document.getElementById('newBatchTitle').value.trim();
+  if (!newBatchTitle) {
+    alert('Please enter a title for the new batch.');
+    return;
+  }
+
+  document.getElementById('selectsection').style.display = 'block';
+  document.getElementById('newBatchContainer').style.display = 'none';
+  document.getElementById('batchSelect').innerHTML += `<option value="${newBatchTitle}">${newBatchTitle}</option>`;
+  document.getElementById('batchSelect').value = newBatchTitle;
+  isBatchAdded = true;
+});
+
+document.getElementById('csvFile').addEventListener('change', function() {
+  var fileName = this.files[0].name;
+  document.getElementById('fileName').textContent = fileName;
+});
+
+document.getElementById('fileContainer').addEventListener('click', function() {
+  document.getElementById('csvFile').click();
+});
+
+document.getElementById('backButton').addEventListener('click', function() {
+  document.getElementById('batchDetailsForm').style.display = 'none';
+  document.getElementById('csvUploadContainer').style.display = 'block';
+  document.getElementById('filterStudentsContainer').style.display = 'block';
+});
+
+document.getElementById('batchDetailsForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  var csvFile = document.getElementById('csvFile').files[0];
+  batchSelect = document.getElementById('batchSelect').value;
+  var newBatchTitle = document.getElementById('newBatchTitle').value.trim();
+
+  if (!csvFile) {
+    alert('Please upload a CSV file before submitting.');
+    return;
+  }
+
+  if (!batchSelect && document.getElementById('newBatchContainer').style.display === 'block' && !isBatchAdded) {
+    alert('Please enter a title for the new batch and click on "Create Batch".');
+    return;
+  }
+
+  if (!batchSelect && document.getElementById('newBatchContainer').style.display === 'none') {
+    alert('Please select a batch.');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const csvData = event.target.result;
+    const parsedData = parseCSV(csvData);
+
+    if (parsedData.length === 0) {
+      alert('No data to submit.');
+      return;
+    }
+
+    const csvString = convertToCSV(parsedData);
+
+    const formData = new FormData();
+    formData.append('batchSelect', batchSelect);
+    formData.append('newBatchTitle', newBatchTitle);
+    formData.append('csvFile', new Blob([csvString], { type: 'text/csv' }), 'data.csv');
+
+    fetch('/api/batches/upload-batch-details-csv', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById('batchDetailsForm').reset();
+      document.getElementById('batchDetailsForm').style.display = 'none';
+      document.getElementById('successContainer').style.display = 'block';
+
+      // Display the number of duplicates and the duplicate data
+      if (data.duplicateCount) {
+        document.getElementById('duplicateCount').textContent = `Duplicates count: ${data.duplicateCount}`;
+        const duplicateTableBody = document.querySelector('#duplicate-table tbody');
+        duplicateTableBody.innerHTML = '';
+        data.duplicates.forEach(duplicate => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td>${duplicate.name}</td><td>${duplicate.email}</td><td>${duplicate.regno || '-'}</td>`;
+          duplicateTableBody.appendChild(tr);
+        });
+      }
+
+      // Display the number of unique rows
+      const uniqueRowsCount = data.totalRowsCount - data.duplicateCount;
+      document.getElementById('uniqueRowsCount').textContent = `Number of unique rows uploaded: ${uniqueRowsCount}`;
+
+      // Populate the batch table
+      populateBatchTable(parsedData);
+    })
+    .catch(error => console.error('Error:', error));
+  };
+  reader.readAsText(csvFile);
+});
+
+function parseCSV(data) {
+  const rows = data.trim().split('\n');
+  const headers = rows[0].split(',');
+  return rows.slice(1).map(row => {
+    const values = row.split(',');
+    const obj = {};
+    headers.forEach((header, index) => {
+      obj[header.trim()] = values[index] ? values[index].trim() : '';
+    });
+    return obj;
+  });
+}
+
+function convertToCSV(data) {
+  if (data.length === 0) return '';
+  const headers = Object.keys(data[0]);
+  const rows = data.map(row => headers.map(header => row[header]).join(','));
+  return [headers.join(','), ...rows].join('\n');
+}
+
+function populateBatchTable(data) {
+  const tableHeaders = ['Name', 'Email', 'Registration Number'];
+
+  const thead = document.querySelector('#data-table thead tr');
+  thead.innerHTML = '';
+  tableHeaders.forEach(header => {
+    const th = document.createElement('th');
+    th.textContent = header;
+    thead.appendChild(th);
+  });
+
+  const tbody = document.querySelector('#data-table tbody');
+  tbody.innerHTML = '';
+  data.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${item.name}</td><td>${item.email}</td><td>${item.regno || '-'}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  // Update the student count
+  updateStudentCount();
+}
+
+function updateStudentCount() {
+  const totalRows = document.querySelectorAll('#data-table tbody tr').length;
+  document.getElementById('uniqueRowsCount').textContent = `Students count: ${totalRows}`;
+}
+
+function viewBatchDetails() {
+  if (!batchSelect) {
+    console.error('Batch selection is undefined or empty.');
+    return;
+  }
+
+  document.getElementById('successContainer').style.display = 'none';
+  document.getElementById('previewContainer').style.display = 'block';
+
+  const pageSize = 10;
+  let currentPage = 1;
+
+  function fetchDataAndPopulateTable() {
+    fetch(`/api/batches/Batchdata/${batchSelect}`)
+      .then(response => response.json())
+      .then(data => {
+        const tableHeaders = ['Name', 'Email', 'Registration Number'];
+
+        const thead = document.querySelector('#data-table thead tr');
+        thead.innerHTML = '';
+        tableHeaders.forEach(header => {
+          const th = document.createElement('th');
+          th.textContent = header;
+          thead.appendChild(th);
+        });
+
+        const startIndex = (currentPage - 1) * pageSize;
+        const paginatedData = data.slice(startIndex, startIndex + pageSize);
+
+        const tbody = document.querySelector('#data-table tbody');
+        tbody.innerHTML = '';
+        paginatedData.forEach(item => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = 
+            `<td>${item.name}</td>
+             <td>${item.email}</td>
+             <td>${item.regno || '-'}</td>`;
+          tbody.appendChild(tr);
+        });
+
+        updatePaginationButtons(data.length);
+
+        // Update the student count
+        updateStudentCount();
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }
+
+  function updatePaginationButtons(totalItems) {
+    const totalPages = Math.ceil(totalItems / pageSize);
+    document.getElementById('prev-button').disabled = currentPage === 1;
+    document.getElementById('next-button').disabled = currentPage === totalPages;
+  }
+
+  document.getElementById('prev-button').addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      fetchDataAndPopulateTable();
+    }
+  });
+
+  document.getElementById('next-button').addEventListener('click', () => {
+    fetch(`/api/batches/Batchdata/${batchSelect}`)
+      .then(response => response.json())
+      .then(data => {
+        if (currentPage < Math.ceil(data.length / pageSize)) {
+          currentPage++;
+          fetchDataAndPopulateTable();
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  });
+
+  fetchDataAndPopulateTable();
+}
+
+
+document.getElementById('viewDuplicatesBtn').addEventListener('click', () => {
+  document.getElementById('previewContainer').style.display = 'none';
+  document.getElementById('duplicatesContainer').style.display = 'block';
+});
+
+document.getElementById('backToPreviewBtn').addEventListener('click', () => {
+  document.getElementById('duplicatesContainer').style.display = 'none';
+  document.getElementById('previewContainer').style.display = 'block';
+});
+
+document.getElementById('downloadTableAsExcel').addEventListener('click', () => {
+  const table = document.getElementById('data-table');
+  const rows = table.rows;
+  const csvData = [];
+
+  const headers = [];
+  for (let i = 0; i < rows[0].cells.length; i++) {
+    headers.push(rows[0].cells[i].textContent);
+  }
+  csvData.push(headers.join(','));
+
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    const csvRow = [];
+    for (let j = 0; j < row.cells.length; j++) {
+      csvRow.push(row.cells[j].textContent);
+    }
+    csvData.push(csvRow.join(','));
+  }
+
+  const csvString = csvData.join('\n');
+  const blob = new Blob([csvString], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'table_data.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+
+
+
+  
+  </script>
+  
+
+
+
+
+
+
+</div> </div>
+
+
+</div>
+<div id="logoutModal" class="modal" style="display: none;">
+  <div class="modal-content">
+      <p class="question">Are you sure you want to logout?</p>
+      <div class="logout-div"></div>
+      <div class="modal-buttons">
+          <button id="cancelLogout">Cancel</button>
+          <button id="confirmLogout">Yes</button>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Populate dropdown with batches
+    fetch('api/batches/data')
+      .then(response => response.json())
+      .then(data => {
+        const batchSelect = document.getElementById('batchSelect');
+        data.forEach(batch => {
+          const option = document.createElement('option');
+          option.value = batch.id;
+          option.textContent = batch.batch_title;
+          batchSelect.appendChild(option);
+        });
+      });
+  
+    // Handle change event for batchSelect dropdown
+    document.getElementById('batchSelect').addEventListener('change', function() {
+      document.getElementById('batchIdInput').value = this.value;
+    });
+  
+    // Show the new batch container when add new batch button is clicked
+    document.getElementById('addNewBatchBtn').addEventListener('click', function() {
+      document.getElementById('newBatchContainer').style.display = 'block';
+    });
+  
+    // Handle add new batch button click
+    document.getElementById('addBatchBtn').addEventListener('click', function() {
+      const newBatchTitle = document.getElementById('newBatchTitle').value;
+      if (newBatchTitle) {
+        fetch('api/batches/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ batch_title: newBatchTitle })
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.id) {
+            // Add the new batch to the dropdown and select it
+            const batchSelect = document.getElementById('batchSelect');
+            const option = document.createElement('option');
+            option.value = data.id;
+            option.textContent = data.batch_title;
+            batchSelect.appendChild(option);
+            batchSelect.value = data.id;
+            document.getElementById('batchIdInput').value = data.id;
+            
+            // Hide the new batch container and clear the input
+            document.getElementById('newBatchContainer').style.display = 'none';
+            document.getElementById('newBatchTitle').value = '';
+          } else {
+            console.error('Failed to Create batch:', data);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+    });
+
+    // document.getElementById('batchDetailsForm').addEventListener('submit', function(event) {
+    // event.preventDefault();
+    
+    //  });
+  });
+
+  
+  </script>
+
+<!-----------User Details Fetching---------------------->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Function to get the value of a cookie by name
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // Get the JWT token from the cookie
+    const token = getCookie('userAdminToken');
+    
+    if (token) {
+      // Decode the JWT token
+      const decoded = jwt_decode(token);
+      
+      // Display the username and role
+      document.querySelector('.userN').textContent = decoded.email;
+      document.querySelector('.userR').textContent = decoded.role;
+    } else {
+      // Handle the case where the token is not found
+      document.querySelector('.userN').textContent = 'No user logged in';
+      document.querySelector('.userR').textContent = '';
+    }
+  });
+</script>
+
+  <!---------Logout module----------->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutButton = document.getElementById('logoutButton');
+        const logoutModal = document.getElementById('logoutModal');
+        const modalContent = logoutModal.querySelector('.modal-content');
+        const confirmLogoutButton = modalContent.querySelector('#confirmLogout');
+        const cancelLogoutButton = modalContent.querySelector('#cancelLogout');
+  
+        logoutButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the button
+  
+            // Show the modal
+            logoutModal.style.display = 'block';
+  
+            // Add event listeners to the modal buttons
+            confirmLogoutButton.addEventListener('click', function() {
+                // If user confirms, navigate to /logout
+                window.location.href = '/logout';
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            cancelLogoutButton.addEventListener('click', function() {
+                // If user cancels, hide the modal
+                logoutModal.style.display = 'none';
+            });
+  
+            // Add event listener to the close span
+            closeSpan.addEventListener('click', function() {
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            // Add event listener to the modal itself to close when clicked outside
+            window.addEventListener('click', function(event) {
+                if (event.target === logoutModal) {
+                    logoutModal.style.display = 'none'; // Hide the modal
+                }
+            });
+        });
+    });
+  </script>
+</body>
+</html>

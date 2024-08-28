@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customized internships</title>
+    <link rel="stylesheet" href="css/training_overview.css" />
+    <link rel="stylesheet" href="css/sidebar.css" />
+    <link rel="icon" type="image/x-icon" href="img/sidebar logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/trainCommon.css" />
+    <link rel="stylesheet" href="css/nav_log.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <style>
+      /* Overlay styles */
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Popup styles */
+      .popup {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+        position: relative;
+      }
+
+      /* Close button styles */
+      .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      .nodata {
+        border: 1px solid rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        padding: 10px;
+        position: relative;
+        text-align: center;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.7);
+        margin: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script>
+      window.userRole = "<%= user.role %>";
+    </script>
+    <script src="js/rolebase.js"></script>
+    
+    <div class="supercss">
+      <% if (user.role === 'InternshipsAdmin') { %>
+        <div class="sidebar">
+            <a class="logo" style="text-align: center; align-items:center; padding:5px;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px; height:80px;">
+            </a>  
+            <a href="internshipsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+                <img src="img/internship.png" alt="manage" style="width: 20px; height: auto" />
+                <span style="color: black; font-weight: bold;">Internships</span>
+            </a>
+        </div>
+    <% } else if (user.role === 'SuperAdmin') { %>
+        <div class="sidebar">
+            <a class="logo" style="text-align: center; align-items:center; padding:5px;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px; height:80px;">
+            </a>  
+            <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="employability" style="max-width:18px; height:20px">
+                <span>Employability</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/internship.png" alt="internships" style="width: 20px; height: auto" />
+                <span style="color: black; font-weight: bold;">Internships</span>
+            </a>
+        </div>
+    <% } else { %>
+        <div class="sidebar">
+            <a class="logo" style="text-align: center; align-items:center; padding:5px;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px; height:80px;">
+            </a>  
+            <a href="myDashboard" class="menu-item" id="dashboard-link">
+                <img src="img/dash_white.png" alt="dash" style="max-width:22px; height:22px">
+                <span style="color:white">Dashboard</span>
+            </a>
+            <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="employability" style="max-width:18px; height:20px">
+                <span>Employability</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+                <img alt="Assessment icon" src="img/assessment.png" style="max-width:19px; height:19.5px">
+                <span>Assessments</span>
+            </a>
+            <a href="jobsDashboard" class="menu-item">
+                <img src="img/jobs.png" alt="jobs" style="max-width:20px; height:21px">
+                <span>Jobs</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/" class="menu-item">
+                <img alt="course icon" src="img/course.png" style="max-width:19px; height:20px">
+                <span>Course</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/lessonPlan/" class="menu-item">
+                <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width:23px; height:18px">
+                <span>Lesson Plan</span>
+            </a>
+            <a href="trainingsDashboard" class="menu-item">
+                <img src="img/trainings.png" alt="trainings" style="max-width:27px; height:21px">
+                <span>Trainings</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+                <img src="img/internship.png" alt="internships" style="width: 20px; height: auto" />
+                <span style="color: black; font-weight: bold;">Internships</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/" class="menu-item">
+                <img alt="vpl icon" src="img/vpl.png" style="max-width:19px; height:17px">
+                <span>VPL</span>
+            </a> 
+        </div>
+    <% } %>
+    
+
+      <div class="css">
+        <div class="css0">
+          <div class="navbar">
+            <div class="nav1"></div>
+            <div class="nav2">
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageStudents/"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Manage Users"
+                    src="img/newManageUsers.svg"
+                    class="chakra-image css-0"
+                  />
+                </div>
+              </a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/tpCalendar/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Calendar"
+                    src="img/newCalenderNavIcon.svg"
+                    class="chakra-image css-0"
+                  /></div
+              ></a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageNotification/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <div class="css-1edim3w">
+                    <img
+                      alt="Notifications"
+                      src="img/newNotificationIcon.svg"
+                      class="chakra-image css-6su6fj"
+                    />
+                    <div class="css-1bac456">
+                      <div class="css-1rkwksi">1</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <button type="button" class="navbtn" id="userButton">
+                <span class="user-details">
+                  <div class="user">
+                    <span class="user-profile">
+                      <i
+                        class="fa-solid fa-circle-user"
+                        style="font-size: 30px"
+                      ></i>
+                    </span>
+                    <div class="username">
+                      <p class="userN"></p>
+                      <p class="userR"></p>
+                    </div>
+                  </div>
+                </span>
+                <span class="chakra-button__icon css-1hzyiq5">
+                  <svg
+                    viewBox="0 0 16 16"
+                    style="height: 12px !important; width: 12px !important"
+                    aria-hidden="true"
+                    focusable="false"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="black"
+                    class="css-1eamic5 ex0cdmw0"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    ></path>
+                  </svg>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="logoutbtn"
+                id="logoutButton"
+                style="display: none"
+              >
+                Log out
+              </button>
+            </div>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const userButton = document.getElementById("userButton");
+                const logoutButton = document.getElementById("logoutButton");
+
+                userButton.addEventListener("click", () => {
+                  if (logoutButton.style.display === "none") {
+                    logoutButton.style.display = "flex";
+                    logoutButton.style.top = `${
+                      userButton.offsetTop + userButton.offsetHeight
+                    }px`;
+                    logoutButton.style.left = `${userButton.offsetLeft}px`;
+                  } else {
+                    logoutButton.style.display = "none";
+                  }
+                });
+
+                logoutButton.addEventListener("click", () => {
+                  // Add your logout logic here
+                  console.log("User logged out");
+                });
+              });
+            </script>
+          </div>
+        </div>
+        <div class="css1">
+          <div class="main-container">
+            <div class="roww marginr">
+              <img
+                src="img/internshipgrey.png"
+                alt="internship icon"
+                style="width: 14px; height: 14px; margin-right: 5px"
+              />
+              <a href="internshipsDashboard" style="text-decoration: none">
+                <p class="grey f14 marginr" style="margin: 0">
+                  Internships
+                  <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                </p>
+              </a>
+              <p class="f14"><span id="internship-title"></span></p>
+            </div>
+
+            <div class="banner">
+              <div class="banner-text">
+                <img id="banner-img" alt="" />
+              </div>
+            </div>
+
+            <h3 class="f22 font600" style="display: none">
+              <span id="title"></span> Overall Dashboard
+            </h3>
+            <div class="section2 column1">
+              <div class="section2_1 roww">
+                <div class="section2_1_1">
+                  <p class="font600 f16">Student Internship Enrollments</p>
+                  <div>
+                    <div class="section2_inner_section">
+                      <div class="roww">
+                        <h4 class="f22 font600 marginr" id="batch-count"></h4>
+                        <p class="f12">Students</p>
+                      </div>
+
+                      <div style="float: right">
+                        <p
+                          class="f12"
+                          id="showStudentsList"
+                          style="
+                            color: #53acfd;
+                            text-decoration: underline;
+                            cursor: pointer;
+                          "
+                        >
+                          Show Students list
+                        </p>
+                      </div>
+                      <div
+                        id="studentPopup"
+                        style="
+                          display: none;
+                          position: fixed;
+                          top: 0;
+                          left: 0;
+                          width: 90%;
+                          height: 100%;
+                          z-index: 1;
+                        "
+                      >
+                        <div
+                          class="table-responsive"
+                          style="
+                            width: 90%;
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                            background-color: #fff;
+                            padding: 20px;
+                            margin-left: 100px;
+                            height: 800px;
+                            overflow-y: auto;
+                          "
+                        >
+                          <span
+                            class="close"
+                            style="
+                              float: right;
+                              font-weight: bold;
+                              cursor: pointer;
+                            "
+                            >x</span
+                          >
+                          <br /><br />
+                          <table id="studentTable" class="table">
+                            <thead>
+                              <tr>
+                                <th>Batch ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Reg No</th>
+                                <th>Phone</th>
+                              </tr>
+                            </thead>
+                            <tbody id="studentData"></tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- HTML to display batch details -->
+                    <div
+                      id="batch-container"
+                      style="width: 100%; display: flex; flex-direction: row"
+                    ></div>
+                    <div
+                      id="batch-text-container"
+                      style="width: 100%; display: flex; flex-direction: row"
+                    ></div>
+                  </div>
+                </div>
+                <div class="section2_1_2">
+                  <p class="f16 font600">% Completion</p>
+
+                  <div style="width: 400px; height: 200px">
+                    <div
+                      id="no-data-message"
+                      style="
+                        display: none;
+                        border: 1px solid black;
+                        border-radius: 10px;
+                        padding: 20px;
+                        text-align: center;
+                        margin: 20px;
+                      "
+                    ></div>
+                    <canvas id="myChart" width="400" height="200"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="section2_2">
+                <div class="card_s2">
+                  <div class="card_s2_div">
+                    <div class="background-img-color">
+                      <img src="img/feedback.png" alt="feedback" />
+                    </div>
+                    <p class="f16 font600">
+                      Average <br />
+                      Feedback
+                    </p>
+                  </div>
+                  <div class="card_s2_div">
+                    <span class="font600 f22">4.5/5</span>
+                    <img src="img/feedback1.png" alt="feedback" />
+                  </div>
+                </div>
+                <div class="card_s2">
+                  <div class="card_s2_div">
+                    <div class="background-img-color">
+                      <img src="img/overall.png" alt="overall" />
+                    </div>
+                    <p class="f16 font600">
+                      Overall <br />
+                      Interactiveness
+                    </p>
+                  </div>
+                  <div class="card_s2_div">
+                    <span class="font600 f22">93.4/100</span>
+                    <img src="img/overall1.png" alt="overall" />
+                  </div>
+                </div>
+                <div class="card_s2" style="display: none">
+                  <div class="card_s2_div">
+                    <div class="background-img-color">
+                      <img src="img/projects.png" alt="projects" />
+                    </div>
+                    <p class="f16 font600">
+                      Projects & Case <br />
+                      Studies
+                    </p>
+                  </div>
+                  <div class="card_s2_div">
+                    <span class="font600 f22">0</span>
+                    <img src="img/projects1.png" alt="projects" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Create a table element -->
+
+            <div class="section3">
+              <h2 class="f16 font600">Internship Domain Wise Summary</h2>
+              <div
+                id="no-data-message1"
+                style="
+                  display: none;
+                  border: 1px solid black;
+                  border-radius: 10px;
+                  padding: 20px;
+                  text-align: center;
+                  margin: 20px;
+                "
+              ></div>
+              <table id="table-details">
+                <tbody id="table-body">
+                  <!-- Table body will be populated dynamically -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="section4">
+              <h2 class="f16 font600">Overall Top Students</h2>
+
+              <table id="student-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Registration Number</th>
+                    <th>Average Score</th>
+                  </tr>
+                </thead>
+                <tbody id="student-table-body">
+                  <!-- table rows will be generated here -->
+                </tbody>
+              </table>
+
+              <div class="pagination" id="sattendance-pagination-controls">
+                <button id="sattendancePrevPage" onclick="studentPrevPage()">
+                  Previous
+                </button>
+                <div id="sattendancePageNumbers"></div>
+                <button id="sattendanceNextPage" onclick="studentNextPage()">
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+          <div id="logoutModal" class="modal" style="display: none">
+            <div class="modal-content">
+              <p class="question">Are you sure you want to logout?</p>
+              <div class="logout-div"></div>
+              <div class="modal-buttons">
+                <button id="cancelLogout">Cancel</button>
+                <button id="confirmLogout">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const paginationContainer = document.getElementById("pagination");
+      const prevPageBtn = document.getElementById("prevPage");
+      const nextPageBtn = document.getElementById("nextPage");
+
+      let currentPage = 1;
+      const totalPages = 10; // Total number of pages
+
+      // Function to generate page links
+      function generatePageLinks() {
+        paginationContainer.innerHTML = ""; // Clear previous links
+        const startPage = Math.max(1, currentPage - 2);
+        const endPage = Math.min(totalPages, startPage + 4);
+
+        // Previous button
+        if (currentPage > 1) {
+          const prevLink = document.createElement("div");
+          prevLink.textContent = "< Previous";
+          prevLink.classList.add("pagination-item");
+          prevLink.addEventListener("click", () => {
+            currentPage--;
+            generatePageLinks();
+          });
+          paginationContainer.appendChild(prevLink);
+        }
+
+        // Page links
+        for (let i = startPage; i <= endPage; i++) {
+          const pageLink = document.createElement("div");
+          pageLink.textContent = i;
+          pageLink.classList.add("pagination-item");
+          if (i === currentPage) {
+            pageLink.classList.add("active");
+          }
+          if (i !== currentPage) {
+            // Apply color to numbered links only
+            pageLink.style.backgroundColor = "#fff";
+            pageLink.style.color = "#000";
+          }
+          pageLink.addEventListener("click", () => {
+            currentPage = i;
+            generatePageLinks();
+          });
+          paginationContainer.appendChild(pageLink);
+        }
+
+        // Next button
+        if (currentPage < totalPages) {
+          const nextLink = document.createElement("div");
+          nextLink.textContent = "Next >";
+          nextLink.classList.add("pagination-item");
+          nextLink.addEventListener("click", () => {
+            currentPage++;
+            generatePageLinks();
+          });
+          paginationContainer.appendChild(nextLink);
+        }
+      }
+
+      // Initial generation of page links
+      generatePageLinks();
+    </script>
+
+    <script>
+              async function fetchInternshipDetails() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const internshipId = urlParams.get('id');
+
+                if (!internshipId) {
+                  document.getElementById('internship-title').textContent = 'Invalid internship ID';
+                  return;
+                }
+
+                try {
+                  const response = await fetch(`/api/internship_overview/internship/${internshipId}`);
+                  const internship = await response.json();
+
+                  if (response.status !== 200) {
+                    document.getElementById('internship-title').textContent = 'Error fetching internship details';
+                    return;
+                  }
+
+                  renderinternshipDetails(internship, internshipId);
+                } catch (error) {
+                  console.error('Error fetching internship details:', error);
+                  document.getElementById('internship-title').textContent = 'Error fetching internship details';
+                }
+              }
+
+               function renderinternshipDetails(internship, internshipId) {
+        document.getElementById('internship-title').textContent = internship.title;
+        document.getElementById('title').textContent = internship.title;
+        // Add more HTML rendering code here as needed
+        const bannerImg = document.getElementById('banner-img');
+        bannerImg.src = internship.banner;
+      }
+
+                window.onload = fetchInternshipDetails;
+
+                const urlParams = new URLSearchParams(window.location.search);
+              const internshipId = urlParams.get('id');
+
+              fetch(`/api/internship_overview/batch_count/${internshipId}`)
+
+              .then(response => response.json())
+                 .then(data => {
+                    const batchCountElement = document.getElementById('batch-count');
+                    batchCountElement.innerText = `${data.batchCount}`;
+                    console.log(internshipId);
+                  })
+                 .catch(error => {
+                    console.error('Error fetching batch count:', error);
+                  });
+
+                  <!-- Create a container to display the batch details -->
+
+                  const initialColors = ["#AC95EE", "#53ACFD", "#EED477"];
+
+              // Function to generate a random color in hex format
+              function getRandomColor() {
+                const letters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                  color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+              }
+
+              // Fetch batch details and update the UI
+              fetch(`/api/internship_overview/batch_details/${internshipId}`)
+              .then(response => response.json()) .then(data => { const totalCount = data.reduce((acc, item) => acc + item.count, 0);
+
+              const colors = initialColors;
+               // Dynamic colors can be added here
+               const batchDivs = data.map((item, index) => {
+              const batchDiv = document.createElement('div');
+               const widthPercentage = Math.log(item.count) / Math.log(totalCount) * 100;
+                // Logarithmic scale
+                batchDiv.style.width = `${widthPercentage}%`;
+                 batchDiv.style.backgroundColor = colors[index % colors.length];
+                  batchDiv.style.height = '61px';
+                 batchDiv.style.margin = '2px';
+                 batchDiv.style.borderRadius = '5px';
+                 return batchDiv; });
+                 const containerDiv = document.getElementById('batch-container');
+                  containerDiv.innerHTML = '';
+                  batchDivs.forEach(batchDiv => containerDiv.appendChild(batchDiv));
+                   const textDivs = data.map((item, index) => { const textDiv = document.createElement('div');
+                   const widthPercentage = Math.log(item.count) / Math.log(totalCount) * 100;
+                   textDiv.innerHTML = `${item.batch} <br> <div style="font-size:16px; font-weight:600">${item.count}</div>`;
+                   textDiv.style.fontSize = "12px";
+                   textDiv.style.width = `${widthPercentage}%`;
+                   textDiv.style.margin = '2px';
+                    return textDiv; });
+                    const textContainerDiv = document.getElementById('batch-text-container'); textContainerDiv.innerHTML = '';
+                    textDivs.forEach(textDiv => textContainerDiv.appendChild(textDiv));
+                   })
+                   .catch(
+                    error => { console.error('Error fetching batch details:', error);
+
+                    });
+
+
+
+                    async function fetchStudentDetails(internshipId) {
+                  try {
+                      const response = await fetch(`/api/internship_overview/batch_students_data/${internshipId}`);
+
+
+                      console.log(internshipId);
+                      if (!response.ok) {
+                          throw new Error('Network response was not ok ' + response.statusText);
+                      }
+
+                      const data = await response.json();
+
+                      const tableBody = document.getElementById('studentTable').querySelector('tbody');
+                      tableBody.innerHTML = ''; // Clear any existing rows
+
+                      data.forEach(student => {
+                          const row = document.createElement('tr');
+
+                          const batchIdCell = document.createElement('td');
+                          batchIdCell.textContent = student.batch_id;
+                          row.appendChild(batchIdCell);
+
+                          const nameCell = document.createElement('td');
+                          nameCell.textContent = student.name;
+                          row.appendChild(nameCell);
+
+                          const emailCell = document.createElement('td');
+                          emailCell.textContent = student.email;
+                          row.appendChild(emailCell);
+
+                          const regnoCell = document.createElement('td');
+                          regnoCell.textContent = student.regno;
+                          row.appendChild(regnoCell);
+
+                          const phoneCell = document.createElement('td');
+                          phoneCell.textContent = student.phone;
+                          row.appendChild(phoneCell);
+
+                          tableBody.appendChild(row);
+                      });
+                  } catch (error) {
+                      console.error('Error fetching student details:', error);
+                  }
+              }
+
+              // Call the function with the internship ID
+              fetchStudentDetails(internshipId); // Replace '1' with the actual internship ID you want to fetch data for
+              document.getElementById("showStudentsList").addEventListener("click", function() {
+                      document.getElementById("studentPopup").style.display = "block";
+                      fetchStudentDetails(internshipId); // Pass the internship ID to the function
+                  });
+
+                  // Add event listener to close the popup when clicked outside
+                  document.addEventListener("click", function(event) {
+                      if (event.target.id!== "showStudentsList" && event.target.id!== "studentPopup") {
+                          document.getElementById("studentPopup").style.display = "none";
+                      }
+                  });
+
+              //////////////////////////////////////////////////
+              ////////Graph Data////////////////////////
+                document.addEventListener("DOMContentLoaded", function () {
+                  const ctx = document.getElementById("myChart").getContext("2d");
+
+                  // Creating a pattern with vertical lines for filled bars
+                  function getPattern() {
+                    const patternCanvas = document.createElement("canvas");
+                    const patternContext = patternCanvas.getContext("2d");
+
+                    patternCanvas.width = 40;
+                    patternCanvas.height = 400;
+
+                    // Create grey vertical lines for filled bars
+                    patternContext.fillStyle = "rgba(230, 229, 251, 1)"; // Grey color
+                    for (let i = 0; i < 40; i += 4) {
+                      // Adjust width of the stripes to 4 pixels
+                      patternContext.fillRect(i, 0, 2, 400); // Draw vertical lines
+                    }
+
+                    return ctx.createPattern(patternCanvas, "repeat");
+                  }
+
+                  function createLinearGradient(ctx, bottomColor) {
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400); // Create a vertical gradient
+                    gradient.addColorStop(0, "rgba(211, 251, 82, 0.1)");
+                    gradient.addColorStop(0, "rgba(211, 251, 82, 0.2)");
+                    gradient.addColorStop(0.5, "rgba(211, 251, 82, 0.8)"); // Lighter shade of #D3FB52
+                    gradient.addColorStop(0.5, "rgba(211, 251, 82, 1)"); // Lighter shade of #D3FB52
+                    gradient.addColorStop(1, "rgba(211, 251, 82, 1)"); // Darker shade of #D3FB52
+
+                    return gradient;
+                  }
+
+                  // Use the function to create the linear gradient
+                  const bottomColor = "#D3FB52"; // Color at the bottom
+                  const linearGradient = createLinearGradient(ctx, bottomColor);
+
+                  // Fetch data from API
+                  fetch(`/api/internship_overview/graph_details/${internshipId}`)
+                   .then(response => response.json())
+                   .then(data => {
+                    if (data.message === 'Data not found') {
+            // Display "No data available" message
+            const noDataMessage = document.getElementById('no-data-message');
+            noDataMessage.style.display = 'block';
+            noDataMessage.textContent = 'No data available';
+            return;
+          }
+                      const originalTotalData = [
+                        data[0].total_live_sessions,
+                        data[0].total_assessments,
+                        data[0].grand_tests,
+                        data[0].assignments,
+                      ];
+                      const completedData = [
+                        data[0].total_event_count,
+                        data[0].daily_tests,
+                        data[0].grand_tests,
+                        data[0].assignments,
+                      ];
+                      const totalData = originalTotalData.map((value, index) => value - completedData[index]);
+                      // Chart configuration
+                      const config = {
+                        type: "bar",
+                        data: {
+                          labels: [
+                            "Live Sessions",
+                            "Daily Tests",
+                            "Weekly Tests",
+                            "Grand Tests",
+                          ],
+                          datasets: [
+                            {
+                              label: "Completed",
+                              borderRadius: {
+                                topLeft: 5,
+                                topRight: 5,
+                                bottomLeft: 20,
+                                bottomRight: 20,
+                              },
+                              backgroundColor: linearGradient, // Apply pattern to the empty bars
+                              data: completedData, // Update with received data
+                              barThickness: 35,
+                            },
+                            {
+                              label: "Total",
+                              borderRadius: 5,
+                              backgroundColor: getPattern(), // Gradient color for filled bars
+                              data: totalData, // Update with received data
+                              barThickness: 35,
+                              labels: originalTotalData,
+                            },
+                          ],
+                        },
+                        options: {
+                          layout: {
+                            padding: {
+                              bottom: 20, // Adjust the bottom padding to create space between bars and x-axis
+                            },
+                          },
+                          scales: {
+                            x: {
+                              stacked: true,
+                              categorySpacing: 4, // Adjust the spacing between bars
+                              grid: {
+                                display: false, // Make X-axis grid lines dashed
+                              },
+                            },
+                            y: {
+                              ticks: {
+                                stepSize: 10,
+                                min: 0,
+                              },
+                              stacked: true,
+                              grid: {
+                                display: false, // Remove background graph lines on y-axis
+                              },
+                            },
+                          },
+                          plugins: {
+                            borderRadius: {
+                              topLeft: 20,
+                              topRight: 20,
+                              bottomLeft: 0,
+                              bottomRight: 0,
+                            },
+                          },
+                          radius: 25,
+                        },
+                      };
+
+                      // Create the chart
+                      const myChart = new Chart(ctx, config);
+                    })
+                   .catch(error => console.error('Error:', error));
+                });
+
+
+                //Table details about the data of the phases
+                const noDataMessage1 = document.getElementById("no-data-message1");
+      const tableBody = document.getElementById("table-body");
+
+      fetch(`/api/internship_overview/table_details/${internshipId}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.length === 0) {
+            noDataMessage1.textContent = "No data available";
+            noDataMessage1.style.display = "block";
+            return;
+          }
+
+          // Create an array to store the titles
+          const titles = data.map(row => row.title);
+
+          // Create a new table head
+          const newTableHead = document.createElement("tr");
+          const emptyCell = document.createElement("th");
+          emptyCell.textContent = "";
+          newTableHead.appendChild(emptyCell);
+          titles.forEach(title => {
+            const th = document.createElement("th");
+            th.textContent = title;
+            newTableHead.appendChild(th);
+          });
+          tableBody.appendChild(newTableHead);
+
+          // Create an array of previous headers with corresponding CSS classes
+          const previousHeaders = [
+            { text: "Live Session Conducted", className: "header-live-session" },
+            { text: "Assessment Conducted", className: "header-assessment" },
+            { text: "Daily Tests", className: "header-daily-tests" },
+            { text: "Grand Tests", className: "header-grand-tests" },
+            { text: "Employability Tests", className: "header-employability-tests" },
+            { text: "Assignments", className: "header-assignments" }
+          ];
+
+          // Iterate through the previous headers
+          previousHeaders.forEach((header, index) => {
+            const newRow = document.createElement("tr");
+            const newHeaderCell = document.createElement("td");
+
+            const span = document.createElement("span");
+            span.textContent = header.text;
+            span.style.textWrap = "nowrap";
+            span.classList.add(header.className);
+            newHeaderCell.appendChild(span);
+            newRow.appendChild(newHeaderCell);
+
+            // Iterate through the data
+            data.forEach(row => {
+              const newCell = document.createElement("td");
+              switch (index) {
+                case 0:
+                  newCell.textContent = row.live_session_count;
+                  break;
+                case 1:
+                  newCell.textContent = row.assessment_count;
+                  break;
+                case 2:
+                  newCell.textContent = row.daily_tests;
+                  break;
+                case 3:
+                  newCell.textContent = row.grand_tests;
+                  break;
+                case 4:
+                  newCell.textContent = row.mets;
+                  break;
+                case 5:
+                  newCell.textContent = row.assignments;
+                  break;
+              }
+              newRow.appendChild(newCell);
+            });
+
+            tableBody.appendChild(newRow);
+          });
+
+          // Add a new row with "View Report" buttons for each title
+          const viewReportRow = document.createElement("tr");
+          const emptyCell2 = document.createElement("td");
+          emptyCell2.textContent = "";
+          viewReportRow.appendChild(emptyCell2);
+          titles.forEach((title, index) => {
+            const viewReportCell = document.createElement("td");
+            const viewReportButton = document.createElement("button");
+            viewReportButton.textContent = "View Report";
+            viewReportButton.style.textWrap = "nowrap";
+
+            // Add an event listener to redirect to the phase report page
+            viewReportButton.addEventListener("click", () => {
+              const phaseId = data[index].id; // Assuming each row has an 'id' field for phase ID
+              window.location.href = `internshipDomainReport?domain_id=${phaseId}`;
+            });
+
+            viewReportCell.appendChild(viewReportButton);
+            viewReportRow.appendChild(viewReportCell);
+          });
+          tableBody.appendChild(viewReportRow);
+        })
+        .catch(error => console.error("Error fetching details:", error));
+
+               let studentTableData = [];
+      let studentCurrentPage = 1;
+      const studentRowsPerPage = 10; // Set the number of rows per page
+
+      async function fetchStudentData(internshipId) {
+        try {
+          const response = await fetch(`/api/internship_overview/top_students/${internshipId}`);
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+
+          if (data.message) {
+            document.getElementById('student-table').style.display = 'none';
+            document.getElementById('sattendance-pagination-controls').style.display = 'none';
+            document.querySelector('.section4').innerHTML += '<div class="nodata">No data is available</div>';
+            return;
+          }
+
+          studentTableData = data;
+          renderStudentTable();
+        } catch (error) {
+          console.error('Error fetching student data:', error);
+        }
+      }
+
+      function renderStudentTable() {
+        const tableBody = document.getElementById('student-table-body');
+        tableBody.innerHTML = '';
+
+        if (studentTableData.length === 0) {
+          document.getElementById('student-table').style.display = 'none';
+          document.getElementById('sattendance-pagination-controls').style.display = 'none';
+          document.querySelector('.section4').innerHTML += '<div class="nodata">No data is available</div>';
+          return;
+        }
+
+        document.getElementById('student-table').style.display = 'table';
+        document.getElementById('sattendance-pagination-controls').style.display = 'flex';
+
+        const start = (studentCurrentPage - 1) * studentRowsPerPage;
+        const end = start + studentRowsPerPage;
+        const pageData = studentTableData.slice(start, end);
+
+        pageData.forEach((student) => {
+          const tableRow = document.createElement('tr');
+          tableRow.innerHTML = `
+            <td class="name-cell">
+              <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+              ${student.name}
+            </td>
+            <td>${student.email}</td>
+            <td>${student.phone}</td>
+            <td>${student.regno}</td>
+            <td>${student.average_score}%</td>
+          `;
+          tableBody.appendChild(tableRow);
+        });
+
+        const totalPages = Math.ceil(studentTableData.length / studentRowsPerPage);
+        updateStudentPaginationControls(totalPages);
+      }
+
+      function updateStudentPaginationControls(totalPages) {
+        const pageNumbersElement = document.getElementById('sattendancePageNumbers');
+        const prevPageButton = document.getElementById('sattendancePrevPage');
+        const nextPageButton = document.getElementById('sattendanceNextPage');
+
+        pageNumbersElement.innerHTML = '';
+        prevPageButton.disabled = studentCurrentPage === 1;
+        nextPageButton.disabled = studentCurrentPage === totalPages;
+
+        let startPage = Math.max(studentCurrentPage - 3, 1);
+        let endPage = Math.min(studentCurrentPage + 3, totalPages);
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else if (endPage === totalPages) {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageNumber = document.createElement('span');
+          pageNumber.textContent = i;
+          pageNumber.style.fontWeight = i === studentCurrentPage ? 'bold' : 'normal';
+          pageNumber.style.backgroundColor = i === studentCurrentPage ? '#7962BD' : '#D3FB52';
+          pageNumber.style.color = i === studentCurrentPage ? '#fff' : '#000';
+          pageNumber.onclick = () => goToStudentPage(i);
+          pageNumbersElement.appendChild(pageNumber);
+        }
+      }
+
+      function goToStudentPage(page) {
+        studentCurrentPage = page;
+        renderStudentTable();
+        updateStudentPaginationControls(Math.ceil(studentTableData.length / studentRowsPerPage));
+      }
+
+      function studentPrevPage() {
+        if (studentCurrentPage > 1) {
+          studentCurrentPage--;
+          renderStudentTable();
+          updateStudentPaginationControls(Math.ceil(studentTableData.length / studentRowsPerPage));
+        }
+      }
+
+      function studentNextPage() {
+        const totalPages = Math.ceil(studentTableData.length / studentRowsPerPage);
+        if (studentCurrentPage < totalPages) {
+          studentCurrentPage++;
+          renderStudentTable();
+          updateStudentPaginationControls(totalPages);
+        }
+      }
+
+      // Initial fetch of student data
+      fetchStudentData(internshipId);
+
+      function downloadTableAsExcel(tableId, filename, allData) {
+          // Create a new table element to store all data
+          const completeTable = document.createElement('table');
+
+          // Create a table header row
+          const headerRow = document.createElement('tr');
+          const table = document.getElementById(tableId);
+          const headerCells = table.querySelectorAll('th');
+          headerCells.forEach(cell => {
+              const th = document.createElement('th');
+              th.innerText = cell.innerText;
+              headerRow.appendChild(th);
+          });
+          completeTable.appendChild(headerRow);
+
+          // Populate the table with all data rows
+          allData.forEach(rowData => {
+              const row = document.createElement('tr');
+              rowData.forEach(cellData => {
+                  const cell = document.createElement('td');
+                  cell.innerText = cellData;
+                  row.appendChild(cell);
+              });
+              completeTable.appendChild(row);
+          });
+
+          // Convert the complete table to a workbook and download
+          const workbook = XLSX.utils.table_to_book(completeTable, { sheet: "Sheet1" });
+          XLSX.writeFile(workbook, filename);
+      }
+
+      // Usage Example:
+      // Assuming you have a function to fetch all data, e.g., getAllTableData():
+      const allData = getAllTableData();  // This should return an array of arrays containing all table data
+
+      // Call the modified function
+      downloadTableAsExcel('yourTableId', 'yourFilename.xlsx', allData);
+
+
+      function addLoadersToSections(sectionIds) {
+          sectionIds.forEach(id => {
+              const section = document.getElementById(id);
+              if (section) {
+                  const loader = document.createElement('div');
+                  loader.className = 'loader';
+                  section.appendChild(loader);
+              }
+          });
+
+          // Remove loaders after a certain time (optional)
+          window.addEventListener('load', function() {
+              setTimeout(function() {
+                  sectionIds.forEach(id => {
+                      const section = document.getElementById(id);
+                      if (section) {
+                          const loader = section.querySelector('.loader');
+                          if (loader) {
+                              loader.style.display = 'none';
+                          }
+                      }
+                  });
+              }, 3000); // Adjust the timeout duration as needed
+          });
+      }
+
+      // IDs of the sections where loaders will be added
+      const sectionIds = ['internship-title','title','batch-count','studentTable','myChart','table-body'];
+
+      // Call the function to add loaders to the sections
+      addLoadersToSections(sectionIds);
+    </script>
+
+    <!-----------User Details Fetching---------------------->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Function to get the value of a cookie by name
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+
+        // Get the JWT token from the cookie
+        const token = getCookie("userAdminToken");
+
+        if (token) {
+          // Decode the JWT token
+          const decoded = jwt_decode(token);
+
+          // Display the username and role
+          document.querySelector(".userN").textContent = decoded.email;
+          document.querySelector(".userR").textContent = decoded.role;
+        } else {
+          // Handle the case where the token is not found
+          document.querySelector(".userN").textContent = "No user logged in";
+          document.querySelector(".userR").textContent = "";
+        }
+      });
+    </script>
+
+    <!---------Logout module----------->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const logoutButton = document.getElementById("logoutButton");
+        const logoutModal = document.getElementById("logoutModal");
+        const modalContent = logoutModal.querySelector(".modal-content");
+        const confirmLogoutButton =
+          modalContent.querySelector("#confirmLogout");
+        const cancelLogoutButton = modalContent.querySelector("#cancelLogout");
+
+        logoutButton.addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default behavior of the button
+
+          // Show the modal
+          logoutModal.style.display = "block";
+
+          // Add event listeners to the modal buttons
+          confirmLogoutButton.addEventListener("click", function () {
+            // If user confirms, navigate to /logout
+            window.location.href = "/logout";
+            logoutModal.style.display = "none"; // Hide the modal
+            
+          });
+
+          cancelLogoutButton.addEventListener("click", function () {
+            // If user cancels, hide the modal
+            logoutModal.style.display = "none";
+            logoutButton.style.display = "none";
+          });
+
+          // Add event listener to the close span
+          closeSpan.addEventListener("click", function () {
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          // Add event listener to the modal itself to close when clicked outside
+          window.addEventListener("click", function (event) {
+            if (event.target === logoutModal) {
+              logoutModal.style.display = "none"; // Hide the modal
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

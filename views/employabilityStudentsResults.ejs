@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Results</title>
+    <!-- XLSX library script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.0/xlsx.full.min.js"></script>
+
+    <!-- FileSaver.js script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <link rel="stylesheet" href="css/emp_students_results.css" />
+    <link rel="stylesheet" href="css/nav_log.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="icon" type="image/x-icon" href="img/sidebarlogo.png" />
+    <script src="js/students_results.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <style>
+      .filter-card {
+        border: 1px solid white;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: white;
+      }
+      .filter-card-header {
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+      .checkbox-container {
+        display: flex;
+        flex-direction: column;
+      }
+      .checkbox-container div {
+        margin-bottom: 5px;
+        font-size: 12px;
+      }
+      .show-more-button,
+      .show-less-button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        background-color: #f0f0f0;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+        border-radius: 3px;
+      }
+      .checkbox-container input[type="checkbox"] {
+        transform: scale(0.8); /* Adjust the scale as needed */
+        margin-right: 5px; /* Optional: Add some spacing between the checkbox and label */
+        margin-bottom: 0;
+      }
+
+      .table-container {
+        position: relative;
+        max-height: 1180px;
+      }
+
+      tbody td {
+        font-size: 12px;
+      }
+
+      .custom-button {
+        background-color: #d3fb52;
+        color: #333;
+        padding: 10px 15px;
+        border: 2px solid #a1c900;
+        border-radius: 50px;
+        cursor: pointer;
+        margin-right: 10px;
+        font-size: 12px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s, box-shadow 0.3s;
+      }
+
+      .custom-button:hover {
+        background-color: #b7e300;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .custom-button:active {
+        background-color: #a1c900;
+        box-shadow: 0 3px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      /* HTML: <div class="loader"></div> */
+      .loader {
+        width: 50px;
+        padding: 8px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #25b09b;
+        --_m: conic-gradient(#0000 10%, #000),
+          linear-gradient(#000 0 0) content-box;
+        -webkit-mask: var(--_m);
+        mask: var(--_m);
+        -webkit-mask-composite: source-out;
+        mask-composite: subtract;
+        animation: l3 1s infinite linear;
+        margin: 200px;
+      }
+      @keyframes l3 {
+        to {
+          transform: rotate(1turn);
+        }
+      }
+      .roww{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.marginr{
+    margin-right: 10px;
+}
+.grey{
+    color: rgba(0, 0, 0, 0.7);
+}
+.f14{
+    font-size: 14px;
+}
+       
+    </style>
+  </head>
+  <body>
+    <script>
+      window.userRole = "<%= user.role %>";
+    </script>
+    <script src="js/rolebase.js"></script>
+    
+    <!--Sidebar-->
+    <div class="supercss">
+      <div class="sidebar">
+        
+    
+        <% if (user.role === 'EmployabilityAdmin') { %>
+          <a class="logo"
+          style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+          <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+      </a>
+            <a href="employabilityReport" class="menu-item active" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+        <% } else if (user.role === 'SuperAdmin') { %>
+            <a class="logo"
+                style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+            </a>
+            <a href="employabilityReport" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item">
+                <img src="img/internship_whiteicon.png" alt="manage" style="width: 20px; height: auto">
+                <span>Internships</span>
+            </a>
+        <% } else { %>
+          <a class="logo"
+          style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+          <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+      </a>
+            <a href="myDashboard" class="menu-item" id="dashboard-link">
+                <img src="img/dash_white.png" alt="dash" style="max-width:22px; height:22px">
+                <span style="color:white">Dashboard</span>
+            </a>
+            <a href="employabilityReport" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+                <img alt="Assessment icon" src="img/assessment.png" style="max-width:19px; height:19.5px">
+                <span>Assessments</span>
+            </a>
+            <a href="jobsDashboard" class="menu-item">
+                <img src="img/jobs.png" alt="jobs" style="max-width:20px; height:21px">
+                <span>Jobs</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/" class="menu-item">
+                <img alt="course icon" src="img/course.png" style="max-width:19px; height:20px">
+                <span>Course</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/lessonPlan/" class="menu-item">
+                <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width:23px; height:18px">
+                <span>Lesson Plan</span>
+            </a>
+            <a href="trainingsDashboard" class="menu-item">
+                <img src="img/trainings.png" alt="trainings" style="max-width:27px; height:21px">
+                <span>Trainings</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item">
+                <img src="img/internship_whiteicon.png" alt="manage" style="width: 20px; height: auto">
+                <span>Internships</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/" class="menu-item">
+                <img alt="vpl icon" src="img/vpl.png" style="max-width:19px; height:17px">
+                <span>VPL</span>
+            </a>
+        <% } %>
+    </div>
+      <div class="css">
+        <div class="css0">
+          <div class="navbar">
+            <div class="nav1"></div>
+            <div class="nav2">
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageStudents/"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Manage Users"
+                    src="img/newManageUsers.svg"
+                    class="chakra-image css-0"
+                  />
+                </div>
+              </a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/tpCalendar/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Calendar"
+                    src="img/newCalenderNavIcon.svg"
+                    class="chakra-image css-0"
+                  /></div
+              ></a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageNotification/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <div class="css-1edim3w">
+                    <img
+                      alt="Notifications"
+                      src="img/newNotificationIcon.svg"
+                      class="chakra-image css-6su6fj"
+                    />
+                    <div class="css-1bac456">
+                      <div class="css-1rkwksi">1</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <button type="button" class="navbtn" id="userButton">
+                <span class="user-details">
+                  <div class="user">
+                    <span class="user-profile">
+                      <i
+                        class="fa-solid fa-circle-user"
+                        style="font-size: 30px"
+                      ></i>
+                    </span>
+                    <div class="username">
+                      <p class="userN"></p>
+                      <p class="userR"></p>
+                    </div>
+                  </div>
+                </span>
+                <span class="chakra-button__icon css-1hzyiq5">
+                  <svg
+                    viewBox="0 0 16 16"
+                    height="12px"
+                    width="12px"
+                    aria-hidden="true"
+                    focusable="false"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="black"
+                    class="css-1eamic5 ex0cdmw0"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    ></path>
+                  </svg>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="logoutbtn"
+                id="logoutButton"
+                style="display: none"
+              >
+                Log out
+              </button>
+            </div>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const userButton = document.getElementById("userButton");
+                const logoutButton = document.getElementById("logoutButton");
+
+                userButton.addEventListener("click", () => {
+                  if (logoutButton.style.display === "none") {
+                    logoutButton.style.display = "flex";
+                    logoutButton.style.top = `${
+                      userButton.offsetTop + userButton.offsetHeight
+                    }px`;
+                    logoutButton.style.left = `${userButton.offsetLeft}px`;
+                  } else {
+                    logoutButton.style.display = "none";
+                  }
+                });
+
+                logoutButton.addEventListener("click", () => {
+                  // Add your logout logic here
+                  console.log("User logged out");
+                });
+              });
+            </script>
+          </div>
+        </div>
+
+        <div class="css1">
+          <div class="main-container">
+            <div class="usercontainer">
+              <div class="usercard">
+                <div class="roww marginr">
+                  <img
+                    src="img/empgrey.png"
+                    alt="internship icon"
+                    style="width: 14px; height: 14px; margin-right: 5px"
+                  />
+                  <a href="employabilityReport" style="text-decoration: none;">
+                    <p class="grey f14 marginr">
+                      Employbility Report <i class="fa-solid fa-chevron-right f10 marginl grey"></i>
+                    </p></a>
+                  <p class="f14">Student Results</p>
+                </div>
+          
+                <div class="usercard-header">
+                  <h2>STUDENT RESULTS</h2>
+                  <button
+                    type="submit"
+                    class="btn btn-primary-submit custom-button"
+                    onclick="downloadTableAsExcel('data-table', 'student_data.xlsx')"
+                  >
+                    Download
+                  </button>
+                </div>
+                <div class="userinnercard">
+                  <p style="font-size: 16px">FILTERS</p>
+                  <div class="frame">
+                    <div class="left-frame">
+                      <form>
+                        <div class="filters">
+                          <div class="filter-card">
+                            <div class="filter-card-header">DEGREE</div>
+                            <div
+                              id="degree-filter"
+                              class="checkbox-container"
+                            ></div>
+                          </div>
+                          <div class="filter-card">
+                            <div class="filter-card-header">BRANCH</div>
+                            <div
+                              id="branch-filter"
+                              class="checkbox-container"
+                            ></div>
+                          </div>
+                          <div class="filter-card">
+                            <div class="filter-card-header">YEAR</div>
+                            <div
+                              id="year-filter"
+                              class="checkbox-container"
+                            ></div>
+                          </div>
+                          <div class="filter-card">
+                            <div class="filter-card-header">
+                              EMPLOYBILITY BAND
+                            </div>
+                            <div
+                              id="emp-band-filter"
+                              class="checkbox-container"
+                            ></div>
+                          </div>
+                          <div class="filter-card">
+                            <div class="filter-card-header">
+                              BEST EMPLOYBILITY BAND
+                            </div>
+                            <div
+                              id="emp-best-band-filter"
+                              class="checkbox-container"
+                            ></div>
+                          </div>
+                          <div class="filter-card">
+                            <div class="filter-card-header">
+                              10TH PERCENTAGE
+                            </div>
+                            <input
+                              type="range"
+                              id="10th-percentage-slider"
+                              min="0"
+                              max="100"
+                              step="0.1"
+                              value="0"
+                            /><span id="10th-percentage-label"> 0</span>%
+                          </div>
+                          <div class="filter-card">
+                            <div class="filter-card-header">
+                              12TH PERCENTAGE
+                            </div>
+                            <input
+                              type="range"
+                              id="12th-percentage-slider"
+                              min="0"
+                              max="100"
+                              step="0.1"
+                              value="0"
+                            /><span id="12th-percentage-label"> 0</span>%
+                          </div>
+                          <div class="filter-card">
+                            <div class="filter-card-header">
+                              GRADUATION PERCENTAGE
+                            </div>
+                            <input
+                              type="range"
+                              id="grad-percentage-slider"
+                              min="0"
+                              max="100"
+                              step="0.1"
+                              value="0"
+                            /><span id="grad-percentage-label">0</span>%
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="right-frame">
+                      <div class="table-container" id="table-container">
+                        <table id="data-table">
+                          <thead>
+                            <tr>
+                              <!-- Table headers will be populated dynamically -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- Table content will be populated dynamically -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div id="logoutModal" class="modal" style="display: none">
+                <div class="modal-content">
+                  <p class="question">Are you sure you want to logout?</p>
+                  <div class="logout-div"></div>
+                  <div class="modal-buttons">
+                    <button id="cancelLogout">Cancel</button>
+                    <button id="confirmLogout">Yes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const filterOptions = await fetchFilterOptions();
+    populateFilters(filterOptions);
+    addFilterListeners();
+    fetchDataAndPopulateTable();
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to load data. Please try again later.");
+  }
+});
+
+async function fetchFilterOptions() {
+  const responses = await Promise.all([
+    fetch("api/emp_results_with_filters/filters/degrees"),
+    fetch("api/emp_results_with_filters/filters/branches"),
+    fetch("api/emp_results_with_filters/filters/years"),
+    fetch("api/emp_results_with_filters/filters/employabilityBands"),
+    fetch("api/emp_results_with_filters/filters/possibleEmployabilityBands"),
+  ]);
+  const filterOptions = await Promise.all(
+    responses.map((response) => response.json())
+  );
+
+  return filterOptions;
+}
+
+function populateFilters(filterOptions) {
+  const degreeFilter = document.getElementById("degree-filter");
+  const branchFilter = document.getElementById("branch-filter");
+  const yearFilter = document.getElementById("year-filter");
+  const empBandFilter = document.getElementById("emp-band-filter");
+  const empBestBandFilter = document.getElementById("emp-best-band-filter");
+
+  addFilterOptions(degreeFilter, filterOptions[0]);
+  addFilterOptions(branchFilter, filterOptions[1]);
+  addFilterOptions(yearFilter, filterOptions[2]);
+  addFilterOptions(empBandFilter, filterOptions[3], ["A++","A+", "A", "B", "C", "F"]);
+  addFilterOptions(empBestBandFilter, filterOptions[4], ["A++","A+","A", "B", "C", "F"]);
+}
+
+function addFilterOptions(container, options, customOrder) {
+  const maxOptionsToShow = 5;
+
+  // Sort options based on custom order if provided
+  if (customOrder) {
+    options.sort((a, b) => customOrder.indexOf(a) - customOrder.indexOf(b));
+  }
+
+  const initialOptions = options.slice(0, maxOptionsToShow);
+
+  initialOptions.forEach((option) => addCheckbox(container, option));
+
+  if (options.length > maxOptionsToShow) {
+    addShowMoreButton(container, options.slice(maxOptionsToShow), customOrder);
+  }
+}
+
+function addCheckbox(container, option) {
+  if (!option) return; // Skip if the option is empty
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.value = option;
+  checkbox.id = `${option}-checkbox`;
+
+  const label = document.createElement("label");
+  label.htmlFor = `${option}-checkbox`;
+  label.textContent = option;
+
+  const div = document.createElement("div");
+  div.appendChild(checkbox);
+  div.appendChild(label);
+
+  container.appendChild(div);
+}
+
+function addShowMoreButton(container, remainingOptions, customOrder) {
+  const showMoreButton = document.createElement("button");
+  showMoreButton.textContent = "Show More";
+  showMoreButton.className = "show-more-button";
+
+  showMoreButton.addEventListener("click", () => {
+    remainingOptions.forEach((option) => {
+      addCheckbox(container, option);
+      const checkbox = document.getElementById(`${option}-checkbox`);
+      if (checkbox) {
+        checkbox.addEventListener("change", fetchDataAndPopulateTable);
+      }
+    });
+    showMoreButton.remove();
+    addShowLessButton(container, remainingOptions, customOrder);
+  });
+
+  container.appendChild(showMoreButton);
+}
+
+function addShowLessButton(container, addedOptions, customOrder) {
+  const showLessButton = document.createElement("button");
+  showLessButton.textContent = "Show Less";
+  showLessButton.className = "show-less-button";
+
+  showLessButton.addEventListener("click", () => {
+    addedOptions.forEach((option) => {
+      const checkbox = document.getElementById(`${option}-checkbox`);
+      if (checkbox) {
+        checkbox.parentElement.remove();
+      }
+    });
+    showLessButton.remove();
+    addShowMoreButton(container, addedOptions, customOrder);
+  });
+
+  container.appendChild(showLessButton);
+}
+
+function addFilterListeners() {
+  const filters = document.querySelectorAll(
+    ".checkbox-container input[type='checkbox']"
+  );
+  filters.forEach((filter) => {
+    filter.addEventListener("change", fetchDataAndPopulateTable);
+  });
+
+  const sliders = [
+    document.getElementById("10th-percentage-slider"),
+    document.getElementById("12th-percentage-slider"),
+    document.getElementById("grad-percentage-slider"),
+  ];
+
+  sliders.forEach((slider) => {
+    slider.addEventListener("input", fetchDataAndPopulateTable);
+  });
+
+  const tenthSlider = document.getElementById("10th-percentage-slider");
+  const twelfthSlider = document.getElementById("12th-percentage-slider");
+  const gradSlider = document.getElementById("grad-percentage-slider");
+
+  tenthSlider.addEventListener("input", () => {
+    document.getElementById("10th-percentage-label").textContent =
+      tenthSlider.value;
+  });
+  twelfthSlider.addEventListener("input", () => {
+    document.getElementById("12th-percentage-label").textContent =
+      twelfthSlider.value;
+  });
+  gradSlider.addEventListener("input", () => {
+    document.getElementById("grad-percentage-label").textContent =
+      gradSlider.value;
+  });
+}
+
+async function fetchDataAndPopulateTable() {
+  const tableContainer = document.getElementById("table-container");
+  const loader = document.createElement("div");
+  loader.className = "loader";
+  tableContainer.appendChild(loader);
+
+  try {
+    const queryParams = getQueryParams();
+    const url =
+      "api/emp_results_with_filters/emp_band_data" + queryParams;
+    const response = await fetch(url);
+    const data = await response.json();
+    populateTable(data);
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Failed to load data. Please try again later.");
+  } finally {
+    loader.remove();
+  }
+}
+
+function getQueryParams() {
+  const degreeFilter = getSelectedCheckboxes(
+    document.getElementById("degree-filter")
+  );
+  const branchFilter = getSelectedCheckboxes(
+    document.getElementById("branch-filter")
+  );
+  const yearFilter = getSelectedCheckboxes(
+    document.getElementById("year-filter")
+  );
+  const empBandFilter = getSelectedCheckboxes(
+    document.getElementById("emp-band-filter")
+  );
+  const empBestBandFilter = getSelectedCheckboxes(
+    document.getElementById("emp-best-band-filter")
+  );
+  const tenthPercentage = document.getElementById(
+    "10th-percentage-slider"
+  ).value;
+  const twelfthPercentage = document.getElementById(
+    "12th-percentage-slider"
+  ).value;
+  const gradPercentage = document.getElementById(
+    "grad-percentage-slider"
+  ).value;
+
+  const params = new URLSearchParams();
+  if (degreeFilter.length > 0) params.append("degree", degreeFilter);
+  if (branchFilter.length > 0) params.append("branch", branchFilter);
+  if (yearFilter.length > 0) params.append("year", yearFilter);
+  if (empBandFilter.length > 0) params.append("empBand", empBandFilter);
+  if (empBestBandFilter.length > 0)
+    params.append("empBestBand", empBestBandFilter);
+  params.append("tenthPercentage", tenthPercentage);
+  params.append("twelfthPercentage", twelfthPercentage);
+  params.append("gradPercentage", gradPercentage);
+
+  return "?" + params.toString();
+}
+
+function getSelectedCheckboxes(container) {
+  const selectedCheckboxes = Array.from(
+    container.querySelectorAll("input[type='checkbox']:checked")
+  ).map((checkbox) => checkbox.value);
+  return selectedCheckboxes.join(",");
+}
+
+const headerMapping = {
+  name: "Name",
+  email: "Email",
+  roll_number: "Roll Number",
+  college_id:"College Id",
+  yop: "YOP",
+  btechdegree: "Degree",
+  btechbranch: "Branch",
+  total_score: "Total Score",
+  aptitude: "Aptitude",
+  coding: "Coding",
+  english: "English",
+  employability_band: "Employability Band",
+  possible_employability_band: "Best Employability Band",
+  profile_score: "Profile Score",
+  github_id: "GitHub ID",
+  linkedin_id: "LinkedIn ID",
+  hacker_rank_id: "HackerRank ID",
+  leet_code_id: "LeetCode ID",
+  tenth_cgpa: "10th %",
+  twelfth_cgpa: "12th %",
+  btech_cgpa: "B.Tech %",
+  codingscore: "Coding Score",
+  codingaccuracy: "Coding Accuracy %",
+  javascore: "Java Score",
+  javaaccuracy: "Java Accuracy %",
+  pythonscore: "Python Score",
+  pythonaccuracy: "Python Accuracy",
+  cscore: "C Score",
+  caccuracy: "C Accuracy %",
+  cppscore: "C++ Score",
+  cppaccuracy: "C++ Accuracy %",
+  sqlscore: "SQL Score",
+  sqlaccuracy: "SQL Accuracy %",
+  comment: "Comment",
+  aptitude_improvement_suggestions: "Aptitude Improvement Suggestions",
+  technical_improvement_suggestions: "Technical Improvement Suggestions",
+  english_improvement_suggestions: "English Improvement Suggestions",
+  // Add more mappings as needed
+};
+
+const defaultMessages = {
+  coding: "NA",
+  codingscore: "NA",
+  codingaccuracy: "NA",
+  javascore: "NA",
+  javaaccuracy: "NA",
+  pythonscore: "NA",
+  pythonaccuracy: "NA",
+  cscore: "NA",
+  caccuracy: "NA",
+  cppscore: "NA",
+  cppaccuracy: "NA",
+  sqlscore: "NA",
+  sqlaccuracy: "NA",
+  // Add more defaults as needed
+};
+
+function populateTable(data) {
+  const table = document.getElementById("data-table");
+  const tableHead = table.querySelector("thead tr");
+  const tableBody = table.querySelector("tbody");
+
+  tableHead.innerHTML = "";
+  tableBody.innerHTML = "";
+
+  console.log(data,"");
+
+  if (data.length > 0) {
+    const headers = Object.keys(data[0]);
+    const headersToDisplay = headers.filter((header) => header !== "id");
+
+    headersToDisplay.forEach((header) => {
+      const th = document.createElement("th");
+      th.textContent = headerMapping[header];
+      tableHead.appendChild(th);
+    });
+
+    data.forEach((rowData) => {
+      const row = document.createElement("tr");
+      headersToDisplay.forEach((header) => {
+        const cell = document.createElement("td");
+
+        if (
+          header === "employability_band" ||
+          header === "possible_employability_band"
+        ) {
+          cell.textContent =
+            rowData[header] || "NA";
+        } else if (
+          header === "name" ||
+          header === "github_id" ||
+          header === "linkedin_id" ||
+          header === "hacker_rank_id" ||
+          header === "leet_code_id"
+        ) {
+          const anchor = document.createElement("a");
+          const email = rowData["email"];
+          const name = rowData["name"]
+          const githubLink = rowData["github_id"];
+          const LinkedInLink = rowData["linkedin_id"];
+          const hackerRankId = rowData["hacker_rank_id"];
+          const leetCodeLink = rowData["leet_code_id"]
+
+          if (rowData[header]) {
+
+            
+            if(rowData[header]===githubLink){
+              anchor.href = githubLink;
+              anchor.textContent = "Github Link"
+            }else if (rowData[header]===LinkedInLink){
+              anchor.href = LinkedInLink;
+              anchor.textContent = "LinkedIn Link"
+            }
+            else if (rowData[header]===hackerRankId){
+              anchor.href = hackerRankId;
+              anchor.textContent = "Hackerrank Link"
+            }
+            else if (rowData[header]===leetCodeLink){
+              anchor.href = leetCodeLink;
+              anchor.textContent = "Leetcode Link"
+            }
+            else if(rowData[header]===name){
+              anchor.href = `employabilityStudentReport?name=${rowData[header]}&email=${email}`;
+              anchor.textContent = name
+            }
+          }
+          else {
+            // anchor.href = "#";
+            anchor.textContent = "NA";
+          }
+          cell.appendChild(anchor);
+        } else {
+          cell.textContent =
+            rowData[header] !== null && rowData[header] !== undefined
+              ? rowData[header]
+              : "NA";
+        }
+
+        row.appendChild(cell);
+      });
+      tableBody.appendChild(row);
+    });
+  } else {
+    const noDataRow = document.createElement("tr");
+    const noDataCell = document.createElement("td");
+    noDataCell.textContent = "No data available";
+    noDataCell.colSpan = tableHead.children.length || 1;
+    noDataRow.appendChild(noDataCell);
+    tableBody.appendChild(noDataRow);
+  }
+}
+
+function downloadTableAsExcel(tableId, filename) {
+  const table = document.getElementById(tableId);
+  const workbook = XLSX.utils.table_to_book(table, { sheet: "Sheet1" });
+  XLSX.writeFile(workbook, filename);
+}
+
+    </script>
+    
+
+    <!-----------User Details Fetching---------------------->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Function to get the value of a cookie by name
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+
+        // Get the JWT token from the cookie
+        const token = getCookie("userAdminToken");
+
+        if (token) {
+          // Decode the JWT token
+          const decoded = jwt_decode(token);
+
+          // Display the username and role
+          document.querySelector(".userN").textContent = decoded.email;
+          document.querySelector(".userR").textContent = decoded.role;
+        } else {
+          // Handle the case where the token is not found
+          document.querySelector(".userN").textContent = "No user logged in";
+          document.querySelector(".userR").textContent = "";
+        }
+      });
+    </script>
+    <!---------Logout module----------->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const logoutButton = document.getElementById("logoutButton");
+        const logoutModal = document.getElementById("logoutModal");
+        const modalContent = logoutModal.querySelector(".modal-content");
+        const confirmLogoutButton =
+          modalContent.querySelector("#confirmLogout");
+        const cancelLogoutButton = modalContent.querySelector("#cancelLogout");
+
+        logoutButton.addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default behavior of the button
+
+          // Show the modal
+          logoutModal.style.display = "block";
+
+          // Add event listeners to the modal buttons
+          confirmLogoutButton.addEventListener("click", function () {
+            // If user confirms, navigate to /logout
+            window.location.href = "/logout";
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          cancelLogoutButton.addEventListener("click", function () {
+            // If user cancels, hide the modal
+            logoutModal.style.display = "none";
+          });
+
+          // Add event listener to the close span
+          closeSpan.addEventListener("click", function () {
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          // Add event listener to the modal itself to close when clicked outside
+          window.addEventListener("click", function (event) {
+            if (event.target === logoutModal) {
+              logoutModal.style.display = "none"; // Hide the modal
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

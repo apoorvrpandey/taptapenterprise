@@ -1,0 +1,237 @@
+
+  /* Media query for screens smaller than 768px (typical tablets and phones) */
+  @media (max-width: 767px) {
+  .bottombar {
+  position: fixed;
+  top:90%;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  padding: 4px 0;
+  display: flex;
+  justify-content: space-between;
+  background-color: #000;
+  border-top: 1px solid #fff; /* Optional: Add a border at the top */
+  }
+  
+  .logo{
+  display: none;
+  }
+  .bottombar {
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  
+  }
+  
+  .bottombar .menu-item img {
+  margin-bottom: 5px;
+  }
+  }
+ 
+
+  a{
+    color: black;
+  }
+
+  a:hover, a.active{
+    text-decoration: none;
+    color: black;
+  }
+
+  .minternships{
+    background-color: rgba(0,0,0,0.1);
+    border: 1px solid #ccc;
+    border-radius: 30px; 
+    padding: 10px 15px;
+}
+
+  .ctrainging{
+    background-color: #D3FB52;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    padding: 10px 15px;
+  }
+
+  .ctrainging:hover,
+  .mtrainings:hover{
+    background-color: #e0a9e7;
+    font-weight: 600;
+    border: none;
+  }
+
+  .topnav {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 1px solid #ccc; /* Add border to .topnav */
+}
+
+.topnav a {
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    padding: 10px;
+    box-sizing: border-box;
+    border-bottom: 3px solid transparent; /* Add transparent border to .topnav a */
+}
+
+.topnav a:hover,
+.topnav a.active {
+    border-bottom-color: #d3fb52; /* Change border color on hover and active */
+    font-weight: 600;
+    color: black;
+}
+
+/* Adjust margins to reduce the space between links */
+.topnav a:nth-child(1),
+.topnav a:nth-child(2) {
+    margin-right: 10px; /* Adjust the margin as needed */
+}
+
+.topnav i {
+  margin-right: 10px;
+}
+
+.topnav a:hover {
+    border-bottom: 3px solid #d3fb52;
+    font-weight: 600;
+    color: black;
+}
+
+.topnav a.active {
+    border-bottom: 3px solid #d3fb52;
+    font-weight: 600;
+    color: black;
+}
+
+ 
+  
+  .section2_2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .card_s2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-left: 4px solid #7962BD;
+    margin-top: 10px;
+    padding: 10px;
+    width: 32%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .card_s2_div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card_s2 p{
+    font-size: 22px;
+  }
+
+  .card_s2_div span{
+    margin-right: 10px;
+  }
+  .background-img-color{
+    background-color: rgba(121,98,189,0.3);
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    border-radius: 100%;
+    margin: 10px;
+  }
+
+  .training{
+    height: fit-content;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+  }
+
+  .banner-t-img{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    margin-right:20px
+  }
+
+  .banner {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover; /* maintains aspect ratio */
+    flex: 1 1 auto; /* adjusts the size of the images */
+    margin: 5px; /* optional: space between images */
+}
+
+.settings-button {
+    background-color: #D3FB52;
+    text-decoration: none;
+    color: black;
+    padding: 8px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.settings-button:hover,
+.settings-button:active,
+.settings-button:focus{
+    text-decoration: none;
+    color: black;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.view{
+    background-color: #7962BD;
+    text-decoration: none;
+    color: white;
+    margin-right: 5px;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}
+.view:hover,
+.view:focus,
+.view:active{
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+}

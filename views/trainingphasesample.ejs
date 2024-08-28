@@ -1,0 +1,2067 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/training_domainsample.css" />
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/nav_log.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
+
+    <title>Training Phases</title>
+  </head>
+  <body>
+    <script>
+      window.userRole = "<%= user.role %>";
+    </script>
+    <script src="js/rolebase.js"></script>
+    
+    <div class="supercss">
+    <div class="sidebar">
+        <a class="logo" style="text-align: center;align-items:center;padding:5px">
+          <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+       </a> 
+       <a href="myDashboard" class="menu-item" id="dashboard-link">
+            <img src="img/dash_white.png" alt="dash" style="max-width:22px; height:22px"><span style="color:white">Dashboard</span>
+        </a>
+         <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="dash" style="max-width:18px; height:20px"><span>Employability</span>
+            </a>
+        <a href="https://admin.hackathon.blackbucks.me"  class="menu-item" >
+            <img alt="Assessment icon" src="img/assessment.png" style="max-width:19px; height:19.5px">
+            <span>Assessments</span></a>
+       
+         <a href="jobsDashboard" class="menu-item">
+           <img src="img/jobs.png" alt="jobs" style="max-width:20px; height:21px"><span>Jobs</span>
+        </a>
+        <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/"  class="menu-item" >
+            <img alt="course icon" src="img/course.png" style="max-width:19px; height:20px"> 
+            <span>Course</span></a>
+        <a href="https://admin.hackathon.blackbucks.me/lessonPlan/"  class="menu-item" >
+            <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width:23px; height:18px">
+            <span>Lesson Plan</span></a>
+        
+                <a href="trainingsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+            <img src="img/trainings_black.png" alt="trainings" style="max-width:27px; height:21px"><span style="color: black;font-weight:bold">Trainings</span>
+        </a>
+                 <a href="internshipsDashboard" class="menu-item">
+                    <img
+                      src="img/internship_whiteicon.png"
+                      alt="manage"
+                      style="width: 20px; height: auto"
+                    /><span>Internships</span>
+                  </a>
+                <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/"  class="menu-item" >
+                    <img alt="vpl icon" src="img/vpl.png" style="max-width:19px; height:17px">
+                    <span>VPL</span></a>
+       
+         
+
+             
+     </div>
+   
+
+     
+     <div class="css">
+      <div class="css0">
+        <div class="navbar">
+         <div class="nav1"></div>
+         <div class="nav2">
+             <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                 <div class="chakra-stack css-nr8aow">
+                     <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                 </div>
+             </a>
+             <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                 <div class="chakra-stack css-nr8aow">
+                     <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0"></div></a>
+             <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                 <div class="chakra-stack css-nr8aow">
+                     <div class="css-1edim3w">
+                         <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj">
+                         <div class="css-1bac456">
+                             <div class="css-1rkwksi">1</div>
+                         </div>
+                     </div>
+                 </div>
+             </a>
+             <button type="button" class="navbtn" id="userButton">
+                 <span class="user-details">
+                     <div class="user">
+                         <span class="user-profile">
+                             <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                         </span>
+                         <div class="username">
+                             <p class="userN"></p>
+                             <p class="userR"></p>
+                         </div>
+                     </div>
+                 </span>
+                 <span class="chakra-button__icon css-1hzyiq5">
+                     <svg viewBox="0 0 16 16" style="height:12px !important; width: 12px !important;"  aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                         <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                     </svg>
+                 </span>
+             </button>
+             
+             <button type="button" class="logoutbtn" id="logoutButton" style="display: none;">
+                 Log out
+             </button>
+             
+            
+         </div>
+       
+  <script>
+     document.addEventListener('DOMContentLoaded', () => {
+     const userButton = document.getElementById('userButton');
+     const logoutButton = document.getElementById('logoutButton');
+  
+     userButton.addEventListener('click', () => {
+         if (logoutButton.style.display === 'none') {
+             logoutButton.style.display = 'flex';
+             logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+             logoutButton.style.left = `${userButton.offsetLeft}px`;
+         } else {
+             logoutButton.style.display = 'none';
+         }
+     });
+  
+     logoutButton.addEventListener('click', () => {
+         // Add your logout logic here
+         console.log('User logged out');
+     });
+  });
+  
+  </script>
+        </div>
+     </div>
+     <div class="css1">
+    <div class="main-container">
+      <div class="roww marginr">
+        <img
+          src="img/traininggrey.png"
+          alt="internship icon"
+          style="width: 14px; height: 14px; margin-right: 5px"
+        />
+        <p class="grey f14 marginr">
+           Trainings <i class="fa-solid fa-chevron-right f10 marginl grey"></i>
+        </p>
+        <p class="f14">Trainings Overview</p>
+      </div>
+
+      <div class="banner">
+        <div class="banner-text">
+          <h1>Blackbucks Trainings</h1>
+          <h4>Blackbucks Group</h4>
+        </div>
+      </div>
+
+      <h3>Suggestion Tabs</h3>
+      <div class="topnav">
+        <a href="#Overview" class="active" onclick="smoothScroll('Overview')">
+          <img src="img/fsdtab.png" alt="fsdoverview" />
+          <span style="padding-left: 5px">Trainings Overview</span>
+        </a>
+        <a href="#candidates" onclick="smoothScroll('candidates')">
+          <img src="img/candidates.png" alt="" />
+          <span style="padding-left: 5px">Enrolled Candidates</span>
+        </a>
+        <a href="#Student-Activity" onclick="smoothScroll('Student-Activity')">
+          <img
+            src="img/activity.png"
+            alt="activity"
+            style="width: 15px; height: 15px"
+          />
+          <span style="padding-left: 5px">Student Activities</span>
+        </a>
+        <!-- <a href="#projects" onclick="smoothScroll('projects')">
+          <img
+            src="img/activity.png"
+            alt="activity"
+            style="width: 15px; height: 15px"
+          />
+          <span style="padding-left: 5px">Projects</span>
+        </a> -->
+        <a
+          href="#student-attendance"
+          onclick="smoothScroll('student-attendance')"
+        >
+          <img
+            src="img/activity.png"
+            alt="activity"
+            style="width: 15px; height: 15px"
+          />
+          <span style="padding-left: 5px">Student Attendance</span>
+        </a>
+      </div>
+
+      <div class="overview section" id="Overview" style="border: none;  padding: 0;">
+        <h3 class="f22 font600">Trainings Overview</h3>
+
+        <div class="suboverview">
+          <div class="lefthalf">
+            <div class="row">
+              <div
+                class="quarter gradient-background active"
+                onclick="showRightHalf('live-sessions' , this)"
+              >
+                <div>
+                  <p>Live Sessions</p>
+                  <span>1450</span>
+                </div>
+                <div class="circle active">
+                  <img src="img/ls.png" alt="live sessions" />
+                </div>
+              </div>
+              <div class="quarter" onclick="showRightHalf('assessments', this)">
+                <div>
+                  <p>Assessments</p>
+                  <span>1550</span>
+                </div>
+                <div class="circle">
+                  <img src="img/fsd-options.png" alt="Assessments" />
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div
+                class="quarter"
+                onclick="showRightHalf('employability-test', this)"
+              >
+                <div>
+                  <p>Employability Tests</p>
+                  <span>950</span>
+                </div>
+                <div class="circle">
+                  <img src="img/fsd-options.png" alt="tests" />
+                </div>
+              </div>
+              <div class="quarter disabled">
+                <div>
+                  <p>Projects</p>
+                  <span>0</span>
+                </div>
+                <div class="circle">
+                  <img src="img/fsd-options.png" alt="projects" />
+                </div>
+                <div class="overlay">Not Available Right Now</div>
+              </div>
+            </div>
+          </div>
+          <div class="gap"></div>
+          <div class="righthalf">
+            <!------------------overview-Livesessions------------------>
+            <div class="righthalf-part active" id="live-sessions">
+              <h4 class="f20 font600">Live Sessions</h4>
+              <hr />
+              <div class="ls-options">
+                <div class="ls-table">
+                  <table class="otable">
+                    <thead>
+                      <tr>
+                        <th>Overview</th>
+                        <th>Live Session %</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="smallcircle sc1"></span>
+                          Overall Feedback
+                        </td>
+                        <td>50%</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="smallcircle sc2"></span>
+                          Session Interactiveness
+                        </td>
+                        <td>40%</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="smallcircle sc3"></span>
+                          Absentees
+                        </td>
+                        <td>50%</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="smallcircle sc4"></span>
+                          Hours Covered
+                        </td>
+                        <td>60%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="ls-graph">
+                  <canvas id="myChart" height="auto"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!-----------------Overview- Assessments----------->
+            <div class="righthalf-part" id="assessments">
+              <h4 class="f20 font600">Assessments</h4>
+              <hr />
+              <div class="a-options">
+                <div class="a-table">
+                  <table class="assessment-table">
+                    <thead>
+                      <tr>
+                        <th>Overall</th>
+                        <th>Assessments %</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="smallcircle sc3"></span>
+                          Daily Test
+                        </td>
+                        <td>20%</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <span class="smallcircle sc1"></span>
+                          Weekly Test
+                        </td>
+                        <td>65%</td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          <span class="smallcircle sc4"></span>
+                          Grand Test
+                        </td>
+                        <td>15%</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="a-graph">
+                  <canvas id="myChart-assessment" height="auto"></canvas>
+                </div>
+              </div>
+            </div>
+
+            <!----------------Overview-Employabitity test-------------->
+            <div class=" righthalf-part" id="employability-test">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-between;
+                "
+              >
+                <h4 class="f20 font600">Employability Test</h4>
+
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <div class="smallcircle sc2"></div>
+                  <p>Average Employability Test</p>
+                </div>
+
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <div class="smallcircle sc3"></div>
+                  <p>Suggested Training</p>
+                </div>
+              </div>
+              <div class="oemp-graph" style="height: 160px;">
+                <canvas id="myChart-employability" height="200px"></canvas>
+              </div>
+            </div>
+
+            <!------------------Overview- Projects---------------->
+            <div class="righthalf-part" id="projectss">
+              <div
+                style="
+                  display: flex;
+                  flex-direction: row;
+                  justify-content: space-around;
+                "
+              >
+                <h4 class="f20 font600">Projects</h4>
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <div class="smallcircle sc2"></div>
+                  <p>Enroll Student</p>
+                </div>
+
+                <div
+                  style="
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                  "
+                >
+                  <div class="smallcircle sc3"></div>
+                  <p>Available Project</p>
+                </div>
+              </div>
+
+              <hr />
+              <table class="oproj-graph">
+                <tr>
+                  <td>
+                    <section class="total-section">
+    <!-- Use Font Awesome version 5 user icon -->
+                     <i class="fas fa-user"></i>
+                         <svg>
+                         <circle id="track" cx="40" cy="40" r="35"></circle> <!-- Adjusted circle radius -->
+                         <circle id="progress" cx="40" cy="40" r="35"></circle> <!-- Adjusted circle radius -->
+                         </svg>
+                     <span id="percentage" style="display: none;"></span>
+                     </section>
+                  </td>
+                  <td  style="margin-left:40px; padding-left:40px;">
+                    <div style="display: flex; flex-direction: column;">
+                      <span style="margin: 0; padding: 0;">1,235</span>
+                      <p style="margin-top: 4px; padding: 0;">How Many Enroll</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td >
+                    <section class="project-section">
+                         <!-- Use Font Awesome version 5 user icon -->
+                         <i class="fas fa-tag"></i>
+                         <svg>
+                        <circle id="track" cx="40" cy="40" r="35"></circle> <!-- Adjusted circle radius -->
+                         <circle id="progress" cx="40" cy="40" r="35"></circle> <!-- Adjusted circle radius -->
+                        </svg>
+                             <span id="percentage" style="display: none;"></span>
+                        </section>
+                  </td>
+                  <td  style="margin-left:40px; padding-left:40px;">
+                    <div style="display: flex; flex-direction: column;">
+                      <span style="margin: 0; padding: 0;">456</span>
+                      <p style="margin-top: 4px; padding: 0;">Available Projects
+                        <br>Student Yet to Choose Project</p>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              
+               <script>
+    function updateProgress(percentage) {
+        const progressCircle = document.getElementById('progress');
+        const circumference = 2 * Math.PI * parseFloat(progressCircle.getAttribute('r'));
+        const offset = circumference * (1 - (percentage / 100));
+        progressCircle.style.strokeDashoffset = offset;
+        document.getElementById('percentage').textContent = `${percentage}%`;
+    }
+
+    // Example: Update progress to 50%
+    updateProgress(465); // Call this function with your desired percentage value
+  </script>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--------------------------Enrolled Candidates Section--------------------------------->
+      <div class="enrolled-candidates " id="candidates">
+        <h3 class="f22 font600">Enrolled Candidates</h3>
+        <div class="section">
+        <ul class="responsive-table">
+    <li class="table-header">
+        <div class="col col-1" style="color:black">Basic Info</div>
+        <div class="col col-2" style="color:black">Batch Name</div>
+        <div class="col col-3" style="color:black">Employability Band</div>
+        <div class="col col-4" style="color:black">Employability Score</div>
+        <div class="col col-5" style="color:black">Enrolled Date</div>
+    </li>
+    <!-- Insert your new table row here -->
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">1</p>
+                    <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Rajesh Kumar</p>
+                    <p class="emp-email">rajeshkumar@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">B</div>
+        <div class="col col-4" data-label="Employability Score">67/100</div>
+        <div class="col col-5" data-label="Enrolled Date">May 13, 2024</div>
+    </li>
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">2</p>
+                    <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Sita Reddy</p>
+                    <p class="emp-email">sitareddy@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">A</div>
+        <div class="col col-4" data-label="Employability Score">85/100</div>
+        <div class="col col-5" data-label="Enrolled Date">June 1, 2024</div>
+    </li>
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">3</p>
+                    <img src="img/user3.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Anil Sharma</p>
+                    <p class="emp-email">anilsharma@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">C</div>
+        <div class="col col-4" data-label="Employability Score">55/100</div>
+        <div class="col col-5" data-label="Enrolled Date">April 22, 2024</div>
+    </li>
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">4</p>
+                    <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Priya Singh</p>
+                    <p class="emp-email">priyasingh@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">B</div>
+        <div class="col col-4" data-label="Employability Score">70/100</div>
+        <div class="col col-5" data-label="Enrolled Date">March 10, 2024</div>
+    </li>
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">5</p>
+                    <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Lakshmi Narayan</p>
+                    <p class="emp-email">lakshminarayan@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">A</div>
+        <div class="col col-4" data-label="Employability Score">88/100</div>
+        <div class="col col-5" data-label="Enrolled Date">February 14, 2024</div>
+    </li>
+    <!-- Existing Table Rows -->
+    <!-- First Five Rows -->
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">4</p>
+                    <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Priya Singh</p>
+                    <p class="emp-email">priyasingh@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">B</div>
+        <div class="col col-4" data-label="Employability Score">70/100</div>
+        <div class="col col-5" data-label="Enrolled Date">March 10, 2024</div>
+    </li>
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">5</p>
+                    <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Lakshmi Narayan</p>
+                    <p class="emp-email">lakshminarayan@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">A</div>
+        <div class="col col-4" data-label="Employability Score">88/100</div>
+        <div class="col col-5" data-label="Enrolled Date">February 14, 2024</div>
+    </li>
+    <!-- Additional Five Rows -->
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">6</p>
+                    <img src="img/user3.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Vikram Reddy</p>
+                    <p class="emp-email">vikramreddy@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">A</div>
+        <div class="col col-4" data-label="Employability Score">90/100</div>
+        <div class="col col-5" data-label="Enrolled Date">January 5, 2024</div>
+    </li>
+    <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+            <div style="display: flex; align-items: center">
+                <div style="display: flex; align-items: center">
+                    <p style="margin-right: 10px">7</p>
+                    <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                </div>
+                <div>
+                    <p class="emp-name">Anjali Patel</p>
+                    <p class="emp-email">anjalipatel@gmail.com</p>
+                </div>
+            </div>
+        </div>
+        <div class="col col-2" data-label="Domain">Java</div>
+        <div class="col col-3" data-label="Employability Band">B</div>
+        <div class="col col-4" data-label="Employability Score">78/100</div>
+        <div class="col col-5" data-label="Enrolled Date">March 22, 2024</div>
+    </li>
+    
+</ul>
+
+      </div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+      <!------------------------Student activity section-------------------------------------->
+      <div class="student-activity section" id="Student-Activity">
+        <h3 class="f22 font600">Student Activity</h3>
+
+        <div class="sa-topnav" style="margin-top: 20px; margin-bottom: 10px">
+          <div class="sa-links-container">
+            <a
+            href="#summary"
+            class="active"
+            onclick="toggleSection('summary', this)"
+          >
+            <img src="img/fsdtab.png" alt="summary" width="18px" height="16px" />
+            <span>Summary</span>
+          </a>
+            <a href="#dailytest" onclick="toggleSection('daily-test', this)"
+            >
+              <img src="img/fsdtab.png" alt="daily test" width="18px" height="16px" />
+              <span>Daily Test</span>
+            </a>
+            <a href="#grandtest" onclick="toggleSection('grand-test', this)">
+              <img
+                src="img/candidates.png"
+                alt="grand test"
+                style="width: 16px; height: 16px; padding-left: 5px"
+              />
+              <span>Grand Test</span>
+            </a>
+            <a href="#weektest" onclick="toggleSection('weekly-test', this)">
+              <img
+                src="img/activity.png"
+                alt="activity"
+                style="width: 15px; height: 15px"
+              />
+              <span>Weekly Test</span>
+            </a>
+            <a
+                    href="#emptest"
+                    onclick="toggleSection('Employbility-test', this)"
+                  >
+                    <img
+                      src="img/activity.png"
+                      alt="activity"
+                      style="width: 15px; height: 15px"
+                    />
+                    <span>Employability Test</span>
+                  </a>
+            <a
+            href="#absenteeslist"
+            onclick="toggleSection('Absentees-List', this)"
+          >
+            <img
+              src="img/activity.png"
+              alt="activity"
+              style="width: 15px; height: 15px"
+            />
+            <span>Test Reports</span>
+          </a>
+          </div>
+        </div>
+
+        <div class="stu-act active" id="summary">
+          <div class="project1">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Assessment Title</th>
+                        <th>Total Students</th>
+                        <th>Present Students</th>
+                        <th>Absent Students</th>
+                        <th>Hours Covered</th>
+                        <th>Attendance Rate (%)</th>
+                        <th>Average Feedback</th>
+                        <th>Interactiveness (%)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="event-data">
+                    <tr>
+                        <td>Introduction to HTML</td>
+                        <td>30</td>
+                        <td>28</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>93.3</td>
+                        <td>4.5</td>
+                        <td>85</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                    <tr>
+                        <td>CSS Basics</td>
+                        <td>25</td>
+                        <td>23</td>
+                        <td>2</td>
+                        <td>1.5</td>
+                        <td>92.0</td>
+                        <td>4.2</td>
+                        <td>80</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                    <tr>
+                        <td>JavaScript Fundamentals</td>
+                        <td>20</td>
+                        <td>18</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>90.0</td>
+                        <td>4.8</td>
+                        <td>90</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                    <tr>
+                        <td>Advanced JavaScript</td>
+                        <td>15</td>
+                        <td>14</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>93.3</td>
+                        <td>4.7</td>
+                        <td>85</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                    <tr>
+                        <td>Responsive Design</td>
+                        <td>28</td>
+                        <td>26</td>
+                        <td>2</td>
+                        <td>2</td>
+                        <td>92.9</td>
+                        <td>4.3</td>
+                        <td>82</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                    <tr>
+                        <td>Introduction to SQL</td>
+                        <td>22</td>
+                        <td>21</td>
+                        <td>1</td>
+                        <td>1.5</td>
+                        <td>95.5</td>
+                        <td>4.6</td>
+                        <td>88</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                    <tr>
+                        <td>API Integration</td>
+                        <td>18</td>
+                        <td>16</td>
+                        <td>2</td>
+                        <td>2.5</td>
+                        <td>88.9</td>
+                        <td>4.1</td>
+                        <td>77</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                    <tr>
+                        <td>Version Control with Git</td>
+                        <td>25</td>
+                        <td>24</td>
+                        <td>1</td>
+                        <td>1.5</td>
+                        <td>96.0</td>
+                        <td>4.4</td>
+                        <td>83</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                    <tr>
+                        <td>Testing and Debugging</td>
+                        <td>30</td>
+                        <td>29</td>
+                        <td>1</td>
+                        <td>3</td>
+                        <td>96.7</td>
+                        <td>4.9</td>
+                        <td>89</td>
+                        <td><a href="#" class="download-absentees">Download Absentees</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="stu-act" id="daily-test">
+          <div class="dt-tablecontainer2">
+              <ul>
+                  <li class="dt-table-header">
+                      <div class="col col-0" style="border: none">S.No</div>
+                      <div class="col col-1">Name</div>
+                      <div class="col col-2">Email</div>
+                      <div class="col col-3">Registration Number</div>
+                      <div class="col col-4" style="color:white">Average Score</div>
+                      <div class="col col-5">Java Daily Test 1</div>
+                  </li>
+                  <li class="dt-table-row">
+                      <div class="col col-0" data-label="S.No">1</div>
+                      <div class="col col-1" data-label="Name">
+                          <div style="display: flex; align-items: center">
+                              <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                              <p class="emp-name">Ravi Kumar</p>
+                          </div>
+                      </div>
+                      <div class="col col-2" data-label="Email">ravi.kumar@example.com</div>
+                      <div class="col col-3" data-label="Registration Number">2023XYZ001</div>
+                      <div class="col col-4" data-label="Average Score" style="color: black;">82%</div>
+                      <div class="col col-5" data-label="Java Daily Test 1">85%</div>
+                  </li>
+                  <li class="dt-table-row">
+                      <div class="col col-0" data-label="S.No">2</div>
+                      <div class="col col-1" data-label="Name">
+                          <div style="display: flex; align-items: center">
+                              <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                              <p class="emp-name">Arun Prasad</p>
+                          </div>
+                      </div>
+                      <div class="col col-2" data-label="Email">arun.prasad@example.com</div>
+                      <div class="col col-3" data-label="Registration Number">2023XYZ002</div>
+                      <div class="col col-4" data-label="Average Score" style="color: black;">89%</div>
+                      <div class="col col-5" data-label="Java Daily Test 1">91%</div>
+                  </li>
+                  <li class="dt-table-row">
+                      <div class="col col-0" data-label="S.No">3</div>
+                      <div class="col col-1" data-label="Name">
+                          <div style="display: flex; align-items: center">
+                              <img src="img/user3.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                              <p class="emp-name">Kavya Nair</p>
+                          </div>
+                      </div>
+                      <div class="col col-2" data-label="Email">kavya.nair@example.com</div>
+                      <div class="col col-3" data-label="Registration Number">2023XYZ003</div>
+                      <div class="col col-4" data-label="Average Score" style="color: black;">75%</div>
+                      <div class="col col-5" data-label="Java Daily Test 1">78%</div>
+                  </li>
+                  <li class="dt-table-row">
+                      <div class="col col-0" data-label="S.No">4</div>
+                      <div class="col col-1" data-label="Name">
+                          <div style="display: flex; align-items: center">
+                              <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                              <p class="emp-name">Lakshmi Reddy</p>
+                          </div>
+                      </div>
+                      <div class="col col-2" data-label="Email">lakshmi.reddy@example.com</div>
+                      <div class="col col-3" data-label="Registration Number">2023XYZ004</div>
+                      <div class="col col-4" data-label="Average Score" style="color: black;">79%</div>
+                      <div class="col col-5" data-label="Java Daily Test 1">83%</div>
+                  </li>
+                  <li class="dt-table-row">
+                      <div class="col col-0" data-label="S.No">5</div>
+                      <div class="col col-1" data-label="Name">
+                          <div style="display: flex; align-items: center">
+                              <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                              <p class="emp-name">Nithya Menon</p>
+                          </div>
+                      </div>
+                      <div class="col col-2" data-label="Email">nithya.menon@example.com</div>
+                      <div class="col col-3" data-label="Registration Number">2023XYZ005</div>
+                      <div class="col col-4" data-label="Average Score" style="color: black;">80%</div>
+                      <div class="col col-5" data-label="Java Daily Test 1">82%</div>
+                  </li>
+              </ul>
+          </div>
+      </div>
+      
+      
+        <div class="stu-act" id="grand-test">
+          <div class="dt-tablecontainer2">
+            <ul>
+              <li class="dt-table-header">
+                  <div class="col col-0" style="border: none">S.No</div>
+                  <div class="col col-1">Name</div>
+                  <div class="col col-2">Email</div>
+                  <div class="col col-3">Registration Number</div>
+                  <div class="col col-4" style="color:white">Average Score</div>
+                  <div class="col col-5">Java Grand Test 1</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">1</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Ravi Kumar</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">ravi.kumar@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ001</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">82%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">85%</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">2</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Arun Prasad</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">arun.prasad@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ002</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">89%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">91%</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">3</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user3.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Kavya Nair</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">kavya.nair@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ003</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">75%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">78%</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">4</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Lakshmi Reddy</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">lakshmi.reddy@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ004</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">79%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">83%</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">5</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Nithya Menon</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">nithya.menon@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ005</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">80%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">82%</div>
+              </li>
+          </ul>
+          </div>
+        </div>
+
+        <div class="stu-act" id="weekly-test">
+          <div class="dt-tablecontainer2">
+            <ul>
+              <li class="dt-table-header">
+                  <div class="col col-0" style="border: none">S.No</div>
+                  <div class="col col-1">Name</div>
+                  <div class="col col-2">Email</div>
+                  <div class="col col-3">Registration Number</div>
+                  <div class="col col-4" style="color:white">Average Score</div>
+                  <div class="col col-5">Java Weekly Test 1</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">1</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Ravi Kumar</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">ravi.kumar@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ001</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">82%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">85%</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">2</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Arun Prasad</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">arun.prasad@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ002</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">89%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">91%</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">3</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user3.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Kavya Nair</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">kavya.nair@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ003</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">75%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">78%</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">4</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user2.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Lakshmi Reddy</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">lakshmi.reddy@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ004</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">79%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">83%</div>
+              </li>
+              <li class="dt-table-row">
+                  <div class="col col-0" data-label="S.No">5</div>
+                  <div class="col col-1" data-label="Name">
+                      <div style="display: flex; align-items: center">
+                          <img src="img/user1.png" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+                          <p class="emp-name">Nithya Menon</p>
+                      </div>
+                  </div>
+                  <div class="col col-2" data-label="Email">nithya.menon@example.com</div>
+                  <div class="col col-3" data-label="Registration Number">2023XYZ005</div>
+                  <div class="col col-4" data-label="Average Score" style="color: black;">80%</div>
+                  <div class="col col-5" data-label="Java Daily Test 1">82%</div>
+              </li>
+          </ul>
+          </div>
+        </div>
+
+        <div class="stu-act" id="Absentees-List">
+          <div
+            style="width: 100%; display: flex; justify-content: center"
+          >
+            <div id="testreport-result-message"></div>
+          </div>
+          <div class="inactive-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Event Title</th>
+                  <th>Total Students</th>
+                  <th>Present Students</th>
+                  <th>Absent Students</th>
+                  <th>Attendance Rate (%)</th>
+                  <th>Average Score</th>
+                  <th>Absentees Report</th>
+                </tr>
+              </thead>
+              <tbody id="event-data">
+                <tr>
+                  <td>Hackathon 2024</td>
+                  <td>150</td>
+                  <td>140</td>
+                  <td>10</td>
+                  <td>93.33%</td>
+                  <td>85</td>
+                  <td><a href="#">View Report</a></td>
+                </tr>
+                <tr>
+                  <td>Tech Symposium</td>
+                  <td>200</td>
+                  <td>180</td>
+                  <td>20</td>
+                  <td>90.00%</td>
+                  <td>78</td>
+                  <td><a href="#">View Report</a></td>
+                </tr>
+                <tr>
+                  <td>AI Workshop</td>
+                  <td>100</td>
+                  <td>95</td>
+                  <td>5</td>
+                  <td>95.00%</td>
+                  <td>88</td>
+                  <td><a href="#">View Report</a></td>
+                </tr>
+                <tr>
+                  <td>Web Dev Bootcamp</td>
+                  <td>50</td>
+                  <td>45</td>
+                  <td>5</td>
+                  <td>90.00%</td>
+                  <td>80</td>
+                  <td><a href="#">View Report</a></td>
+                </tr>
+                <tr>
+                  <td>Data Science Seminar</td>
+                  <td>120</td>
+                  <td>110</td>
+                  <td>10</td>
+                  <td>91.67%</td>
+                  <td>82</td>
+                  <td><a href="#">View Report</a></td>
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+        </div>
+
+        <div class="stu-act" id="Employbility-test">
+          <div style="width: 100%; border-radius: 10px; overflow: hidden">
+            <div style="width: 100%; display: flex; justify-content: center">
+              <div id="emp-result-message" class="nodata"></div>
+            </div>
+            <div class="inactive-table">
+              <table>
+                <thead class="dthead" id="emptesttable-head">
+                  <tr>
+                    <th>Serial No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Reg No</th>
+                    <th>Test Score</th>
+                  </tr>
+                </thead>
+                <tbody id="event-data">
+                  <tr>
+                    <td>1</td>
+                    <td>John Doe</td>
+                    <td>john.doe@example.com</td>
+                    <td>REG123</td>
+                    <td>85</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Jane Smith</td>
+                    <td>jane.smith@example.com</td>
+                    <td>REG456</td>
+                    <td>92</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Alice Johnson</td>
+                    <td>alice.johnson@example.com</td>
+                    <td>REG789</td>
+                    <td>78</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Bob Brown</td>
+                    <td>bob.brown@example.com</td>
+                    <td>REG101</td>
+                    <td>88</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Charlie Davis</td>
+                    <td>charlie.davis@example.com</td>
+                    <td>REG202</td>
+                    <td>91</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div>
+
+      <!---------------------Projectss-->
+    <!-- <div class="projects" id="projects">
+        <h3 class="f22 font600">Projects</h3>
+        <div class="pro-sections section">
+          <div class="project1">
+           <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>College Reg.No</th>
+            <th>Email</th>
+            <th>Project Chosen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Ravi Kumar
+            </td>
+            <td>CRN001</td>
+            <td>ravi.kumar@gmail.com</td>
+            <td>Java Web Application</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Arun Prasad
+            </td>
+            <td>CRN002</td>
+            <td>arun.prasad@gmail.com</td>
+            <td>Java E-commerce Platform</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Kavya Nair
+            </td>
+            <td>CRN003</td>
+            <td>kavya.nair@gmail.com</td>
+            <td>Java Inventory Management</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Lakshmi Reddy
+            </td>
+            <td>CRN004</td>
+            <td>lakshmi.reddy@gmail.com</td>
+            <td>Java Banking System</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Nithya Menon
+            </td>
+            <td>CRN005</td>
+            <td>nithya.menon@gmail.com</td>
+            <td>Java Online Booking System</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Sanjay Rao
+            </td>
+            <td>CRN006</td>
+            <td>sanjay.rao@gmail.com</td>
+            <td>Java Social Media App</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Meena Iyer
+            </td>
+            <td>CRN007</td>
+            <td>meena.iyer@gmail.com</td>
+            <td>Java Chat Application</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Vikram Reddy
+            </td>
+            <td>CRN008</td>
+            <td>vikram.reddy@gmail.com</td>
+            <td>Java Health Management System</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Priya Rajan
+            </td>
+            <td>CRN009</td>
+            <td>priya.rajan@gmail.com</td>
+            <td>Java Hotel Reservation System</td>
+        </tr>
+        Add more rows as needed 
+    </tbody>
+</table>
+
+          </div>
+          <div class="project2">
+            <h3>Project Choosen</h3>
+            <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column">
+              <div style="width: 350px; height: 250px;">
+              <canvas id="myChart4" width="100" height="100"></canvas></div>
+               <script>
+              document.addEventListener('DOMContentLoaded', function () {
+      const projectCtx = document.getElementById('myChart4').getContext('2d');
+      
+      // Gauge Chart Text plugin block
+      const gaugeChartText = {
+        id: 'gaugeChartText',
+        afterDatasetsDraw(chart, args, pluginOptions) {
+          const { ctx, chartArea: { top, bottom, left, right, width, height } } = chart;
+
+          ctx.save();
+          const xcoor = chart.getDatasetMeta(0).data[0].x;
+          const ycoor = chart.getDatasetMeta(0).data[0].y;
+          const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+
+          ctx.fillStyle = '#FFF3E1';
+          ctx.beginPath();
+          ctx.arc(xcoor, ycoor, 75, 0, 2 * Math.PI);
+          ctx.fill();
+
+
+          ctx.fillStyle = '#000'; // Text color
+          ctx.font = '22px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(total, xcoor, ycoor + 15);
+
+          ctx.font = '22px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('Java', xcoor, ycoor - 15);
+          
+          ctx.restore();
+        }
+      };
+
+      new Chart(projectCtx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            label: '# of Votes',
+            data: [20, 12, 4, 4],
+            borderWidth: 1,
+            cutout: '85%',
+            borderRadius: 20,
+            offset: 1,
+            circumference: 270,
+            rotation: 225,
+            backgroundColor: [
+              '#C084FC',
+              '#FCC573',
+              '#C5E866',
+              '#6BD096'
+            ]
+          }]
+        },
+        options: {
+          aspectRatio: 1.5,
+        },
+        plugins: [gaugeChartText]
+      });
+    });
+               </script>
+
+           
+
+              <p style="line-height: 25px">
+                <strong>40%</strong> most of the Students choose the java <br />
+                for their project
+              </p>
+            </div>
+            <div>
+              <div class="roww"> 
+                <div class="smallcircle" style="background-color: #C084FC;"></div>
+                <p>Java</p>
+              </div>
+              <div class="roww">
+                <div class="smallcircle" style="background-color: #FCC573;"></div>
+                <p>Python</p>
+              </div>
+              <div class="roww">
+                <div class="smallcircle" style="background-color: #C5E866;"></div>
+                <p>C Language</p>
+              </div>
+              <div class="roww">
+                <div class="smallcircle" style="background-color: #6BD096;"></div>
+                <p>C++</p>
+              </div>
+            </div>
+          </div></div>
+        </div>
+      </div> -->
+      <div class="student-attendance" id="student-attendance">
+        <h3 class="f22 font600">Student Attendance</h3>
+        <div class="section">
+        <div class="sattendance-topnav" style="margin-top: 20px; margin-bottom: 10px">
+          <div class="sattendance-links-container">
+            <a href="#summary" class="active"
+              onclick="toggleAttendanceSection('sattendance-summary', this)">
+              <img src="img/fsdtab.png" alt="summary" width="18px" height="16px"/>
+              <span>Summary</span>
+            </a>
+            <a href="#attendance-report" onclick="toggleAttendanceSection('sattendance-report', this)">
+              <img
+                src="img/candidates.png"
+                alt="report"
+                style="width: 16px; height: 16px; padding-left: 5px"
+              />
+              <span>Attendance Report</span>
+            </a>
+            <a href="#inactive-students" onclick="toggleAttendanceSection('sattendance-inactive' , this)">
+              <img
+                src="img/activity.png"
+                alt="activity"
+                style="width: 15px; height: 15px"
+              />
+              <span>Inactive Students</span>
+            </a>
+            <!-- <a
+            href="#inactive-students-report"
+            onclick="toggleAttendanceSection('sattendance-inactive-download' , this)"
+          >
+            <img
+              src="img/activity.png"
+              alt="activity"
+              style="width: 15px; height: 15px"
+            />
+            <span>Students Report download</span>
+          </a> -->
+          </div>
+        </div>
+        <div class="sattendance active" id = "sattendance-summary">
+          <div class="project1">
+    <table>
+        <thead>
+            <tr>
+                <th>Session Title</th>
+                <th>Total Students</th>
+                <th>Present Students</th>
+                <th>Absent Students</th>
+                <th>Hours Covered</th>
+                <th>Attendance Rate (%)</th>
+                <th>Average Feedback</th>
+                <th>Interactiveness (%)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="event-data">
+            <tr>
+                <td>Introduction to HTML</td>
+                <td>30</td>
+                <td>28</td>
+                <td>2</td>
+                <td>2</td>
+                <td>93.3</td>
+                <td>4.5</td>
+                <td>85</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+            <tr>
+                <td>CSS Basics</td>
+                <td>25</td>
+                <td>23</td>
+                <td>2</td>
+                <td>1.5</td>
+                <td>92.0</td>
+                <td>4.2</td>
+                <td>80</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+            <tr>
+                <td>JavaScript Fundamentals</td>
+                <td>20</td>
+                <td>18</td>
+                <td>2</td>
+                <td>3</td>
+                <td>90.0</td>
+                <td>4.8</td>
+                <td>90</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+            <tr>
+                <td>Advanced JavaScript</td>
+                <td>15</td>
+                <td>14</td>
+                <td>1</td>
+                <td>2</td>
+                <td>93.3</td>
+                <td>4.7</td>
+                <td>85</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+            <tr>
+                <td>Responsive Design</td>
+                <td>28</td>
+                <td>26</td>
+                <td>2</td>
+                <td>2</td>
+                <td>92.9</td>
+                <td>4.3</td>
+                <td>82</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+            <tr>
+                <td>Introduction to SQL</td>
+                <td>22</td>
+                <td>21</td>
+                <td>1</td>
+                <td>1.5</td>
+                <td>95.5</td>
+                <td>4.6</td>
+                <td>88</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+            <tr>
+                <td>API Integration</td>
+                <td>18</td>
+                <td>16</td>
+                <td>2</td>
+                <td>2.5</td>
+                <td>88.9</td>
+                <td>4.1</td>
+                <td>77</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+            <tr>
+                <td>Version Control with Git</td>
+                <td>25</td>
+                <td>24</td>
+                <td>1</td>
+                <td>1.5</td>
+                <td>96.0</td>
+                <td>4.4</td>
+                <td>83</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+            <tr>
+                <td>Testing and Debugging</td>
+                <td>30</td>
+                <td>29</td>
+                <td>1</td>
+                <td>3</td>
+                <td>96.7</td>
+                <td>4.9</td>
+                <td>89</td>
+                <td><a href="#" class="download-absentees">Download Absentees</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+        </div>
+        <div class="sattendance" id ="sattendance-report">
+
+         <div class="attendreportcontainer">
+          <ul class="attendreporttable">
+            <li class="ar-table-header">
+              <div class="col col-1">Registration Number</div>
+              <div class="col col-2">IIDT Java Day-1</div>
+              <div class="col col-3">IIDT Java Day-2</div>
+              <div class="col col-4">IIDT Java Day-3</div>
+              <div class="col col-5">IIDT Java Day-4</div>
+              <div class="col col-6">IIDT Java Day-5</div>
+              <div class="col col-7">IIDT Java Day-6</div>
+            </li>
+            <li class="ar-table-row">
+              <div class="col col-1" data-label="Registration Number">12345</div>
+              <div class="col col-2" data-label="IIDT Java Day-1">&#10004;</div>
+              <div class="col col-3" data-label="IIDT Java Day-2">&#10005;</div>
+              <div class="col col-4" data-label="IIDT Java Day-3">&#10004;</div>
+              <div class="col col-5" data-label="IIDT Java Day-4">&#10005;</div>
+              <div class="col col-6" data-label="IIDT Java Day-5">&#10004;</div>
+              <div class="col col-7" data-label="IIDT Java Day-6">&#10005;</div>
+            </li>
+            <!-- Add more rows as needed -->
+            <li class="ar-table-row">
+              <div class="col col-1" data-label="Registration Number">23456</div>
+              <div class="col col-2" data-label="IIDT Java Day-1">&#10005;</div>
+              <div class="col col-3" data-label="IIDT Java Day-2">&#10004;</div>
+              <div class="col col-4" data-label="IIDT Java Day-3">&#10005;</div>
+              <div class="col col-5" data-label="IIDT Java Day-4">&#10004;</div>
+              <div class="col col-6" data-label="IIDT Java Day-5">&#10005;</div>
+              <div class="col col-7" data-label="IIDT Java Day-6">&#10004;</div>
+            </li>
+            <li class="ar-table-row">
+              <div class="col col-1" data-label="Registration Number">34567</div>
+              <div class="col col-2" data-label="IIDT Java Day-1">&#10004;</div>
+              <div class="col col-3" data-label="IIDT Java Day-2">&#10004;</div>
+              <div class="col col-4" data-label="IIDT Java Day-3">&#10005;</div>
+              <div class="col col-5" data-label="IIDT Java Day-4">&#10005;</div>
+              <div class="col col-6" data-label="IIDT Java Day-5">&#10004;</div>
+              <div class="col col-7" data-label="IIDT Java Day-6">&#10005;</div>
+            </li>
+            <li class="ar-table-row">
+              <div class="col col-1" data-label="Registration Number">45678</div>
+              <div class="col col-2" data-label="IIDT Java Day-1">&#10005;</div>
+              <div class="col col-3" data-label="IIDT Java Day-2">&#10005;</div>
+              <div class="col col-4" data-label="IIDT Java Day-3">&#10005;</div>
+              <div class="col col-5" data-label="IIDT Java Day-4">&#10005;</div>
+              <div class="col col-6" data-label="IIDT Java Day-5">&#10004;</div>
+              <div class="col col-7" data-label="IIDT Java Day-6">&#10005;</div>
+            </li>
+            <li class="ar-table-row">
+              <div class="col col-1" data-label="Registration Number">56789</div>
+              <div class="col col-2" data-label="IIDT Java Day-1">&#10004;</div>
+              <div class="col col-3" data-label="IIDT Java Day-2">&#10005;</div>
+              <div class="col col-4" data-label="IIDT Java Day-3">&#10004;</div>
+              <div class="col col-5" data-label="IIDT Java Day-4">&#10005;</div>
+              <div class="col col-6" data-label="IIDT Java Day-5">&#10004;</div>
+              <div class="col col-7" data-label="IIDT Java Day-6">&#10005;</div>
+            </li>
+          </ul>
+        </div>
+        </div>
+        <div class="sattendance" id="sattendance-inactive">
+         
+
+        <div class="inactive-table">
+          <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>College Roll Number</th>
+            <th>Phone</th>
+            <th>College Name</th>
+            <th>College Registration Number</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Ravi Kumar
+            </td>
+            <td>CRN001</td>
+            <td>9034567890</td>
+            <td>ABC College of Engineering</td>
+            <td>CRN123001</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Arun Prasad
+            </td>
+            <td>CRN002</td>
+            <td>9365678901</td>
+            <td>Siddarth Institute of Technology</td>
+            <td>CRN123002</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Kavya Nair
+            </td>
+            <td>PQN003</td>
+            <td>8456789012</td>
+            <td>PQR University</td>
+            <td>CRN123003</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Lakshmi Reddy
+            </td>
+            <td>LMN004</td>
+            <td>7567890123</td>
+            <td>LMN College</td>
+            <td>CRN123004</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Nithya Menon
+            </td>
+            <td>OPN005</td>
+            <td>9678901234</td>
+            <td>SMRK Institute of Science</td>
+            <td>CRN123005</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Sanjay Rao
+            </td>
+            <td>ErN006</td>
+            <td>6789012345</td>
+            <td>Sri University</td>
+            <td>CRN123006</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Meena Iyer
+            </td>
+            <td>UVN007</td>
+            <td>789-012-3456</td>
+            <td>UVW College of Arts</td>
+            <td>CRN123007</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Vikram Reddy
+            </td>
+            <td>C008</td>
+            <td>8901234567</td>
+            <td>VIT Institute of Technology</td>
+            <td>CRN123008</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                Priya Rajan
+            </td>
+            <td>RN009</td>
+            <td>9012345678</td>
+            <td>LMN College</td>
+            <td>CRN123009</td>
+        </tr>
+    </tbody>
+</table>
+
+      </div>
+        </div>
+
+        <!-- <div class="sattendance" id="sattendance-inactive-download">
+          <div id="event-download-result" style="display: none"></div>
+          <div class="inactive-table">
+            <table id="attendance-table">
+              <thead>
+                <tr>
+                  <th>Event Title</th>
+                  <th>Total Students</th>
+                  <th>Present Students</th>
+                  <th>Absent Students</th>
+                  <th>Hours Covered</th>
+                  <th>Attendance Rate (%)</th>
+                  <th>Average Feedback</th>
+                  <th>Interactiveness (%)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="attendance-data">
+                <tr>
+                  <td>Tech Workshop</td>
+                  <td>50</td>
+                  <td>45</td>
+                  <td>5</td>
+                  <td>2</td>
+                  <td>90%</td>
+                  <td>4.2</td>
+                  <td>85%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+                <tr>
+                  <td>Code Sprint</td>
+                  <td>30</td>
+                  <td>28</td>
+                  <td>2</td>
+                  <td>3</td>
+                  <td>93%</td>
+                  <td>4.5</td>
+                  <td>90%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+                <tr>
+                  <td>Hackathon</td>
+                  <td>40</td>
+                  <td>35</td>
+                  <td>5</td>
+                  <td>4</td>
+                  <td>87%</td>
+                  <td>4.0</td>
+                  <td>80%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+                <tr>
+                  <td>Networking Event</td>
+                  <td>60</td>
+                  <td>55</td>
+                  <td>5</td>
+                  <td>3</td>
+                  <td>92%</td>
+                  <td>4.3</td>
+                  <td>88%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+                <tr>
+                  <td>Guest Lecture</td>
+                  <td>20</td>
+                  <td>18</td>
+                  <td>2</td>
+                  <td>1.5</td>
+                  <td>90%</td>
+                  <td>4.7</td>
+                  <td>95%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+                <tr>
+                  <td>Workshop on AI</td>
+                  <td>35</td>
+                  <td>33</td>
+                  <td>2</td>
+                  <td>2</td>
+                  <td>94%</td>
+                  <td>4.6</td>
+                  <td>91%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+                <tr>
+                  <td>Career Fair</td>
+                  <td>70</td>
+                  <td>65</td>
+                  <td>5</td>
+                  <td>5</td>
+                  <td>93%</td>
+                  <td>4.4</td>
+                  <td>89%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+                <tr>
+                  <td>Startup Pitch</td>
+                  <td>25</td>
+                  <td>23</td>
+                  <td>2</td>
+                  <td>2.5</td>
+                  <td>92%</td>
+                  <td>4.2</td>
+                  <td>85%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+                <tr>
+                  <td>Project Showcase</td>
+                  <td>45</td>
+                  <td>42</td>
+                  <td>3</td>
+                  <td>4</td>
+                  <td>93%</td>
+                  <td>4.1</td>
+                  <td>87%</td>
+                  <td><a href="#" class="view-link">View</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div> -->
+        
+        
+      
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="logoutModal" class="modal" style="display: none;">
+  <div class="modal-content">
+      <p class="question">Are you sure you want to logout?</p>
+      <div class="logout-div"></div>
+      <div class="modal-buttons">
+          <button id="cancelLogout">Cancel</button>
+          <button id="confirmLogout">Yes</button>
+      </div>
+  </div>
+</div>
+
+
+    <script>
+      const paginationContainer = document.getElementById("pagination");
+      const tableRows = document.querySelectorAll(".table-row");
+      const itemsPerPage = 5; // Number of items per page
+      let currentPage = 1;
+      let totalPages = Math.ceil(tableRows.length / itemsPerPage);
+
+      // Function to display the rows for the current page
+      function displayRows() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, tableRows.length);
+
+        tableRows.forEach((row, index) => {
+          if (index >= startIndex && index < endIndex) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        });
+      }
+
+      // Function to generate page links
+      function generatePageLinks() {
+        paginationContainer.innerHTML = ""; // Clear previous links
+
+        // Previous button
+        if (currentPage > 1) {
+          const prevLink = document.createElement("span");
+          prevLink.textContent = "< Previous";
+          prevLink.classList.add("pagination-item");
+          prevLink.addEventListener("click", () => {
+            currentPage--;
+            displayRows();
+            generatePageLinks();
+          });
+          paginationContainer.appendChild(prevLink);
+        }
+
+        // Page links
+        for (let i = 1; i <= totalPages; i++) {
+          const pageLink = document.createElement("span");
+          pageLink.textContent = i;
+          pageLink.classList.add("pagination-item");
+          if (i === currentPage) {
+            pageLink.classList.add("active");
+          }
+          pageLink.addEventListener("click", () => {
+            currentPage = i;
+            displayRows();
+            generatePageLinks();
+          });
+          paginationContainer.appendChild(pageLink);
+        }
+
+        // Next button
+        if (currentPage < totalPages) {
+          const nextLink = document.createElement("span");
+          nextLink.textContent = "Next >";
+          nextLink.classList.add("pagination-item");
+          nextLink.addEventListener("click", () => {
+            currentPage++;
+            displayRows();
+            generatePageLinks();
+          });
+          paginationContainer.appendChild(nextLink);
+        }
+      }
+
+      // Initial generation of page links and display of rows
+      generatePageLinks();
+      displayRows();
+    </script>
+
+     <!-----------User Details Fetching---------------------->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to get the value of a cookie by name
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+  
+      // Get the JWT token from the cookie
+      const token = getCookie('userAdminToken');
+      
+      if (token) {
+        // Decode the JWT token
+        const decoded = jwt_decode(token);
+        
+        // Display the username and role
+        document.querySelector('.userN').textContent = decoded.email;
+        document.querySelector('.userR').textContent = decoded.role;
+      } else {
+        // Handle the case where the token is not found
+        document.querySelector('.userN').textContent = 'No user logged in';
+        document.querySelector('.userR').textContent = '';
+      }
+    });
+  </script>
+  
+     <!---------Logout module----------->
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutButton = document.getElementById('logoutButton');
+        const logoutModal = document.getElementById('logoutModal');
+        const modalContent = logoutModal.querySelector('.modal-content');
+        const confirmLogoutButton = modalContent.querySelector('#confirmLogout');
+        const cancelLogoutButton = modalContent.querySelector('#cancelLogout');
+  
+        logoutButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the button
+  
+            // Show the modal
+            logoutModal.style.display = 'block';
+  
+            // Add event listeners to the modal buttons
+            confirmLogoutButton.addEventListener('click', function() {
+                // If user confirms, navigate to /logout
+                window.location.href = '/logout';
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            cancelLogoutButton.addEventListener('click', function() {
+                // If user cancels, hide the modal
+                logoutModal.style.display = 'none';
+            });
+  
+            // Add event listener to the close span
+            closeSpan.addEventListener('click', function() {
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            // Add event listener to the modal itself to close when clicked outside
+            window.addEventListener('click', function(event) {
+                if (event.target === logoutModal) {
+                    logoutModal.style.display = 'none'; // Hide the modal
+                }
+            });
+        });
+    });
+  </script>
+
+    <script src="/js/training_domain.js"></script>
+  </div>
+  </body>
+</html>

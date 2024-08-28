@@ -1,0 +1,154 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+   
+}
+
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header img {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.company-banner {
+    background: linear-gradient(45deg, #f3ec78, #af4261);
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.company-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.company-profile img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+}
+
+.company-info {
+    flex: 1;
+}
+
+.company-info h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.company-info p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.company-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.company-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10000px; /* Note: This is an extremely large border-radius value */
+    cursor: pointer;
+}
+
+.company-actions .follow-btn {
+    background-color: #5A0BBF;
+    color: white;
+}
+
+.company-actions .visit-btn {
+    background-color: white;
+    color: #5A0BBF;
+    border: 1px solid #5A0BBF;
+}
+
+
+.tab-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.tab-content p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.tab-content button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #5A0BBF;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+        .tabs {
+            display: flex;
+         
+            gap: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .tab-btn {
+            color: #555;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .tab-btn.active {
+            color: #7F2FE4;
+            border-bottom-color: #7F2FE4;
+        }
+        
+        .accordion {
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .accordion input {
+            display: none;
+        }
+
+        .accordion label {
+            display: block;
+            padding: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion input:checked~.accordion-content {
+            max-height: 200px;
+            padding: 10px;
+            border-top: 1px solid #e0e0e0;
+        }

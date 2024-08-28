@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tpo Report</title>
+    <link rel="stylesheet" href="css/emp_tporeport.css">
+    <link rel="stylesheet" href="css/emp_report_common.css">
+    <link rel="stylesheet" href="css/nav_log.css">
+    <link rel="icon" type="image/x-icon" href="img/sidebar logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-graph"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-geo"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-venn"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-crosshair"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-cylinder"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-background-gradient"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+
+      .banner {
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .banner-image {
+        width: 100%;
+        height: auto;
+      }
+
+      /* HTML: 
+									<div class="loader"></div> */
+      #noDataMessage {
+        display: none;
+        border: 1px solid rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        padding: 20px;
+        position: relative;
+        text-align: center;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.7);
+      }
+
+      /* Ensure the loader is hidden by default */
+      .loader.hidden {
+        display: none;
+      }
+
+      /* Style for the chart section to ensure the loader is centered */
+      .chart-section {
+        position: relative;
+        min-height: 200px;
+        /* Ensure there's space for the loader */
+      }
+
+      .roww {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 5px;
+        margin-bottom: 20px;
+      }
+
+      .marginr {
+        margin-right: 10px;
+      }
+
+      .grey {
+        color: rgba(0, 0, 0, 0.7);
+      }
+
+      .f14 {
+        font-size: 14px;
+      }
+
+      .card_s5 {
+        margin-top: 50px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        background: linear-gradient(to right, #eefac5, #d3fb52);
+      }
+
+      .view-report {
+        border: none;
+        border-radius: 30px;
+        padding: 10px 20px;
+        font-size: 0.9em;
+        text-wrap: nowrap;
+        cursor: pointer;
+        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        background-color: #7962BD;
+        color: #fff;
+        margin-bottom: 10px;
+        float: center;
+        text-decoration: none;
+        margin-left: 470px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.userRole = "<%= user.role %>";
+    </script>
+    <script src="js/rolebase.js"></script>
+    
+    <div class="supercss">
+      
+      <div class="sidebar">
+       
+    
+        <% if (user.role === 'EmployabilityAdmin') { %>
+          <a class="logo"
+          style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+          <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+      </a>
+            <a href="employabilityReport" class="menu-item active" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+        <% } else if (user.role === 'SuperAdmin') { %>
+            <a class="logo"
+                style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+            </a>
+            <a href="employabilityReport" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item">
+                <img src="img/internship_whiteicon.png" alt="manage" style="width: 20px; height: auto">
+                <span>Internships</span>
+            </a>
+        <% } else { %>
+          <a class="logo"
+          style="text-align: center;align-items:center;padding:5px; padding-bottom: 0; margin-bottom: 0;">
+          <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+      </a>
+            <a href="myDashboard" class="menu-item" id="dashboard-link">
+                <img src="img/dash_white.png" alt="dash" style="max-width:22px; height:22px">
+                <span style="color:white">Dashboard</span>
+            </a>
+            <a href="employabilityReport" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/emp_black.png" alt="dash" style="max-width:18px; height:20px">
+                <span style="color: black;font-weight:bold">Employability</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+                <img alt="Assessment icon" src="img/assessment.png" style="max-width:19px; height:19.5px">
+                <span>Assessments</span>
+            </a>
+            <a href="jobsDashboard" class="menu-item">
+                <img src="img/jobs.png" alt="jobs" style="max-width:20px; height:21px">
+                <span>Jobs</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/" class="menu-item">
+                <img alt="course icon" src="img/course.png" style="max-width:19px; height:20px">
+                <span>Course</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/lessonPlan/" class="menu-item">
+                <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width:23px; height:18px">
+                <span>Lesson Plan</span>
+            </a>
+            <a href="trainingsDashboard" class="menu-item">
+                <img src="img/trainings.png" alt="trainings" style="max-width:27px; height:21px">
+                <span>Trainings</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item">
+                <img src="img/internship_whiteicon.png" alt="manage" style="width: 20px; height: auto">
+                <span>Internships</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/" class="menu-item">
+                <img alt="vpl icon" src="img/vpl.png" style="max-width:19px; height:17px">
+                <span>VPL</span>
+            </a>
+        <% } %>
+    </div>
+      <div class="css">
+        <div class="css0">
+          <div class="navbar">
+            <div class="nav1"></div>
+            <div class="nav2">
+              <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                <div class="chakra-stack css-nr8aow">
+                  <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                </div>
+              </a>
+              <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                <div class="chakra-stack css-nr8aow">
+                  <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0">
+                </div>
+              </a>
+              <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                <div class="chakra-stack css-nr8aow">
+                  <div class="css-1edim3w">
+                    <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj">
+                    <div class="css-1bac456">
+                      <div class="css-1rkwksi">1</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <button type="button" class="navbtn" id="userButton">
+                <span class="user-details">
+                  <div class="user">
+                    <span class="user-profile">
+                      <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                    </span>
+                    <div class="username">
+                      <p class="userN"></p>
+                      <p class="userR"></p>
+                    </div>
+                  </div>
+                </span>
+                <span class="chakra-button__icon css-1hzyiq5">
+                  <svg viewBox="0 0 16 16" height="12px" width="12px" aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                  </svg>
+                </span>
+              </button>
+              <button type="button" class="logoutbtn" id="logoutButton" style="display: none;"> Log out </button>
+            </div>
+          </div>
+        </div>
+        <div class="css1">
+          <div class="main-container">
+            <div class="section1">
+              <div class="roww marginr">
+                <img src="img/empgrey.png" alt="internship icon" style="width: 14px; height: 14px; margin-right: 5px" />
+                <a href="employabilityReport" style="text-decoration: none">
+                  <p class="grey f14 marginr" style="margin: 0;font-size: 14px">
+                    Employability Dashboard
+                    <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                  </p>
+                </a>
+                <a id="internshipLink" href="#" style="text-decoration: none; color: grey; font-size: 14px">
+                  <a href="assessmentDashboard" style="text-decoration: none;"><p class="grey f14 marginr" style="margin: 0;">
+                    Employability Assessments
+                    <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                  </p></a>
+                </a>
+                <p class="f14" style="font-size: 14px"><span id="domain-title"></span></p>
+              </div>
+
+              <script>
+                document.addEventListener('DOMContentLoaded', async () => {
+                  // Get the hackathon ID from the URL
+                  const urlParams = new URLSearchParams(window.location.search);
+                  const hackathonId = urlParams.get('id'); // Assuming the URL has a parameter like ?id=123
+              
+                  if (hackathonId) {
+                    try {
+                      // Fetch the hackathon title from the backend
+                      const response = await fetch(`api/employability_assessments/hackathon/${hackathonId}`);
+                      if (response.ok) {
+                        const data = await response.json();
+                        const hackathonTitle = data.title;
+              
+                        // Update the DOM with the fetched title
+                        document.getElementById('domain-title').textContent = hackathonTitle;
+                      } else {
+                        console.error('Failed to fetch hackathon title:', response.statusText);
+                      }
+                    } catch (error) {
+                      console.error('Error fetching hackathon title:', error);
+                    }
+                  } else {
+                    console.error('Hackathon ID not found in the URL.');
+                  }
+                });
+              </script>
+              
+
+              
+
+
+
+
+
+
+              <div class="banner">
+                <div class="banner-content">
+                  <img src="img/image 158.png" alt="students image" class="right-image">
+                  <h2>BLACKBUCK’S EMPLOYABILITY ASSESSMENT</h2>
+                  <h3 class="banner-span" style="text-align: left;  color: #D3FB52;">Institution performance report</h3>
+                  <div class=" banner-inner" style="margin-top: 10px;">
+                    <div class="row1 b1">
+                      <img src="img/Group 1.png" alt="phone">
+                      <p>+91 93929 00171</p>
+                    </div>
+                    <div class="vertical-line"></div>
+                    <div class="row1 b1">
+                      <img src="img/Group 2.png" alt="mail">
+                      <p>hr@blackbucks.me</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="section2">
+              <div class="section2-cards">
+                <div class="s2cards">
+                  <p class="fweight">Test takers from your college</p>
+                  <span class="fweight" id="totalParticipants"></span>
+                  <!-- <h6>
+                         Your Students are in Top 500 across <span style="font-size: 12px;" id="totalParticipantsAll"></span> test takers across India</h6> -->
+                </div>
+                <div class="s2cards">
+                  <p class="fweight">Average Employability Score </p>
+                  <span class="fweight" id="average_emp_score"></span>
+                  <!-- <h6>You are ranked <span style="font-size: 12px;" ></span> out of <span  style="font-size: 12px;" id="totalCollegeCodes"></span> in in 2024</h6> -->
+                </div>
+                <div class="s2cards" style="display: none;">
+                  <p class="fweight">Students Who Scored Zero</p>
+                  <span class="fweight" id="zero_scorers"></span>
+                  <h6>
+                    <strong style="color: #F93C65;">
+                      <i class="fa-solid fa-arrow-trend-down"></i> 4.3% </strong> of Students a who has taken the test scores zeros
+                  </h6>
+                </div>
+                <div class="s2cards">
+                  <p class="fweight">Your College Rank</p>
+                  <span class="fweight" id="collegeRank"></span>
+                  <h6>Across <span style="font-size: 12px;" id="totalCollegeCodes"></span> colleges in 2024 </h6>
+                </div>
+                <div class="s2cards">
+                  <div class="row1">
+                    <p class="fweight ">Things I Can Do</p>
+                  </div>
+                  <div class="s2cards_p fweight">
+                    <a href="/employabilityStudentsResults">
+                      <p>Shortlist Your Students for Placement Drives <i class="fa-solid fa-chevron-right"></i>
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+            <div class="section3">
+              <div class="section3_1">
+                <div class="section3_1_1 row1">
+                  <span class="f700 f18" style="font-size: 22px;">ASSESSMENT SUMMARY</span>
+                  <div class="row1 s3-button" style="display: flex; float: right;margin: 0; padding: 0;">
+                    <a id="studentsReportLink" href="#" style="text-decoration: none; margin: 0; padding: 0;">
+                      <button class="custom-button" style="margin-top: 20px; margin: 0;">View Students Report</button>
+                    </a>
+                    
+                  </div>
+                </div>
+                <p class="f16 black-70">This section presents the collective performance of the batch, identifies areas for improvement, estimates the distribution of salaries among students, and recommends trainings based on individual performance.</p>
+              </div>
+              <div class="section3_2">
+                <div class="section3_2_1">
+                  <p>Summary</p>
+                  <div class="section3_2_1_inside">
+                    <div class="section3_2_1_graph" style="width: 90%; height: 300px;">
+                      <canvas id="marksDistributionChart" width="100%" height="80%"></canvas>
+                      <script src="js/assessment_student_performance.js"></script>
+                    </div>
+                    <div class="legend-container">
+                      <div class="legend-item">
+                        <div class="row2">
+                          <div class=" highest-marks"></div>
+                          <p>Highest Marks</p>
+                        </div>
+                        <span class="fweight f16" id="highestTotalMarks"></span>
+                      </div>
+                      <div class="legend-item ">
+                        <div class="row2">
+                          <div class="average-marks"></div>
+                          <p>Average Marks</p>
+                        </div>
+                        <span class="fweight f16" id="averageTotalMarks"></span>
+                      </div>
+                      <div class="legend-item ">
+                        <div class="row2">
+                          <div class="lowest-marks"></div>
+                          <p>Lowest Marks</p>
+                        </div>
+                        <span class="fweight f16" id="lowestTotalMarks"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="section3_2_2">
+                  <div class="section3_2_2_1" style="display: flex; flex-direction: column;">
+                    <p style="display: flex; align-self: flex-start;
+                        margin-left: 20px;">Programming language preferences among students</p>
+                    <div style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; align-items: center;">
+                      <div class="column1" style="align-items: center; width: 60%;">
+                        <div class="circle-graph" style="width: 200px; height: 150px; justify-content: center;">
+                          <canvas id="myChart4" style="width: 200px; height: 150px;"></canvas>
+                        </div>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                        <script src="js/assessment_coding_laguage_stats.js"></script>
+                      </div>
+                      <div class="column2" style="align-items: center; width: 40%; margin-right: 10px;"></div>
+                    </div>
+                  </div>
+                  <div class="section3_2_2_2">
+                    <table class="custom-table">
+                      <thead>
+                        <tr>
+                          <th>Performance</th>
+                          <th style="background-color: #4C4267; color: #FFFFFF;">Topics</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Weak</td>
+                          <td>
+                            <div id="weakAreasContainer">
+                              <div id="weakAreasTextContainer">
+                                <span id="weakAreasText"></span>
+                                <button id="toggleWeakAreasBtn" style="display:none; margin: 0; padding: 0; border: none; font-size: 12px;" onclick="toggleText('weakAreasText', 'toggleWeakAreasBtn')">Show More</button>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Strong</td>
+                          <td>
+                            <div id="strongAreasContainer">
+                              <div id="strongAreasTextContainer">
+                                <span id="strongAreasText"></span>
+                                <button id="toggleStrongAreasBtn" style="display:none; margin: 0; padding: 0; border: none; font-size: 12px;" onclick="toggleText('strongAreasText', 'toggleStrongAreasBtn')">Show More</button>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="section3_3">
+                <div class="section3_3_1">
+                  <div class="section3_3_1_degree">
+                    <h3>DEGREE</h3>
+                    <div class="checkbox-container">
+                      <div id="degree-filter" class="filter-list"></div>
+                      <span class="show-more" id="show-more-degrees">Show More</span>
+                      <span class="show-less hidden" id="show-less-degrees">Show Less</span>
+                    </div>
+                  </div>
+                  <div class="section3_3_1_branch">
+                    <h3>BRANCH</h3>
+                    <div class="checkbox-container">
+                      <div id="branch-filter" class="filter-list"></div>
+                      <span class="show-more" id="show-more-branches">Show More</span>
+                      <span class="show-less hidden" id="show-less-branches">Show Less</span>
+                    </div>
+                  </div>
+                  <div class="section3_3_1_year">
+                    <h3>YEAR</h3>
+                    <div class="checkbox-container">
+                      <div id="year-filter" class="filter-list"></div>
+                      <span class="show-more" id="show-more-years">Show More</span>
+                      <span class="show-less hidden" id="show-less-years">Show Less</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="section3_3_2">
+                  <table class="custom-table" id="data-table">
+                    <thead>
+                      <tr>
+                        <th>Band</th>
+                        <th>Employability Count</th>
+                        <th>Best Possible Count</th>
+                        <th>Band Description</th>
+                        <th>Suggestive Trainings</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  
+                </div>
+              </div>
+
+              <script>
+                document.addEventListener('DOMContentLoaded', () => {
+    const degreeFilter = document.getElementById('degree-filter');
+    const branchFilter = document.getElementById('branch-filter');
+    const yearFilter = document.getElementById('year-filter');
+
+    const dataTableBody = document.getElementById('data-table').querySelector('tbody');
+
+    const showMoreDegrees = document.getElementById('show-more-degrees');
+    const showLessDegrees = document.getElementById('show-less-degrees');
+
+    const showMoreBranches = document.getElementById('show-more-branches');
+    const showLessBranches = document.getElementById('show-less-branches');
+
+    const showMoreYears = document.getElementById('show-more-years');
+    const showLessYears = document.getElementById('show-less-years');
+
+    const getHackathonIdFromUrl = () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('id');
+    };
+
+    const fetchData = async (hackathonId) => {
+        try {
+            const response = await fetch(`api/employability_assessments/emp_band_data/${hackathonId}`);
+            const data = await response.json();
+            populateFilters(data.filters);
+            updateData(hackathonId);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const populateFilters = (filters) => {
+        populateFilter(degreeFilter, filters.degrees, 'degree', showMoreDegrees, showLessDegrees);
+        populateFilter(branchFilter, filters.branches, 'branch', showMoreBranches, showLessBranches);
+        populateFilter(yearFilter, filters.years, 'year', showMoreYears, showLessYears);
+    };
+
+    const populateFilter = (filterElement, options, filterName, showMoreButton, showLessButton) => {
+        filterElement.innerHTML = '';
+        options.forEach((option, index) => {
+            if (option) { // Check if the option is not null or empty
+                const div = document.createElement('div');
+                div.className = 'checkbox-item';
+                if (index >= 2) div.classList.add('hidden');
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = option;
+                checkbox.name = filterElement.id;
+                checkbox.id = `${filterName}-${option}`;
+                checkbox.addEventListener('change', () => updateData(getHackathonIdFromUrl()));
+
+                const label = document.createElement('label');
+                label.htmlFor = checkbox.id;
+                label.textContent = option;
+
+                div.appendChild(checkbox);
+                div.appendChild(label);
+                filterElement.appendChild(div);
+            }
+        });
+
+        showMoreButton.addEventListener('click', () => {
+            showMoreButton.classList.add('hidden');
+            showLessButton.classList.remove('hidden');
+            filterElement.parentNode.classList.add('expanded');
+            toggleFilterVisibility(filterElement, true);
+        });
+
+        showLessButton.addEventListener('click', () => {
+            showLessButton.classList.add('hidden');
+            showMoreButton.classList.remove('hidden');
+            filterElement.parentNode.classList.remove('expanded');
+            toggleFilterVisibility(filterElement, false);
+        });
+    };
+
+    const toggleFilterVisibility = (filterElement, showAll) => {
+        const items = filterElement.querySelectorAll('.checkbox-item');
+        items.forEach((item, index) => {
+            if (index >= 2) {
+                item.classList.toggle('hidden', !showAll);
+            }
+        });
+    };
+
+    const updateData = async (hackathonId) => {
+        const degree = getCheckedValues(degreeFilter);
+        const branch = getCheckedValues(branchFilter);
+        const year = getCheckedValues(yearFilter);
+
+        try {
+            const response = await fetch(`api/employability_assessments/emp_band_data/${hackathonId}?degree=${degree}&branch=${branch}&year=${year}`);
+            const data = await response.json();
+            updateTable(data.emp_band_counts, data.best_band_counts);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    const getCheckedValues = (filterElement) => {
+        const checkedValues = Array.from(filterElement.querySelectorAll('input[type="checkbox"]:checked')).map(checkbox => checkbox.value);
+        return checkedValues.join(',');
+    };
+
+    const updateTable = (empBandCounts, bestBandCounts) => {
+        dataTableBody.innerHTML = '';
+        const bandGrades = ['A++', 'A+', 'A', 'B', 'C', 'F'];
+        const lpaRange = ['12+ Lpa', '9-12 Lpa', '7-9 Lpa', '5-7 Lpa', '3-5 Lpa', '<3 Lpa'];
+        const suggestiveTrainings = [
+            'MERN Stack and Data Structures and Algorithms', 
+            'Full Stack Development Using Python and DSA', 
+            'Data Structures and Algorithms', 
+            'Python and Structured Query Language', 
+            'Power BI / Tableau / CRM', 
+            'Power BI / Tableau / CRM'
+        ];
+
+        Object.keys(empBandCounts).forEach((band, index) => {
+            const row = document.createElement('tr');
+            const empBandCell = document.createElement('td');
+            empBandCell.textContent = bandGrades[index] || band;
+            empBandCell.style.fontWeight = 'bold'; // Make bandGrades bold
+
+            const empCountCell = document.createElement('td');
+            empCountCell.textContent = empBandCounts[band];
+
+            const bestCountCell = document.createElement('td');
+            bestCountCell.textContent = bestBandCounts[band];
+
+            const bandDescCell = document.createElement('td');
+            bandDescCell.textContent = lpaRange[index];
+
+            const trainingsCell = document.createElement('td');
+            trainingsCell.textContent = suggestiveTrainings[index]; // Static suggestive trainings
+
+            row.appendChild(empBandCell);
+            row.appendChild(empCountCell);
+            row.appendChild(bestCountCell);
+            row.appendChild(bandDescCell);
+            row.appendChild(trainingsCell);
+            dataTableBody.appendChild(row);
+        });
+    };
+
+    // Initial data fetch
+    const hackathonId = getHackathonIdFromUrl();
+    if (hackathonId) {
+        fetchData(hackathonId);
+    } else {
+        console.error('Hackathon ID not found in URL.');
+    }
+});
+
+              </script>
+            </div>
+            <div class="section4" style="display: block;">
+              <div class="row">
+                <h3>Success Probability in Company Placement Tests </h3>
+                <i class="fa-solid fa-chevron-up"></i>
+              </div>
+              <p>It is calculated by taking into consideration the technical topics which are assessed specific to the 12 major drives displayed below. The below success probability is subject to the criteria set by the company and your academic eligibility. </p>
+              <div class="mygraph2" style="width: 100%; height: 300px;">
+                <canvas id="myChart2" style=" width: 1000px;height: 250px;"></canvas>
+              </div>
+              <script src="js/emp_company_eligibility.js"></script>
+              <script src="js/emp_assessment_technical_section.js"></script>
+            </div>
+            <div class="section5">
+              <div class="row">
+                <h3>Technical Section Analysis </h3>
+                <i class="fa-solid fa-chevron-up"></i>
+              </div>
+              <p>This section provides a comprehensive analysis of the entire batch, highlighting strengths and weaknesses. Gain insights into individual student needs and personalize their learning paths. </p>
+              <div class="section5_data">
+                <div class="section5_1">
+                  <p>Technical section</p>
+                  <div id="chartSection" class="chart-section">
+                    <div class="loader"></div>
+                    <canvas id="cylindricalChart"></canvas>
+                    <div id="noDataMessage" class="no-data-message">Data not available</div>
+                  </div>
+                  <script src="js/assessment_sub_domain_stats.js"></script>
+                  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.1"></script>
+                </div>
+                <div class="section5_2">
+                  <p>Analysis of Coding Subdomains: Student Scores ≤ 80</p>
+                  <div class="section5_2_table">
+                    <table class="section5_table" id="subDomainTable">
+                      <thead>
+                        <tr>
+                          <th>Sub Domain</th>
+                          <th>No. of Students to Improve In</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <!-- Data will be inserted here by JavaScript -->
+                      </tbody>
+                    </table>
+                    <button id="toggleRowsBtn" style="display: none;
+                            border:none; background-color: transparent; margin: 10px; color: #3468b5; font-size: 12px; text-decoration: underline; float:right">Show More</button>
+                    <div id="studentModal" class="modal">
+                      <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2 style="font-size: 16px;">Students with Accuracy Less Than or Equal to 80 in <span id="subDomainTitle"></span>
+                        </h2>
+                        <table id="studentTable" style="align-items: center;">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Email</th>
+                              <th>Coding Score</th>
+                              <th>Employability Score</th>
+                              <th>Employbility Band</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- Student list will be inserted here by JavaScript -->
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <p>View Detail student Report</p>-->
+              <!-- <div class="card_s5">
+                <p style="
+                    font-size: 22px;
+                    font-weight: bold;
+                    padding: 20px 30px;
+                    margin-bottom: 0;
+                  "> View Detailed Student Report </p>
+                <div style="
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                  ">
+                  <img src="img/studentsresults.png" alt="image" style="max-width:300px;height:auto" />
+                </div>
+                <div style="
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    padding-bottom: 20px;
+                  ">
+                  <a href="employabilityStudentsResults" style="text-decoration: none;">
+                    <button class="view-report">
+                      <i style="padding-right: 3px;" class="fa fa-eye"></i> View Students Results </button>
+                  </a>
+                </div>
+              </div> -->
+
+              <div class="section6">
+                <div class="card_s6">
+                  <div style="display: flex; justify-content: space-between">
+                    <div style="
+                        padding-left: 30px;
+                        padding-bottom: 0;
+                        font-weight: bold;
+                        position: sticky;
+                      ">
+                      <p class="f22">TOP 100 - Employability</p>
+                    </div>
+                    <div class="selection-container">
+                      <a class="view-report" href="https://taptapenterprise.blackbucks.me/employabilityStudentsResults">View Student Results</a>
+                    </div>
+                  </div>
+              
+                  <div>
+                    <!-- <div class="loader-cont" id="loaderContainer" style="
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                        ">
+                      <div class="loader" id="loader" style="margin-top: 10px"></div>
+                    </div> -->
+              
+                    <div class="scrollable" id="top100Table">
+                      <table class="custom-table">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Marks</th>
+                            <th>Aptitude</th>
+                            <th>English</th>
+                            <th>Coding</th>
+                            <th>Emp Band</th>
+                            <th>Best Possible Band</th>
+                            <th>Aptitude Improvement Sugg</th>
+                            <th>English Improvement Sugg</th>
+                            <th>Coding Improvement Sugg</th>
+                          </tr>
+                        </thead>
+                        <tbody id="top100List"></tbody>
+                      </table>
+                    </div>
+              
+                    <div class="pagination" id="daily-pagination-controls"></div>
+                  </div>
+                </div>
+              
+                <script>
+                  let currentPage = 1;
+                  const rowsPerPage = 10;
+                  let ResData = [];
+                  let hackathonId = getHackathonIdFromUrl();
+              
+                  function getHackathonIdFromUrl() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    return urlParams.get('id'); // Adjust this if your parameter name is different
+                  }
+              
+                  async function fetchTop100Students() {
+                    if (!hackathonId) {
+                      console.error("No hackathon ID found in URL.");
+                      return;
+                    }
+              
+                    const apiUrl = `api/employability_assessments/top100/${hackathonId}`;
+                    const loaderElement = document.getElementById("loader"); // assume you have a loader element with id="loader"
+                    const top100Table = document.getElementById("top100Table"); // Ensure you have a top100Table element
+                    top100Table.style.display = "none";
+                    if (loaderElement) loaderElement.style.display = "block"; // Check if loaderElement exists
+              
+                    try {
+                      const response = await fetch(apiUrl);
+                      if (!response.ok) {
+                        throw new Error(`Error fetching employability graph data: ${response.statusText}`);
+                      }
+                      ResData = await response.json();
+                      console.log("Fetched data:", ResData); // Check the fetched data
+                      displayTable();
+                      setupPagination();
+                    } catch (error) {
+                      console.error("Error:", error);
+                    } finally {
+                      if (loaderElement) loaderElement.style.display = "none"; // Check if loaderElement exists
+                      top100Table.style.display = "block";
+                    }
+                  }
+              
+                  function displayTable() {
+                    const top100List = document.getElementById("top100List");
+                    top100List.innerHTML = "";
+              
+                    const start = (currentPage - 1) * rowsPerPage;
+                    const end = start + rowsPerPage;
+                    const paginatedData = ResData.slice(start, end);
+              
+                    console.log("Paginated data:", paginatedData); // Check the paginated data
+              
+                    paginatedData.forEach((eachMem) => {
+                      const eachStudent = document.createElement("tr");
+                      let userIconHTML =
+                        eachMem.image && eachMem.image !== null && eachMem.image !== ""
+                          ? '<img src="' +
+                            eachMem.image +
+                            '" alt="User Image" style="height: 20px; width: 20px; border-radius: 20px;">'
+                          : '<i class="fa-solid fa-user"></i>';
+              
+                      eachStudent.innerHTML = `
+                        <td class="name-cell">
+                          <div class="user-icon">
+                            ${userIconHTML}
+                          </div>
+                          ${eachMem.first_name}
+                        </td>
+                        <td>${eachMem.email}</td>
+                        <td>${eachMem.total_score}</td>
+                        <td>${eachMem.aptitude}</td>
+                        <td>${eachMem.english}</td>
+                        <td>${eachMem.coding}</td>
+                        <td>${eachMem.employability_band}</td>
+                        <td>${eachMem.possible_employability_band}</td>
+                        <td>${eachMem.aptitude_improvement_suggestions}</td>
+                        <td>${eachMem.english_improvement_suggestions}</td>
+                        <td>${eachMem.technical_improvement_suggestions}</td>
+                      `;
+                      top100List.appendChild(eachStudent);
+                    });
+                  }
+              
+                  function setupPagination() {
+                    const totalPages = Math.ceil(ResData.length / rowsPerPage);
+                    console.log("Total pages:", totalPages); // Check total pages
+                    const paginationControls = document.getElementById("daily-pagination-controls");
+                    paginationControls.innerHTML = "";
+              
+                    if (totalPages > 1) {
+                      // Create a container for the pagination controls
+                      const paginationContainer = document.createElement("div");
+                      paginationContainer.classList.add("pagination-container");
+                      paginationControls.appendChild(paginationContainer);
+              
+                      // Previous button
+                      const prevButton = document.createElement("span");
+                      prevButton.textContent = "Previous";
+                      prevButton.classList.add("prev-button");
+                      prevButton.style.margin = "0 10px"; // add some margin to the previous button
+                      prevButton.addEventListener("click", () => {
+                        if (currentPage > 1) {
+                          currentPage--;
+                          displayTable();
+                          updatePagination();
+                        }
+                      });
+                      paginationContainer.appendChild(prevButton);
+              
+                      // Pagination numbers container
+                      const paginationNumbersContainer = document.createElement("div");
+                      paginationNumbersContainer.classList.add("pagination-numbers-container");
+                      paginationContainer.appendChild(paginationNumbersContainer);
+              
+                      // Pagination buttons
+                      for (let i = 1; i <= totalPages; i++) {
+                        const pageNumber = document.createElement("button");
+                        pageNumber.textContent = i;
+                        pageNumber.classList.add("pagination-button");
+                        pageNumber.style.margin = "0 5px";
+                        pageNumber.addEventListener("click", () => {
+                          currentPage = i;
+                          displayTable();
+                          updatePagination();
+                        });
+                        if (i === currentPage) {
+                          pageNumber.classList.add("current");
+                        }
+                        paginationNumbersContainer.appendChild(pageNumber);
+                      }
+              
+                      // Next button
+                      const nextButton = document.createElement("span");
+                      nextButton.textContent = "Next";
+                      nextButton.classList.add("next-button");
+                      nextButton.style.margin = "0 10px"; // add some margin to the next button
+                      nextButton.addEventListener("click", () => {
+                        if (currentPage < totalPages) {
+                          currentPage++;
+                          displayTable();
+                          updatePagination();
+                        }
+                      });
+                      paginationContainer.appendChild(nextButton);
+                    }
+                  }
+              
+                  function updatePagination() {
+                    const paginationButtons = document.querySelectorAll(".pagination-button");
+                    paginationButtons.forEach((button) => {
+                      if (button.textContent === currentPage.toString()) {
+                        button.classList.add("current");
+                      } else {
+                        button.classList.remove("current");
+                      }
+                    });
+                  }
+              
+                  fetchTop100Students();
+                </script>
+              </div>
+              
+            </div>
+            <div id="logoutModal" class="modal" style="display: none;">
+              <div class="modal-content">
+                <p class="question">Are you sure you want to logout?</p>
+                <div class="logout-div"></div>
+                <div class="modal-buttons">
+                  <button id="cancelLogout">Cancel</button>
+                  <button id="confirmLogout">Yes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+    <script src="js/assessment_report1.js"></script>
+    <script src="js/assessment_report.js"></script>
+    
+    <script src="js/navbar_logout.js"></script>
+    <script>
+      // Function to get assessment ID from URL
+function getAssessmentIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+}
+
+// Function to update href attribute with assessment ID
+function updateStudentsReportLink() {
+    const assessmentId = getAssessmentIdFromUrl();
+
+    if (assessmentId) {
+        const studentsReportLink = document.getElementById('studentsReportLink');
+        studentsReportLink.href = `/assessmentStudentResults?id=${assessmentId}`;
+    } else {
+        console.error('Assessment ID not found in URL');
+    }
+}
+
+// Call the function to update the link
+updateStudentsReportLink();
+
+    </script>
+</body>
+
+</html>

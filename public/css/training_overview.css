@@ -1,0 +1,475 @@
+/* Media query for screens smaller than 768px (typical tablets and phones) */
+@media (max-width: 767px) {
+  .bottombar {
+    position: fixed;
+    top: 90%;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    padding: 4px 0;
+    display: flex;
+    justify-content: space-between;
+    background-color: #000;
+    border-top: 1px solid #fff; /* Optional: Add a border at the top */
+  }
+
+  .logo {
+    display: none;
+  }
+  .bottombar .menu-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+  }
+
+  .bottombar .menu-item img {
+    margin-bottom: 5px;
+  }
+}
+
+
+#banner-img {
+  background-color: #7962bd;
+  width: 100%;
+  height: 210px;
+  border-radius: 10px;
+  color: white;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  background-repeat: no-repeat;
+}
+
+.banner-text {
+  padding-top: 20px;
+  mask-repeat: no-repeat;
+}
+
+.banner h1 {
+  font-size: 41px;
+  font-weight: 600;
+}
+
+.banner h4 {
+  color: #d3fb52;
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.banner img {
+  float: right;
+}
+
+.section2_1 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section2_1_1 {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  width: 50%;
+}
+
+.section2_inner_section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#studentTable {
+  overflow-y: auto;
+  height: 100px; /* adjust the height to your liking */
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.table {
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  th {
+    background-color: #4c4267;
+    color: white;
+    font-weight: bold;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: #ddd;
+  }
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: none;
+}
+
+.popup-content {
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px;
+  overflow-y: auto; /* Add this to enable scrolling */
+  max-height: 500px;
+}
+
+.popup-header {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.popup-header button {
+  background-color: transparent;
+  border: none;
+  font-size: 16px;
+  color: #53acfd;
+  cursor: pointer;
+}
+
+.cards {
+  height: 61px;
+  border-radius: 10px;
+  margin: 2px;
+}
+
+.c1 {
+  background-color: #ac95ee;
+  width: 60%;
+}
+
+.c2 {
+  background-color: #53acfd;
+  width: 25%;
+}
+
+.c3 {
+  background-color: #eed477;
+  width: 15%;
+}
+
+.section2_1_2 {
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+  width: 40%;
+  height: 100%;
+}
+
+.section2_2 {
+  display: flex;
+  flex-direction: row;
+  float: left;
+}
+.card_s2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  width: 32%;
+  margin-right: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card_s2_div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card_s2_div span {
+  margin-right: 10px;
+}
+.background-img-color {
+  background-color: #3a3a3a;
+  width: 25px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-radius: 100%;
+  margin: 10px;
+}
+
+.section3,
+.section4 {
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-top: 30px;
+  border-radius: 5px;
+}
+
+.section3 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.section3 th {
+  color: #606060;
+}
+
+.section3 td {
+  font-weight: 600;
+  font-size: 12px;
+}
+.section3 th,
+.section3 td {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+}
+.section3 td:first-child {
+  text-align: left;
+  font-weight: 400;
+}
+.section3 tr:last-child {
+  font-weight: bold;
+}
+
+.section3 button {
+  background-color: #d3fb52;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 50px;
+  font-size: 10px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+.table-orange {
+  background-color: rgba(255, 145, 77, 0.5);
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.table-blue {
+  background-color: rgba(48, 148, 240, 0.4); /* Equivalent to #3094F0 */
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.table-red {
+  background-color: rgba(255, 94, 129, 0.4);
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.table-green {
+  background-color: rgba(0, 182, 155, 0.3);
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.section4 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.section4 th,
+.section4 td {
+  padding: 10px;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: 3px solid #fff;
+}
+.section4 th {
+  background-color: #4c4267;
+  color: white;
+}
+
+.section4 tr td {
+  font-size: 12px;
+}
+
+.section4 tr:nth-child(even) {
+  background-color: rgba(76, 66, 103, 0.05); /* Light gray */
+  border-radius: 10px;
+  font-size: 10px;
+}
+.section4 tr:nth-child(odd) {
+  background-color: rgba(76, 66, 103, 0.02); /* Light blue */
+  font-size: 10px;
+}
+.section4 .name-cell {
+  display: flex;
+  align-items: center;
+  color: #3468b5;
+}
+.section4 .user-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #ff914d;
+  color: white;
+  margin-right: 8px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  border-radius: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: transparent;
+  cursor: pointer;
+}
+.pagination span {
+  background-color: #d3fb52;
+  display: inline-block;
+  padding: 10px 16px;
+  margin: 0 4px;
+  border-radius: 100%;
+  cursor: pointer;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.5);
+  border-color: #007bff;
+}
+
+.page-btn.active {
+  background-color: rgb(121, 98, 189);
+  color: #fff;
+  border-color: #007bff;
+  font-weight: 600;
+}
+.pagination-item {
+  display: inline-block;
+  padding: 10px 16px;
+  margin: 0 4px;
+  border-radius: 100%;
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.5);
+}
+.pagination-item.active {
+  background-color: #d3fb52;
+  color: #000;
+  border-color: #007bff;
+}
+.pagination-item:hover {
+  background-color: #d3fb52;
+  color: #000;
+}
+.pagination-chevron {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+  margin: 0 8px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.pagination-chevron:hover,
+.pagination-chevron:active {
+  background-color: #fff;
+}
+
+.roww {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.grey {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.f12 {
+  font-size: 12px;
+}
+
+.f10 {
+  font-size: 10px;
+}
+
+.f14 {
+  font-size: 14px;
+}
+
+.f16 {
+  font-size: 16px;
+}
+
+.marginr {
+  margin-right: 10px;
+}
+.marginl {
+  margin-left: 10px;
+}
+
+.f22 {
+  font-size: 22px;
+}
+
+.font600 {
+  font-weight: 600;
+}
+
+.column1 {
+  display: flex;
+  flex-direction: column;
+}
+
+.margin0 {
+  margin: 0;
+}
+
+/* Add these styles to your CSS file or inside a <style> tag in your HTML */
+.header-live-session {
+  background-color: rgba(255, 145, 77, 0.5);
+  border-radius: 5px;
+  padding: 5px 10px; /* Light red */
+}
+
+.header-assessment {
+  background-color: rgba(255, 145, 77, 0.5);
+  border-radius: 5px;
+  padding: 5px 10px; /* Light green */
+}
+
+.header-daily-tests,
+.header-grand-tests,
+.header-employability-tests {
+  background-color: rgba(0, 182, 155, 0.3);
+  border-radius: 5px;
+  padding: 5px 10px; /* Light cyan */
+}
+
+.header-assignments {
+  background-color: rgba(48, 148, 240, 0.4);
+  border-radius: 5px;
+  padding: 5px 10px; /* Light pink */
+}

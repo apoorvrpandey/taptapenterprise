@@ -1,0 +1,783 @@
+
+  
+  .details {
+    width: 95%;
+    /* Set container width */
+    /* Center container on the page */
+    margin-bottom:20px;
+  
+  }
+  
+  .dcard {
+    background-color: #d7d8ff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    /* Add bottom margin to separate cards */
+    
+    width:100%;
+  }
+  
+  .dcard p{
+    margin:0;
+    margin-bottom: 5px;
+    padding:5px;
+    font-size: 14px;
+  }
+  
+  .dcard strong{
+    margin:0;
+    margin-bottom: 5px;
+    padding:5px;
+  }
+  
+  .card h2 {
+    margin-bottom: 10px;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    /* Center the cards horizontally */
+    gap: 20px;
+    /* Gap between the cards */
+    max-width: 1350px;
+  }
+  
+  .left-card,
+  .right-card {
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+    border:1px solid rgba(0, 0, 0, 0.3)
+    /* Allow cards to grow to fill available space */
+  }
+  
+  .left-card {
+    background-color: #f9f9f9;
+    /* Light grey background color for left card */
+    flex-basis: 30%;
+    /* Initial width for the left card */
+    margin-right: 10px;
+    /* Margin to create space between cards */
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    
+  }
+
+  .companies{
+    margin-top: 30px;
+  }
+
+ 
+  
+  .right-card {
+    background-color: #f9f9f9;
+    /* Light grey background color for right card */
+    flex-basis: 70%;
+    /* Initial width for the right card */
+   
+  }
+  
+  .emp_indi_cards {
+    display: flex;
+    justify-content: space-between;
+    /* Distribute items evenly with space between */
+    padding: 10px;
+    width: 100%;
+    margin-top: 20px;
+    padding-left: 0;
+   gap: 15px;
+  }
+  
+  
+  
+  .card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 10px);
+    /* Each card occupies 50% of the container width minus margin */
+    text-align: center;
+    padding-bottom: 1px;
+  }
+  
+ 
+  
+  .result_cards {
+    display: flex;
+    justify-content: space-between;
+    /* Distribute items evenly with space between */
+    
+  }
+  
+  .rcard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    /* Each card occupies 30% of the container width */
+    text-align: center;
+  }
+  
+  .rrcard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 50px; 
+    max-height: auto;/* Allow the card to adjust height based on content */
+    margin-bottom: 10px; /* Adds spacing between cards */
+}
+
+.suggestion-title {
+    margin-bottom: 8px; /* Adds space between title and suggestion text */
+}
+
+.sug {
+    margin-top: auto; /* Pushes this element to the bottom of the card */
+ /* Hides any overflowing content */
+    text-overflow: ellipsis; /* Adds ellipsis to indicate overflow */
+    white-space: wrap; /* Prevents text from wrapping */
+    word-wrap: break-word; /* Breaks long words */
+}
+
+.diff-text {
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    align-items: flex-end;
+}
+
+@media (max-width: 1219px) {
+    .rcard {
+        width: 100%; /* Ensures cards take full width on mobile */
+        margin-bottom: 10px; /* Adds some spacing between cards */
+    }
+
+    .rrcard {
+      height: 85px;
+    }
+
+    .resultscontainer {
+        flex-direction: column; /* Stacks the columns on top of each other */
+        align-items: flex-start; /* Aligns items to the start */
+    }
+
+    .rescolumn {
+        width: 100%; /* Ensures columns take full width */
+        text-align: left; /* Aligns text to the left */
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between; /* Ensures space between items */
+        width: 100%;
+        flex-direction: column;
+    }
+
+    
+}
+
+
+  
+  .rrcard p{
+    margin:2px;
+  }
+  
+  .sug{
+    font-size: 11px;
+    margin:3px;
+    padding-top: 5px;
+  }
+  
+  /* Adjust spacing between cards */
+  .rcard+.rcard {
+    margin-left: 20px;
+    /* Add left margin to all cards except the first one */
+  }
+  
+  .company_cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Distribute items evenly with space between */
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  .ccard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    /* Each card occupies 30% of the container width */
+    text-align: center;
+    margin: 10px;
+  }
+  
+  
+  
+  .advicecard {
+    display: flex;
+    justify-content: space-between;
+    /* Distribute items evenly with space between */
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  
+  .acard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+    /* Each card occupies 30% of the container width */
+    text-align: center;
+    width: 100%;
+    border-left: thick solid #e2e2fe;
+  
+  }
+  
+  .advice-container {
+    display: flex;
+    justify-content: space-around;
+    /* Distribute columns with space around */
+    padding: 20px;
+  }
+  
+  .column {
+    flex: 0 0 45%;
+    /* Each column occupies 45% of the container width */
+  }
+  
+  .aacard {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    /* Add bottom margin to separate cards */
+    height:60px;
+    cursor: pointer;
+  }
+  .aacard:hover{
+    background-color: #ebdbfd;
+  }
+  
+  .aacard h2 {
+    margin-bottom: 10px;
+  }
+  .aacard-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+  
+  
+  
+  .underline-text {
+    display: inline-block;
+  }
+  
+  .underline-text h2 {
+    display: inline;
+    position: relative;
+  }
+  
+  /* Create the underline effect with bulge on the left side */
+  .underline-text h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    /* Adjust based on desired thickness */
+    width: 100%;
+    height: 3px;
+    /* Adjust based on desired thickness */
+    background-image: linear-gradient(to right, #dbdbf8 40%, transparent 60%);
+    background-size: 150% 100%;
+    background-position: left bottom;
+    border-bottom: 1px solid #dbdbf8;
+    /* Thick border for the underline */
+    border-radius: 20%;
+    /* Border radius to create bulge effect */
+  }
+  
+  /* Adjust the bulge effect */
+  .underline-text h2::after {
+    border-radius: 0 50% 50% 0;
+    /* Border radius to create bulge on the left side */
+    transition: all 0.3s;
+    /* Smooth transition for border radius */
+  }
+  
+  /* Hover effect to animate the underline */
+  .underline-text h2:hover::after {
+    border-radius: 0%;
+    /* Transition border radius to 0% on hover */
+  }
+  
+  .banner {
+    margin-bottom: 20px
+  }
+  .banner img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .emp_indi_cards {
+    margin-bottom: 30px
+  }
+  
+  .right-content {
+    margin: 5px
+  }
+  
+  .result_cards {
+    margin-bottom: 30px
+  }
+  
+  .empcontainer {
+    display: flex;
+    
+   
+  }
+  
+  .empcolumn {
+    flex: 1;
+    padding: 1px;
+    margin: 0;
+  }
+  
+  .resultscontainer {
+    display: flex;
+   
+   
+  }
+  
+  .rescolumn {
+    flex: 1;
+    padding: 1px;
+    margin: 0;
+  }
+  
+  
+  
+  .one{
+    font-size: 16px;
+    font-weight: bold;
+    color: grey;
+    float:left;
+  }
+  
+  .two{
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    padding-top: 0;
+    margin-top: 0;
+  }
+  
+  .row{
+    float: left;
+  }
+  
+  .company-table{
+    width:90%;
+  }
+  
+  .company-table td {
+    padding: 10px;
+    text-align: center;
+    font-size: 15px;
+  }
+  
+  
+  
+  
+  .disclaimer{
+    display: flex;
+    flex-direction: row;
+    margin-top:20px;
+    margin-bottom: 20px;
+    
+  }
+  
+  .disclaimer p{
+    font-size: 10px;
+  }
+  
+  .acontent{
+    display: flex;
+    flex-direction: row;
+   
+  
+  }
+  
+  .aheading{
+    margin:0;
+    font-size: 14px;
+    color: #7183bf;
+  }
+  
+  .amatter{
+    margin-top:2px;
+    font-size:12px;
+  }
+  
+  .circle {
+    width: 150px;
+    height: 150px;
+    background-color: grey;
+    border-radius: 50%; /* This creates the circular shape */
+    align-items: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+   
+   
+  }
+  .vertical-line {
+    border-left: 1px dashed black; /* Adjust the width, style, and color as needed */
+    height: 35px; /* Adjust the height as needed */
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+  
+  @media (max-width: 400px) {
+
+    
+    .container {
+      flex-direction: column;
+      width:100%;
+      gap:0px;
+      /* Stack cards on top of each other for small screens */
+    }
+  
+    .left-card,
+    .right-card {
+      flex-basis: auto;
+      /* Reset flex basis to allow cards to take full width */
+      margin-right: 0;
+      /* Remove margin between cards on small screens */
+      padding:0;
+    }
+  
+    .emp_indi_cards {
+      flex-direction: column;
+      /* Stack cards vertically on smaller screens */
+      margin-top: 50px;
+    }
+  
+    .card {
+      width: 100%;
+      /* Full width for cards on smaller screens */
+      margin-bottom: 20px;
+      /* Add bottom margin between stacked cards */
+     
+    }
+  
+    .card:last-child {
+      margin-bottom: 0;
+      /* Remove bottom margin from last card */
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .container {
+      flex-direction: column;
+      /* Stack cards on top of each other for small screens */
+      margin-left: 0; /* Remove left margin */
+    }
+  
+  
+  body{
+      display:flex;
+  }
+    
+    .emp_indi_cards {
+      flex-direction: column;
+      /* Stack cards vertically on smaller screens */
+      margin-top: 50px;
+    }
+  
+    .card {
+      width: 100%;
+      /* Full width for cards on smaller screens */
+      margin-bottom: 20px;
+      /* Add bottom margin between stacked cards */
+    }
+  
+    .card:last-child {
+      margin-bottom: 0;
+      /* Remove bottom margin from last card */
+    }
+  
+    /* Adjustments for smaller screens */
+    .left-card,
+    .right-card {
+      padding: 10px;
+    }
+  
+   
+    .right-content {
+      margin: 0;
+    }
+  
+    .resultscontainer,
+    .empcontainer {
+      flex-direction: column;
+    }
+  
+    .company-table td {
+      font-size: 12px;
+    }
+  
+    .company-table td:first-child {
+      padding-left: 0;
+    }
+  
+    .disclaimer {
+      flex-direction: row;
+      align-items: center;
+    }
+  
+    .disclaimer p {
+      font-size: 9px;
+      text-align: center;
+    }
+  
+    .resultscontainer,
+    .empcontainer {
+      flex-direction: column;
+    }
+  
+    .one {
+      font-size: 24px;
+    }
+  
+    .two {
+      font-size: 24px;
+    }
+  
+    .row {
+      margin-top: 5px;
+    }
+  
+    .result_cards,
+    .emp_indi_cards {
+      margin-top: 20px;
+    }
+  
+    .result_cards ,
+    .emp_indi_cards .card {
+      padding: 15px;
+      margin-left:20px;
+    }
+  
+    .rrcard {
+      padding: 5px;
+      height: auto;
+    }
+  
+    
+  
+    .amatter {
+      font-size: 10px;
+    }
+  
+    .circle {
+      width: 150px;
+      height: 150px;
+    }
+  
+    .vertical-line {
+      height: 25px;
+    }
+  
+    .menu-item span {
+      display: none;
+    }
+  
+    .menu-item img {
+      width: 30px;
+      height: 30px;
+    }
+  
+    .logo img {
+      width: 80%;
+      max-width: 80px;
+      height: auto;
+    }
+    .result_cards{
+        flex-direction:column;
+       
+        margin-left:20px;
+    }
+      .sidebar-item {
+      /* Adjust styles for individual items within the sidebar */
+      margin-right: 10px; /* Add space between items */
+    }
+  
+    .sidebar-item:last-child {
+      margin-right: 0; /* Remove margin from last item */
+    }
+  
+    /* Adjust main content to push up when sidebar is displayed */
+    main {
+      margin-bottom: 60px; /* Adjust height of sidebar */
+    }
+    .banner img {
+      /* Adjust size and position for mobile devices */
+      width: 100%;
+      height: auto;
+    }
+    .advice-container{
+        flex-direction:column;
+    }
+    .rcard{
+        width:80%;
+    }
+    
+    
+    .left-card,.right-card{
+        width:auto;
+       margin-bottom:20px;
+       border-radius:0;
+      box-shadow:none;
+      border:none
+    }
+    
+    
+    
+    .details {
+        width:90%;
+    }
+    
+    .dcard{
+        margin:10px;
+    }
+    .right-card{
+        margin-left:0;
+    }
+    
+   .card {
+      width: 100%; /* Set width to 100% for mobile */
+      float: none; /* Remove float for mobile */
+      padding-left:40px;
+    }
+    
+    .container{
+        margin:0;
+        margin-right:0;
+    }
+    .rcard +.rcard{
+        margin-left:5px;
+        padding:0 20px
+    }
+    .rcard{
+        margin-bottom:20px;
+        margin-left:5px;
+        padding:0 20px
+    }
+    
+   .emp_indi_cards{
+       width:80%;
+   }
+   .empcontainer {
+    display: flex;
+    flex-direction:row;
+    width:100%;
+   
+  }
+  .resultscontainer{
+       display: flex;
+    flex-direction:row;
+   
+  }
+  
+  .logo{
+      display:none;
+  }
+   .bottombar {
+      position: fixed;
+      top:90%;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      padding: 4px 0;
+      display: flex;
+      justify-content: space-between;
+      background-color: #000;
+      border-top: 1px solid #fff; /* Optional: Add a border at the top */
+    }
+  
+    .bottombar .menu-item {
+      display: flex;
+      flex-direction: column;
+      justify-content:space-between;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      color: #fff;
+    
+    }
+  
+    .bottombar .menu-item img {
+      margin-bottom: 5px;
+    }
+    
+    .menu-item span {
+      display: block;
+      font-size: 8px;
+      font-weight:0;
+      padding:2px;
+      color: #fff;
+    }
+  .cccard{
+      width:80%;
+  }
+  
+  body{
+      background-color: #f9f9f9;
+  }
+
+  .left-card{
+    margin-left: 0;
+    
+  }
+  
+  
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

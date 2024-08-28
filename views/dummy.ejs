@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub Domain Stats</title>
+    <style>
+        #statsContainer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .stat-section {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="statsContainer">
+        <div class="stat-section">
+            <h2>Sub Domain Stats</h2>
+           
+        </div>
+        <div class="section3_2_2_2">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>Performance</th>
+                        <th style="background-color: #4C4267; color: #FFFFFF;">Topics</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Weak</td>
+                        <td id="weakAreasList"></td>
+                    </tr>
+                    <tr>
+                        <td>Improvement</td>
+                        <td id="improvementAreasList"></td>
+                    </tr>
+                    <tr>
+                        <td>Strong</td>
+                        <td id="strongAreasList"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/emp_subdomain.js"></script>
+</body>
+</html>

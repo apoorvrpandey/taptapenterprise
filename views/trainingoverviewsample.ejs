@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customized Trainings</title>
+    <link rel="stylesheet" href="css/trainingssample.css" />
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/nav_log.css">
+    <link rel="icon" type="image/x-icon" href="img/sidebar logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/trainCommon.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+    const dashboardLink = document.getElementById("dashboard-link");
+    const manageStudentsLink = document.getElementById("manage-students-link");
+    const overlay = document.getElementById("overlay");
+    const closeBtn = document.getElementById("close-btn");
+
+    function showPopup(event) {
+        event.preventDefault();
+        overlay.style.display = "flex";
+    }
+
+    function hidePopup() {
+        overlay.style.display = "none";
+    }
+
+    dashboardLink.addEventListener("click", showPopup);
+    manageStudentsLink.addEventListener("click", showPopup);
+    closeBtn.addEventListener("click", hidePopup);
+    overlay.addEventListener("click", function(event) {
+        if (event.target === overlay) {
+            hidePopup();
+        }
+    });
+});
+
+    </script>
+    <style>
+        /* Overlay styles */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Popup styles */
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
+
+/* Close button styles */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+    </style>
+  </head>
+
+  <body>
+    <script>
+      window.userRole = "<%= user.role %>";
+    </script>
+    <script src="js/rolebase.js"></script>
+    
+    <div class="supercss">
+    <div class="sidebar">
+        <a class="logo" style="text-align: center;align-items:center;padding:5px">
+          <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+       </a> 
+       <a href="myDashboard" class="menu-item">
+            <img src="img/dash_white.png" alt="dash" style="max-width:22px; height:22px"><span style="color:white">Dashboard</span>
+        </a>
+         <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="dash" style="max-width:18px; height:20px"><span>Employability</span>
+            </a>
+        <a href="https://admin.hackathon.blackbucks.me"  class="menu-item" >
+            <img alt="Assessment icon" src="img/assessment.png" style="max-width:19px; height:19.5px">
+            <span>Assessments</span></a>
+       
+         <a href="jobsDashboard" class="menu-item">
+           <img src="img/jobs.png" alt="jobs" style="max-width:20px; height:21px"><span>Jobs</span>
+        </a>
+        <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/"  class="menu-item" >
+            <img alt="course icon" src="img/course.png" style="max-width:19px; height:20px"> 
+            <span>Course</span></a>
+        <a href="https://admin.hackathon.blackbucks.me/lessonPlan/"  class="menu-item" >
+            <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width:23px; height:18px">
+            <span>Lesson Plan</span></a>
+        
+                <a href="trainingsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+            <img src="img/trainings_black.png" alt="trainings" style="max-width:27px; height:21px"><span style="color: black;font-weight:bold">Trainings</span>
+        </a>
+                 <a href="internshipsDashboard" class="menu-item">
+                    <img
+                      src="img/internship_whiteicon.png"
+                      alt="manage"
+                      style="width: 20px; height: auto"
+                    /><span>Internships</span>
+                  </a>
+                <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/"  class="menu-item" >
+                    <img alt="vpl icon" src="img/vpl.png" style="max-width:19px; height:17px">
+                    <span>VPL</span></a>
+       
+         
+
+             
+     </div>
+
+     <div class="css">
+      <div class="css0">
+        <div class="navbar">
+         <div class="nav1"></div>
+         <div class="nav2">
+             <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                 <div class="chakra-stack css-nr8aow">
+                     <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                 </div>
+             </a>
+             <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                 <div class="chakra-stack css-nr8aow">
+                     <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0"></div></a>
+             <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                 <div class="chakra-stack css-nr8aow">
+                     <div class="css-1edim3w">
+                         <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj">
+                         <div class="css-1bac456">
+                             <div class="css-1rkwksi">1</div>
+                         </div>
+                     </div>
+                 </div>
+             </a>
+             <button type="button" class="navbtn" id="userButton">
+                 <span class="user-details">
+                     <div class="user">
+                         <span class="user-profile">
+                             <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                         </span>
+                         <div class="username">
+                             <p class="userN"></p>
+                             <p class="userR"></p>
+                         </div>
+                     </div>
+                 </span>
+                 <span class="chakra-button__icon css-1hzyiq5">
+                     <svg viewBox="0 0 16 16" style="height:12px !important; width: 12px !important;"  aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                         <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                     </svg>
+                 </span>
+             </button>
+             
+             <button type="button" class="logoutbtn" id="logoutButton" style="display: none;">
+                 Log out
+             </button>
+             
+            
+         </div>
+       
+  <script>
+     document.addEventListener('DOMContentLoaded', () => {
+     const userButton = document.getElementById('userButton');
+     const logoutButton = document.getElementById('logoutButton');
+  
+     userButton.addEventListener('click', () => {
+         if (logoutButton.style.display === 'none') {
+             logoutButton.style.display = 'flex';
+             logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+             logoutButton.style.left = `${userButton.offsetLeft}px`;
+         } else {
+             logoutButton.style.display = 'none';
+         }
+     });
+  
+     logoutButton.addEventListener('click', () => {
+         // Add your logout logic here
+         console.log('User logged out');
+     });
+  });
+  
+  </script>
+        </div>
+     </div>
+     <div class="css1">
+    
+    <div class="main-container">
+      <div class="roww marginr">
+        <img
+          src="img/traininggrey.png"
+          alt="internship icon"
+          style="width: 14px; height: 14px; margin-right: 5px"
+        />
+        <p class="grey f14 marginr">
+          Trainings <i class="fa-solid fa-chevron-right f10 marginl grey"></i>
+        </p>
+        <p class="f14">Overall Trainings Dashboard</p>
+      </div>
+
+      <div class="banner">
+        <div class="banner-text">
+          <h1>Blackbucks Trainings</h1>
+          <h4>Blackbucks Group</h4>
+        </div>
+      </div>
+
+      <h3 class="f22 font600">Overall Dashboard</h3>
+      <div class="section2 column1">
+        <div class="section2_1 roww">
+          <div class="section2_1_1">
+            <p class="font600 f16">Student Training Enrollments</p>
+            <div>
+              <div class="section2_inner_section">
+                <div class="roww">
+                  <h4 class="f22 font600 marginr">6424</h4>
+                  <p class="f12">Students</p>
+                </div>
+                <div style="float: right">
+                  <p
+                    class="f12"
+                    style="color: #53acfd; text-decoration: underline"
+                  >
+                    Show Students list
+                  </p>
+                </div>
+              </div>
+
+              <div class="section2_cards roww">
+                <div class="cards c1"></div>
+                <div class="cards c2"></div>
+                <div class="cards c3"></div>
+              </div>
+              <div class="roww">
+                <div
+                  class="c1"
+                  style="
+                    background-color: white;
+                    height: fit-content;
+                    padding-left: 10px;
+                  "
+                >
+                  <p class="margin0 f12">CSE</p>
+                  <p class="f18 font600 margin0">3588</p>
+                </div>
+                <div
+                  class="c2"
+                  style="
+                    background-color: white;
+                    height: fit-content;
+                    padding-left: 10px;
+                  "
+                >
+                  <p class="margin0 f12">ECE</p>
+                  <p class="f18 font600 margin0">1891</p>
+                </div>
+                <div
+                  class="c3"
+                  style="
+                    background-color: white;
+                    height: fit-content;
+                    padding-left: 10px;
+                  "
+                >
+                  <p class="margin0 f12">MECHANICAL</p>
+                  <p class="f18 font600 margin0">945</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="section2_1_2" >
+            <span class="f16 font600">Test Completion Metrics</span>
+           
+                <div>
+              <canvas id="myChart" width="400" height="200"></canvas>
+           </div>
+             
+            <script>
+              document.addEventListener("DOMContentLoaded", function () {
+                const ctx = document.getElementById("myChart").getContext("2d");
+
+                // Creating a pattern with vertical lines for filled bars
+                function getPattern() {
+                  const patternCanvas = document.createElement("canvas");
+                  const patternContext = patternCanvas.getContext("2d");
+
+                  patternCanvas.width = 40;
+                  patternCanvas.height = 400;
+
+                  // Create grey vertical lines for filled bars
+                  patternContext.fillStyle = "rgba(230, 229, 251, 1)"; // Grey color
+                  for (let i = 0; i < 40; i += 4) {
+                    // Adjust width of the stripes to 4 pixels
+                    patternContext.fillRect(i, 0, 2, 400); // Draw vertical lines
+                  }
+
+                  return ctx.createPattern(patternCanvas, "repeat");
+                }
+
+                function createLinearGradient(ctx, bottomColor) {
+                  const gradient = ctx.createLinearGradient(0, 0, 0, 400); // Create a vertical gradient
+                  gradient.addColorStop(0, "rgba(211, 251, 82, 0.1)");
+                  gradient.addColorStop(0, "rgba(211, 251, 82, 0.2)");
+                  gradient.addColorStop(0.5, "rgba(211, 251, 82, 0.8)"); // Lighter shade of #D3FB52
+                  gradient.addColorStop(0.5, "rgba(211, 251, 82, 1)"); // Lighter shade of #D3FB52
+                  gradient.addColorStop(1, "rgba(211, 251, 82, 1)"); // Darker shade of #D3FB52
+
+                  return gradient;
+                }
+
+                // Use the function to create the linear gradient
+                const bottomColor = "#D3FB52"; // Color at the bottom
+                const linearGradient = createLinearGradient(ctx, bottomColor);
+
+                const data = {
+                  labels: [
+                    "Live Sessions",
+                    "Daily Tests",
+                    "Weekly Tests",
+                    "Grand Tests",
+                  ],
+                  datasets: [
+                    {
+                      label: "Completed",
+                      borderRadius: {
+                        topLeft: 5,
+                        topRight: 5,
+                        bottomLeft: 20,
+                        bottomRight: 20,
+                      },
+                      backgroundColor: linearGradient, // Apply pattern to the empty bars
+                      data: [40, 40, 40, 40], // Total data values
+                      barThickness: 35,
+                    },
+                    {
+                      label: "Total",
+                      borderRadius: 5,
+                      backgroundColor: getPattern(), // Gradient color for filled bars
+                      data: [40, 70, 50, 90], // Actual completed data values
+                      barThickness: 35,
+                    },
+                  ],
+                };
+
+                // Chart configuration
+                const config = {
+                  type: "bar",
+                  data: data,
+                  options: {
+                    layout: {
+                      padding: {
+                        bottom: 20, // Adjust the bottom padding to create space between bars and x-axis
+                      },
+                    },
+                    scales: {
+                      x: {
+                        stacked: true,
+                        categorySpacing: 4, // Adjust the spacing between bars
+                        grid: {
+                          display: false, // Make X-axis grid lines dashed
+                        },
+                      },
+                      y: {
+                        ticks: {
+                          stepSize: 10,
+                          min: 0,
+                        },
+                        stacked: true,
+                        grid: {
+                          display: false, // Remove background graph lines on y-axis
+                        },
+                      },
+                    },
+                    plugins: {
+            borderRadius: {
+                topLeft: 20,
+                topRight: 20,
+                bottomLeft: 0,
+                bottomRight: 0,
+            },
+        },
+                    radius: 25,
+                  },
+                };
+
+                // Create the chart
+                const myChart = new Chart(ctx, config);
+              });
+            </script>
+          </div>
+        </div>
+        <div class="section2_2">
+         <div class="card_s2">
+          <div class="card_s2_div">
+            <div class="background-img-color">
+               <img src="img/feedback.png" alt="feedback">
+            </div>
+            <p class="f16 font600">Average <br> Feedback</p>
+          </div>
+          <div class="card_s2_div">
+            <span class="font600 f22">4.5</span>
+            <img src="img/feedback1.png" alt="feedback"></div>
+         </div>
+         <div class="card_s2">
+          <div class="card_s2_div">
+            <div class="background-img-color">
+               <img src="img/overall.png" alt="overall">
+            </div>
+            <p class="f16 font600">Overall <br> Interactiveness</p>
+          </div>
+          <div class="card_s2_div">
+            <span class="font600 f22">93.4%</span>
+            <img src="img/overall1.png" alt="overall"></div>
+         </div>
+         <div class="card_s2">
+          <div class="card_s2_div">
+            <div class="background-img-color">
+               <img src="img/projects.png" alt="projects">
+            </div>
+            <p class="f16 font600">Projects & Case <br> Studies</p>
+          </div>
+          <div class="card_s2_div">
+            <span class="font600 f22">104</span>
+            <img src="img/projects1.png" alt="projects"></div>
+         </div>
+        </div>
+      </div>
+
+
+
+
+       <div class="section3">
+        <h2 class="f16 font600">Phases Summary</h2>
+      <table>
+    <tr>
+        <td></td>
+        <td>JAVA Phase-1</td>
+        <td>C&DS Phase-2</td>
+        <td>JAVA Phase-2</td>
+    </tr>
+    
+    <tr>
+        <td><span >Assessment Count</span></td>
+        <td>20</td>
+        <td>18</td>
+        <td>22</td>
+    </tr>
+    <tr>
+        <td><span >Live Session Count</span></td>
+        <td>85%</td>
+        <td>80%</td>
+        <td>88%</td>
+    </tr>
+    <tr>
+        <td><span >Daily tests</span></td>
+        <td>15</td>
+        <td>12</td>
+        <td>18</td>
+    </tr>
+    <tr>
+        <td><span >Grand tests</span></td>
+        <td>5</td>
+        <td>4</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td><span >Assessments</span></td>
+        <td>2</td>
+        <td>2</td>
+        <td>3</td>
+    </tr>
+    
+    <tr>
+        <td></td>
+        <td><a href="trainingphasesample"><button style="cursor:pointer">View Report</button></a></td> 
+        <td><a href="trainingphasesample"><button style="cursor:pointer">View Report</button></a></td> 
+        <td><a href="trainingphasesample"><button style="cursor:pointer">View Report</button></a></td>
+    </tr>
+</table>
+
+      
+      </div>
+
+
+      <div class="section4">
+        <h2 class="f16 font600">Overall Top Students</h2>
+
+        <table>
+          <thead>
+              <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>College Registration Number</th>
+                  <th>Average Score</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Anil Kumar
+                  </td>
+                  <td>anil.kumar@example.com</td>
+                  <td>9123456789</td>
+                  <td>CRN789012</td>
+                  <td>85.4</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Suma Reddy
+                  </td>
+                  <td>suma.reddy@example.com</td>
+                  <td>8234567890</td>
+                  <td>CRN890123</td>
+                  <td>91.2</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Rajesh Varma
+                  </td>
+                  <td>rajesh.varma@example.com</td>
+                  <td>7345678901</td>
+                  <td>CRN901234</td>
+                  <td>88.7</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Swapna Goud
+                  </td>
+                  <td>swapna.goud@example.com</td>
+                  <td>6456789012</td>
+                  <td>CRN012345</td>
+                  <td>79.3</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Kiran Reddy
+                  </td>
+                  <td>kiran.reddy@example.com</td>
+                  <td>6034578654</td>
+                  <td>CRN123456</td>
+                  <td>84.6</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Priya Dasari
+                  </td>
+                  <td>priya.dasari@example.com</td>
+                  <td>8245673632</td>
+                  <td>CRN234567</td>
+                  <td>89.9</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Ravi Teja
+                  </td>
+                  <td>ravi.teja@example.com</td>
+                  <td>6302456789</td>
+                  <td>CRN345678</td>
+                  <td>83.1</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Lakshmi Prasanna
+                  </td>
+                  <td>lakshmi.prasanna@example.com</td>
+                  <td>9899923456</td>
+                  <td>CRN456789</td>
+                  <td>90.4</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Arjun Reddy
+                  </td>
+                  <td>arjun.reddy@example.com</td>
+                  <td>9812345445</td>
+                  <td>CRN567890</td>
+                  <td>87.5</td>
+              </tr>
+              <tr>
+                  <td class="name-cell">
+                      <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+                      Manasa Devi
+                  </td>
+                  <td>manasa.devi@example.com</td>
+                  <td>9834983495</td>
+                  <td>CRN678901</td>
+                  <td>92.8</td>
+              </tr>
+          </tbody>
+      </table>
+      
+      <div class="pagination" id="pagination">
+        
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="logoutModal" class="modal" style="display: none;">
+  <div class="modal-content">
+      <p class="question">Are you sure you want to logout?</p>
+      <div class="logout-div"></div>
+      <div class="modal-buttons">
+          <button id="cancelLogout">Cancel</button>
+          <button id="confirmLogout">Yes</button>
+      </div>
+  </div>
+</div>
+
+    <script>
+  const paginationContainer = document.getElementById('pagination');
+  const prevPageBtn = document.getElementById('prevPage');
+  const nextPageBtn = document.getElementById('nextPage');
+
+  let currentPage = 1;
+  const totalPages = 10; // Total number of pages
+
+  // Function to generate page links
+  function generatePageLinks() {
+      paginationContainer.innerHTML = ''; // Clear previous links
+      const startPage = Math.max(1, currentPage - 2);
+      const endPage = Math.min(totalPages, startPage + 4);
+
+      // Previous button
+      if (currentPage > 1) {
+          const prevLink = document.createElement('div');
+          prevLink.textContent = '< Previous';
+          prevLink.classList.add('pagination-item');
+          prevLink.addEventListener('click', () => {
+              currentPage--;
+              generatePageLinks();
+          });
+          paginationContainer.appendChild(prevLink);
+      }
+
+      // Page links
+      for (let i = startPage; i <= endPage; i++) {
+          const pageLink = document.createElement('div');
+          pageLink.textContent = i;
+          pageLink.classList.add('pagination-item');
+          if (i === currentPage) {
+              pageLink.classList.add('active');
+          }
+          if (i !== currentPage) {
+              // Apply color to numbered links only
+              pageLink.style.backgroundColor = '#fff';
+              pageLink.style.color = '#000';
+              
+          }
+          pageLink.addEventListener('click', () => {
+              currentPage = i;
+              generatePageLinks();
+          });
+          paginationContainer.appendChild(pageLink);
+      }
+
+      // Next button
+      if (currentPage < totalPages) {
+          const nextLink = document.createElement('div');
+          nextLink.textContent = 'Next >';
+          nextLink.classList.add('pagination-item');
+          nextLink.addEventListener('click', () => {
+              currentPage++;
+              generatePageLinks();
+          });
+          paginationContainer.appendChild(nextLink);
+      }
+  }
+
+  // Initial generation of page links
+  generatePageLinks();
+</script>
+
+  <!-----------User Details Fetching---------------------->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to get the value of a cookie by name
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+  
+      // Get the JWT token from the cookie
+      const token = getCookie('userAdminToken');
+      
+      if (token) {
+        // Decode the JWT token
+        const decoded = jwt_decode(token);
+        
+        // Display the username and role
+        document.querySelector('.userN').textContent = decoded.email;
+        document.querySelector('.userR').textContent = decoded.role;
+      } else {
+        // Handle the case where the token is not found
+        document.querySelector('.userN').textContent = 'No user logged in';
+        document.querySelector('.userR').textContent = '';
+      }
+    });
+  </script>
+  
+     <!---------Logout module----------->
+   <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutButton = document.getElementById('logoutButton');
+        const logoutModal = document.getElementById('logoutModal');
+        const modalContent = logoutModal.querySelector('.modal-content');
+        const confirmLogoutButton = modalContent.querySelector('#confirmLogout');
+        const cancelLogoutButton = modalContent.querySelector('#cancelLogout');
+  
+        logoutButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the button
+  
+            // Show the modal
+            logoutModal.style.display = 'block';
+  
+            // Add event listeners to the modal buttons
+            confirmLogoutButton.addEventListener('click', function() {
+                // If user confirms, navigate to /logout
+                window.location.href = '/logout';
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            cancelLogoutButton.addEventListener('click', function() {
+                // If user cancels, hide the modal
+                logoutModal.style.display = 'none';
+            });
+  
+            // Add event listener to the close span
+            closeSpan.addEventListener('click', function() {
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            // Add event listener to the modal itself to close when clicked outside
+            window.addEventListener('click', function(event) {
+                if (event.target === logoutModal) {
+                    logoutModal.style.display = 'none'; // Hide the modal
+                }
+            });
+        });
+    });
+  </script>
+</div>
+  </body>
+</html>
+

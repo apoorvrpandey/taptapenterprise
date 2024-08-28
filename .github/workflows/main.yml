@@ -1,0 +1,44 @@
+name: Deploy to ECS
+
+on:
+  push:
+    branches:
+      - main # Change this to the branch you want to trigger the deployment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Amazon ECR
+        id: ecr_login
+        run: |
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 339712883408.dkr.ecr.ap-south-1.amazonaws.com
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Build, tag, and push Docker image
+        run: |
+          # Define the image tag
+          IMAGE_TAG=339712883408.dkr.ecr.ap-south-1.amazonaws.com/blackbuck/taptapenterprise:latest
+
+          # Build the Docker image
+          docker build -t $IMAGE_TAG .
+
+          # Push the image to ECR
+          docker push $IMAGE_TAG
+
+      - name: Deploy to ECS
+        run: |
+          aws ecs update-service \
+            --cluster taptapdev \
+            --service taptapenterprice-service \
+            --force-new-deployment \
+            --region ap-south-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

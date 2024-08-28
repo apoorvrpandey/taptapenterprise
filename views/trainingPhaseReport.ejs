@@ -1,0 +1,2761 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/phase_analysis.css" />
+    <link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css/nav_log.css" />
+    <link rel="stylesheet" href="css/common.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <title>Phase Analysis</title>
+  </head>
+  <body>
+    <script>
+      window.userRole = "<%= user.role %>";
+    </script>
+    <script src="js/rolebase.js"></script>
+    
+    <style>
+      .nodata {
+        border: 1px solid rgba(0, 0, 0, 0.7);
+        border-radius: 10px;
+        padding: 10px;
+        position: relative;
+        text-align: center;
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.7);
+        margin: 10px;
+      }
+    </style>
+
+    <div class="supercss">
+      <div class="sidebar">
+        <a
+          class="logo"
+          style="text-align: center; align-items: center; padding: 5px"
+        >
+          <img
+            src="img/sidebar logo.png"
+            alt="Logo"
+            style="width: 58px; max-width: 70px; height: 80px"
+          />
+        </a>
+        <a href="myDashboard" class="menu-item" id="dashboard-link">
+          <img
+            src="img/dash_white.png"
+            alt="dash"
+            style="max-width: 22px; height: 22px"
+          /><span style="color: white">Dashboard</span>
+        </a>
+        <a href="employabilityReport" class="menu-item">
+          <img
+            src="img/emp.png"
+            alt="dash"
+            style="max-width: 18px; height: 20px"
+          /><span>Employability</span>
+        </a>
+        <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+          <img
+            alt="Assessment icon"
+            src="img/assessment.png"
+            style="max-width: 19px; height: 19.5px"
+          />
+          <span>Assessments</span></a
+        >
+
+        <a href="jobsDashboard" class="menu-item">
+          <img
+            src="img/jobs.png"
+            alt="jobs"
+            style="max-width: 20px; height: 21px"
+          /><span>Jobs</span>
+        </a>
+        <a
+          href="https://admin.hackathon.blackbucks.me/createAndManageCourse/"
+          class="menu-item"
+        >
+          <img
+            alt="course icon"
+            src="img/course.png"
+            style="max-width: 19px; height: 20px"
+          />
+          <span>Course</span></a
+        >
+        <a
+          href="https://admin.hackathon.blackbucks.me/lessonPlan/"
+          class="menu-item"
+        >
+          <img
+            alt="lessonplan icon"
+            src="img/lessonplan.png"
+            style="max-width: 23px; height: 18px"
+          />
+          <span>Lesson Plan</span></a
+        >
+
+        <a
+          href="trainingsDashboard"
+          class="menu-item active"
+          style="background-color: #88eb4c"
+        >
+          <img
+            src="img/trainings_black.png"
+            alt="trainings"
+            style="max-width: 27px; height: 21px"
+          /><span style="color: black; font-weight: bold">Trainings</span>
+        </a>
+        <a href="internshipsDashboard" class="menu-item">
+          <img
+            src="img/internship_whiteicon.png"
+            alt="manage"
+            style="width: 20px; height: auto"
+            style="width: 20px; height: auto"
+          /><span>Internships</span>
+        </a>
+        <a
+          href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/"
+          class="menu-item"
+        >
+          <img
+            alt="vpl icon"
+            src="img/vpl.png"
+            style="max-width: 19px; height: 17px"
+          />
+          <span>VPL</span></a
+        >
+      </div>
+
+      <div class="css">
+        <div class="css0">
+          <div class="navbar">
+            <div class="nav1"></div>
+            <div class="nav2">
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageStudents/"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Manage Users"
+                    src="img/newManageUsers.svg"
+                    class="chakra-image css-0"
+                  />
+                </div>
+              </a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/tpCalendar/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <img
+                    alt="Calendar"
+                    src="img/newCalenderNavIcon.svg"
+                    class="chakra-image css-0"
+                  /></div
+              ></a>
+              <a
+                href="https://admin.hackathon.blackbucks.me/manageNotification/"
+                style="margin-left: 1rem"
+              >
+                <div class="chakra-stack css-nr8aow">
+                  <div class="css-1edim3w">
+                    <img
+                      alt="Notifications"
+                      src="img/newNotificationIcon.svg"
+                      class="chakra-image css-6su6fj"
+                    />
+                    <div class="css-1bac456">
+                      <div class="css-1rkwksi">1</div>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <button type="button" class="navbtn" id="userButton">
+                <span class="user-details">
+                  <div class="user">
+                    <span class="user-profile">
+                      <i
+                        class="fa-solid fa-circle-user"
+                        style="font-size: 30px"
+                      ></i>
+                    </span>
+                    <div class="username">
+                      <p class="userN"></p>
+                      <p class="userR"></p>
+                    </div>
+                  </div>
+                </span>
+                <span class="chakra-button__icon css-1hzyiq5">
+                  <svg
+                    viewBox="0 0 16 16"
+                    style="height: 12px !important; width: 12px !important"
+                    aria-hidden="true"
+                    focusable="false"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg"
+                    color="black"
+                    class="css-1eamic5 ex0cdmw0"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
+                    ></path>
+                  </svg>
+                </span>
+              </button>
+
+              <button
+                type="button"
+                class="logoutbtn"
+                id="logoutButton"
+                style="display: none"
+              >
+                Log out
+              </button>
+            </div>
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const userButton = document.getElementById("userButton");
+                const logoutButton = document.getElementById("logoutButton");
+
+                userButton.addEventListener("click", () => {
+                  if (logoutButton.style.display === "none") {
+                    logoutButton.style.display = "flex";
+                    logoutButton.style.top = `${
+                      userButton.offsetTop + userButton.offsetHeight
+                    }px`;
+                    logoutButton.style.left = `${userButton.offsetLeft}px`;
+                  } else {
+                    logoutButton.style.display = "none";
+                  }
+                });
+
+                logoutButton.addEventListener("click", () => {
+                  // Add your logout logic here
+                  console.log("User logged out");
+                });
+              });
+            </script>
+          </div>
+        </div>
+        <div class="css1">
+          <div class="main-container">
+            <div class="roww marginr">
+              <img
+                src="img/traininggrey.png"
+                alt="internship icon"
+                style="width: 14px; height: 14px; margin-right: 5px"
+              />
+              <p class="grey f14 marginr">
+                Trainings
+                <i class="fa-solid fa-chevron-right f10 marginl grey"></i>
+              </p>
+              <p class="f14"><span id="phase-title"></span> Overview</p>
+            </div>
+
+            <div class="topnav">
+              <a
+                href="#Overview"
+                class="active nav-item"
+                onclick="smoothScroll('Overview')"
+              >
+                <img src="img/fsdtab.png" alt="fsdoverview" />
+                <span style="padding-left: 5px">Trainings Overview</span>
+              </a>
+              <a
+                href="#candidates"
+                class="nav-item"
+                onclick="smoothScroll('candidates')"
+              >
+                <img src="img/candidates.png" alt="" />
+                <span style="padding-left: 5px">Enrolled Candidates</span>
+              </a>
+              <a
+                href="#Student-Activity"
+                class="nav-item"
+                onclick="smoothScroll('Student-Activity')"
+              >
+                <img
+                  src="img/activity.png"
+                  alt="activity"
+                  style="width: 15px; height: 15px"
+                />
+                <span style="padding-left: 5px">Student Activities</span>
+              </a>
+              <!-- <a href="#projects" class="nav-item" onclick="smoothScroll('projects')">
+          <img
+            src="img/activity.png"
+            alt="activity"
+            style="width: 15px; height: 15px"
+          />
+          <span style="padding-left: 5px">Projects</span>
+        </a> -->
+              <a
+                href="#student-attendance"
+                class="nav-item"
+                onclick="smoothScroll('student-attendance')"
+              >
+                <img
+                  src="img/activity.png"
+                  alt="activity"
+                  style="width: 15px; height: 15px"
+                />
+                <span style="padding-left: 5px">Student Attendance</span>
+              </a>
+            </div>
+
+            <div
+              class="overview section post"
+              id="Overview"
+              style="border: none; padding: 0"
+            >
+              <h3 class="f22 font600"><span id="title"></span> Overview</h3>
+              <div class="suboverview">
+                <div class="lefthalf">
+                  <div class="row">
+                    <div
+                      class="quarter gradient-background active"
+                      onclick="showRightHalf('live-sessions' , this)"
+                    >
+                      <div>
+                        <p>Live Sessions</p>
+                        <span id="live-session-count">0</span>
+                      </div>
+
+                      <div class="circle active">
+                        <img src="img/ls.png" alt="live sessions" />
+                      </div>
+                    </div>
+                    <div
+                      class="quarter"
+                      onclick="showRightHalf('assessments', this)"
+                    >
+                      <div>
+                        <p>Assessments</p>
+                        <span id="a-assessments">0</span>
+                      </div>
+                      <div class="circle">
+                        <img src="img/fsd-options.png" alt="Assessments" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div
+                      class="quarter"
+                      onclick="showRightHalf('employability-test', this)"
+                    >
+                      <div>
+                        <p>Employability Tests</p>
+                        <span id="employability_count">0</span>
+                      </div>
+                      <div class="circle">
+                        <img src="img/fsd-options.png" alt="tests" />
+                      </div>
+                    </div>
+                    <div class="quarter disabled">
+                      <div>
+                        <p>Projects</p>
+                        <span>0</span>
+                      </div>
+                      <div class="circle">
+                        <img src="img/fsd-options.png" alt="projects" />
+                      </div>
+                      <div class="overlay">Not Available Right Now</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="gap"></div>
+                <div class="righthalf">
+                  <!------------------overview-Livesessions------------------>
+                  <div class="righthalf-part active" id="live-sessions">
+                    <h4 class="f20 font600">Live Sessions</h4>
+                    <hr />
+                    <div class="ls-options">
+                      <div class="ls-table">
+                        <table class="otable">
+                          <thead>
+                            <tr>
+                              <th>Overview</th>
+                              <th>Live Session %</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <span class="smallcircle sc3"></span>
+                                Absentees
+                              </td>
+                              <td id="absentees">0</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <span class="smallcircle sc4"></span>
+                                Hours Covered
+                              </td>
+                              <td id="hours-covered">0</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <span class="smallcircle sc1"></span>
+                                Overall Feedback
+                              </td>
+                              <td id="overall-feedback">0</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <span class="smallcircle sc2"></span>
+                                Session Interactiveness
+                              </td>
+                              <td id="session-interactiveness">0</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-----------------Overview- Assessments----------->
+                  <div class="righthalf-part" id="assessments">
+                    <h4 class="f20 font600">Assessments</h4>
+                    <hr />
+                    <div class="a-options">
+                      <div class="a-table">
+                        <table class="assessment-table">
+                          <thead>
+                            <tr>
+                              <th>Overall</th>
+                              <th>Assessments</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>
+                                <span class="smallcircle sc3"></span>
+                                Daily Test
+                              </td>
+                              <td id="a-dailyTests">0</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <span class="smallcircle sc1"></span>
+                                Weekly Test
+                              </td>
+                              <td id="a-assignments">0</td>
+                            </tr>
+
+                            <tr>
+                              <td>
+                                <span class="smallcircle sc4"></span>
+                                Grand Test
+                              </td>
+                              <td id="a-grandTests">0</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="a-graph">
+                        <canvas id="myChart-assessment" height="auto"></canvas>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!----------------Overview-Employabitity test-------------->
+                  <div class="righthalf-part" id="employability-test">
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                      "
+                    >
+                      <h4 class="f20 font600">Employability Test</h4>
+                    </div>
+                    <div class="oemp-graph" style="height: 160px">
+                      <canvas id="myChart-employability" height="200"></canvas>
+                      <p id="chart-error-message" style="display: none">
+                        No data available
+                      </p>
+                    </div>
+                  </div>
+
+                  <!------------------Overview- Projects---------------->
+                  <div class="righthalf-part" id="projectss">
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-around;
+                      "
+                    >
+                      <h4 class="f20 font600">Projects</h4>
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: row;
+                          align-items: center;
+                        "
+                      >
+                        <div class="smallcircle sc2"></div>
+                        <p>Enroll Student</p>
+                      </div>
+
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: row;
+                          align-items: center;
+                        "
+                      >
+                        <div class="smallcircle sc3"></div>
+                        <p>Available Project</p>
+                      </div>
+                    </div>
+
+                    <hr />
+                    <table class="oproj-graph">
+                      <tr>
+                        <td>
+                          <section class="total-section">
+                            <!-- Use Font Awesome version 5 user icon -->
+                            <i class="fas fa-user"></i>
+                            <svg>
+                              <circle
+                                id="track"
+                                cx="40"
+                                cy="40"
+                                r="35"
+                              ></circle>
+                              <!-- Adjusted circle radius -->
+                              <circle
+                                id="progress"
+                                cx="40"
+                                cy="40"
+                                r="35"
+                              ></circle>
+                              <!-- Adjusted circle radius -->
+                            </svg>
+                            <span id="percentage" style="display: none"></span>
+                          </section>
+                        </td>
+                        <td style="margin-left: 40px; padding-left: 40px">
+                          <div style="display: flex; flex-direction: column">
+                            <span style="margin: 0; padding: 0">1,235</span>
+                            <p style="margin-top: 4px; padding: 0">
+                              How Many Enroll
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <section class="project-section">
+                            <!-- Use Font Awesome version 5 user icon -->
+                            <i class="fas fa-tag"></i>
+                            <svg>
+                              <circle
+                                id="track"
+                                cx="40"
+                                cy="40"
+                                r="35"
+                              ></circle>
+                              <!-- Adjusted circle radius -->
+                              <circle
+                                id="progress"
+                                cx="40"
+                                cy="40"
+                                r="35"
+                              ></circle>
+                              <!-- Adjusted circle radius -->
+                            </svg>
+                            <span id="percentage" style="display: none"></span>
+                          </section>
+                        </td>
+                        <td style="margin-left: 40px; padding-left: 40px">
+                          <div style="display: flex; flex-direction: column">
+                            <span style="margin: 0; padding: 0">456</span>
+                            <p style="margin-top: 4px; padding: 0">
+                              Available Projects <br />Student Yet to Choose
+                              Project
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <script>
+                      function updateProgress(percentage) {
+                        const progressCircle =
+                          document.getElementById("progress");
+                        const circumference =
+                          2 *
+                          Math.PI *
+                          parseFloat(progressCircle.getAttribute("r"));
+                        const offset = circumference * (1 - percentage / 100);
+                        progressCircle.style.strokeDashoffset = offset;
+                        document.getElementById(
+                          "percentage"
+                        ).textContent = `${percentage}%`;
+                      }
+
+                      // Example: Update progress to 50%
+                      updateProgress(465); // Call this function with your desired percentage value
+                    </script>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!--------------------------Enrolled Candidates Section--------------------------------->
+            <div class="enrolled-candidates post" id="candidates">
+              <h3 class="f22 font600">Enrolled Candidates</h3>
+              <div class="section">
+                <li class="table-header">
+                  <div class="col col-1">Basic Info</div>
+                  <div class="col col-2">Batch Name</div>
+                  <div class="col col-3">Employability Band</div>
+                  <div class="col col-4">Employability Score</div>
+                  <div class="col col-5">Enrolled Date</div>
+                </li>
+                <ul class="responsive-table" id="candidates-table"></ul>
+
+                <div class="pagination" id="pagination-ctrl">
+                  <button id="prevPagee" onclick="goToPrevPage()">
+                    Previous
+                  </button>
+                  <div id="pageNos"></div>
+                  <button id="nextPagee" onclick="goToNextPage()">Next</button>
+                </div>
+              </div>
+            </div>
+
+            <!------------------------Student activity section-------------------------------------->
+            <div class="student-activity section post" id="Student-Activity">
+              <h3 class="f22 font600">Student Activity</h3>
+
+              <div
+                class="sa-topnav"
+                style="margin-top: 20px; margin-bottom: 10px"
+              >
+                <div class="sa-links-container">
+                  <a
+                    href="#dailytest"
+                    class="active"
+                    onclick="toggleSection('daily-test', this)"
+                  >
+                    <img
+                      src="img/fsdtab.png"
+                      alt="daily test"
+                      width="18px"
+                      height="16px"
+                    />
+                    <span>Daily Test</span>
+                  </a>
+                  <a
+                    href="#grandtest"
+                    onclick="toggleSection('grand-test', this)"
+                  >
+                    <img
+                      src="img/candidates.png"
+                      alt="grand test"
+                      style="width: 16px; height: 16px; padding-left: 5px"
+                    />
+                    <span>Grand Test</span>
+                  </a>
+                  <a
+                    href="#weektest"
+                    onclick="toggleSection('weekly-test', this)"
+                  >
+                    <img
+                      src="img/activity.png"
+                      alt="activity"
+                      style="width: 15px; height: 15px"
+                    />
+                    <span>Weekly Test</span>
+                  </a>
+
+                  <a
+                    href="#emptest"
+                    onclick="toggleSection('Employability-test', this)"
+                  >
+                    <img
+                      src="img/activity.png"
+                      alt="activity"
+                      style="width: 15px; height: 15px"
+                    />
+                    <span>Employability Test</span>
+                  </a>
+
+                  <a
+                    href="#absenteeslist"
+                    onclick="toggleSection('Absentees-List', this)"
+                  >
+                    <img
+                      src="img/activity.png"
+                      alt="activity"
+                      style="width: 15px; height: 15px"
+                    />
+                    <span>Test Reports</span>
+                  </a>
+                </div>
+              </div>
+              <div class="stu-act active" id="daily-test">
+                <div style="width: 100%; border-radius: 10px; overflow: hidden">
+                  <div
+                    style="width: 100%; display: flex; justify-content: center"
+                  >
+                    <div id="daily-result-message" class="nodata"></div>
+                  </div>
+                  <div class="dt-tablecontainer2">
+                    <table>
+                      <thead class="dthead" id="dailytesttable-head"></thead>
+                      <tbody id="dailytesttable-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="pagination" id="pagination-controls">
+                  <button id="prevPage" onclick="prevPage()">Previous</button>
+                  <div id="pageNumbers"></div>
+                  <button id="nextPage" onclick="nextPage()">Next</button>
+                </div>
+              </div>
+
+              <div class="stu-act" id="grand-test">
+                <div style="width: 100%; border-radius: 10px; overflow: hidden">
+                  <div
+                    style="width: 100%; display: flex; justify-content: center"
+                  >
+                    <div id="result-message" class="nodata"></div>
+                  </div>
+                  <div class="dt-tablecontainer2">
+                    <table>
+                      <thead class="dthead" id="grandtesttable-head"></thead>
+                      <tbody id="grandtesttable-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="pagination" id="grand-pagination-controls">
+                  <button id="grandprevPage" onclick="grandprevPage()">
+                    Previous
+                  </button>
+                  <div id="grandpageNumbers"></div>
+                  <button id="grandnextPage" onclick="grandnextPage()">
+                    Next
+                  </button>
+                </div>
+              </div>
+
+              <div class="stu-act" id="weekly-test">
+                <div style="width: 100%; border-radius: 10px; overflow: hidden">
+                  <div
+                    style="width: 100%; display: flex; justify-content: center"
+                  >
+                    <div id="weekly-result-message" class="nodata"></div>
+                  </div>
+                  <div class="dt-tablecontainer2">
+                    <table>
+                      <thead class="dthead" id="weeklytesttable-head"></thead>
+                      <tbody id="weeklytesttable-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="pagination" id="weekly-pagination-controls">
+                  <button id="weeklyprevPage" onclick="weeklyprevPage()">
+                    Previous
+                  </button>
+                  <div id="weeklypageNumbers"></div>
+                  <button id="weeklynextPage" onclick="weeklynextPage()">
+                    Next
+                  </button>
+                </div>
+              </div>
+
+              <div class="stu-act" id="Employability-test">
+                <div style="width: 100%; border-radius: 10px; overflow: hidden">
+                  <div
+                    style="width: 100%; display: flex; justify-content: center"
+                  >
+                    <div id="emp-result-message" class="nodata"></div>
+                  </div>
+                  <div class="dt-tablecontainer2">
+                    <table>
+                      <thead class="dthead" id="emptesttable-head"></thead>
+                      <tbody id="emptesttable-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="pagination" id="emp-pagination-controls">
+                  <button id="empprevPage" onclick="empprevPage()">
+                    Previous
+                  </button>
+                  <div id="emppageNumbers"></div>
+                  <button id="empnextPage" onclick="empnextPage()">Next</button>
+                </div>
+              </div>
+
+              <div class="stu-act" id="Absentees-List">
+                <div
+                  style="width: 100%; display: flex; justify-content: center"
+                >
+                  <div id="testreport-result-message"></div>
+                </div>
+                <div class="inactive-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Event Title</th>
+                        <th>Total Students</th>
+                        <th>Present Students</th>
+                        <th>Absent Students</th>
+                        <th>Attendance Rate (%)</th>
+                        <th>Average Score</th>
+                        <th>Absentees Report</th>
+                      </tr>
+                    </thead>
+                    <tbody id="event-data">
+                      <!-- Event data will be inserted here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!---------------------Projectss-->
+            <!-- <div class="projects disabled post" id="projects">
+        <h3 class="f22 font600">Projects</h3>
+        <div class="pro-sections section">
+          <div class="project1">
+           <table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>College Reg.No</th>
+            <th>Email</th>
+            <th>Project Chosen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Ravi Kumar
+            </td>
+            <td>CRN001</td>
+            <td>ravi.kumar@gmail.com</td>
+            <td>Java Web Application</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Arun Prasad
+            </td>
+            <td>CRN002</td>
+            <td>arun.prasad@gmail.com</td>
+            <td>Java E-commerce Platform</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Kavya Nair
+            </td>
+            <td>CRN003</td>
+            <td>kavya.nair@gmail.com</td>
+            <td>Java Inventory Management</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Lakshmi Reddy
+            </td>
+            <td>CRN004</td>
+            <td>lakshmi.reddy@gmail.com</td>
+            <td>Java Banking System</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Nithya Menon
+            </td>
+            <td>CRN005</td>
+            <td>nithya.menon@gmail.com</td>
+            <td>Java Online Booking System</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Sanjay Rao
+            </td>
+            <td>CRN006</td>
+            <td>sanjay.rao@gmail.com</td>
+            <td>Java Social Media App</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Meena Iyer
+            </td>
+            <td>CRN007</td>
+            <td>meena.iyer@gmail.com</td>
+            <td>Java Chat Application</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Vikram Reddy
+            </td>
+            <td>CRN008</td>
+            <td>vikram.reddy@gmail.com</td>
+            <td>Java Health Management System</td>
+        </tr>
+        <tr>
+            <td class="name-cell">
+                <div class="user-icon">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                Priya Rajan
+            </td>
+            <td>CRN009</td>
+            <td>priya.rajan@gmail.com</td>
+            <td>Java Hotel Reservation System</td>
+        </tr>
+     
+    </tbody>
+</table> 
+ </div>
+          <div class="project2">
+            <h3>Project Choosen</h3>
+            <div style="display: flex; flex-direction: row;">
+            <div style="display: flex; flex-direction: column">
+              <div style="width: 350px; height: 250px;">
+              <canvas id="myChart4" width="100" height="100"></canvas></div>
+               <script>
+              document.addEventListener('DOMContentLoaded', function () {
+      const projectCtx = document.getElementById('myChart4').getContext('2d');
+      
+      // Gauge Chart Text plugin block
+      const gaugeChartText = {
+        id: 'gaugeChartText',
+        afterDatasetsDraw(chart, args, pluginOptions) {
+          const { ctx, chartArea: { top, bottom, left, right, width, height } } = chart;
+
+          ctx.save();
+          const xcoor = chart.getDatasetMeta(0).data[0].x;
+          const ycoor = chart.getDatasetMeta(0).data[0].y;
+          const total = chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+
+          ctx.fillStyle = '#FFF3E1';
+          ctx.beginPath();
+          ctx.arc(xcoor, ycoor, 75, 0, 2 * Math.PI);
+          ctx.fill();
+
+
+          ctx.fillStyle = '#000'; // Text color
+          ctx.font = '22px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(total, xcoor, ycoor + 15);
+
+          ctx.font = '22px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('Java', xcoor, ycoor - 15);
+          
+          ctx.restore();
+        }
+      };
+
+      new Chart(projectCtx, {
+        type: 'doughnut',
+        data: {
+          datasets: [{
+            label: '# of Votes',
+            data: [20, 12, 4, 4],
+            borderWidth: 1,
+            cutout: '85%',
+            borderRadius: 20,
+            offset: 1,
+            circumference: 270,
+            rotation: 225,
+            backgroundColor: [
+              '#C084FC',
+              '#FCC573',
+              '#C5E866',
+              '#6BD096'
+            ]
+          }]
+        },
+        options: {
+          aspectRatio: 1.5,
+        },
+        plugins: [gaugeChartText]
+      });
+    });
+               </script>
+
+           
+
+              <p style="line-height: 25px">
+                <strong>40%</strong> most of the Students choose the java <br />
+                for their project
+              </p>
+            </div>
+            <div>
+              <div class="roww"> 
+                <div class="smallcircle" style="background-color: #C084FC;"></div>
+                <p>Java</p>
+              </div>
+              <div class="roww">
+                <div class="smallcircle" style="background-color: #FCC573;"></div>
+                <p>Python</p>
+              </div>
+              <div class="roww">
+                <div class="smallcircle" style="background-color: #C5E866;"></div>
+                <p>C Language</p>
+              </div>
+              <div class="roww">
+                <div class="smallcircle" style="background-color: #6BD096;"></div>
+                <p>C++</p>
+              </div>
+            </div>
+          </div></div>
+        </div>
+        
+      </div>-->
+
+            <!---------------------Attendance------------->
+            <div class="student-attendance post" id="student-attendance">
+              <h3 class="f22 font600">Student Attendance</h3>
+              <div class="section">
+                <div
+                  class="sattendance-topnav"
+                  style="margin-top: 20px; margin-bottom: 10px"
+                >
+                  <div class="sattendance-links-container">
+                    <a
+                      href="#summary"
+                      class="active"
+                      onclick="toggleAttendanceSection('sattendance-summary', this)"
+                    >
+                      <img
+                        src="img/fsdtab.png"
+                        alt="summary"
+                        width="18px"
+                        height="16px"
+                      />
+                      <span>Summary</span>
+                    </a>
+                    <a
+                      href="#attendance-report"
+                      onclick="toggleAttendanceSection('sattendance-report', this)"
+                    >
+                      <img
+                        src="img/candidates.png"
+                        alt="report"
+                        style="width: 16px; height: 16px; padding-left: 5px"
+                      />
+                      <span>Attendance Report</span>
+                    </a>
+                    <a
+                      href="#inactive-students"
+                      onclick="toggleAttendanceSection('sattendance-inactive' , this)"
+                    >
+                      <img
+                        src="img/activity.png"
+                        alt="activity"
+                        style="width: 15px; height: 15px"
+                      />
+                      <span>Inactive Students</span>
+                    </a>
+
+                    <a
+                      href="#inactive-students-report"
+                      onclick="toggleAttendanceSection('sattendance-inactive-download' , this)"
+                    >
+                      <img
+                        src="img/activity.png"
+                        alt="activity"
+                        style="width: 15px; height: 15px"
+                      />
+                      <span>Students Report download</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="sattendance active" id="sattendance-summary">
+                  <div class="stuattend">
+                    <div class="stuattend-left-card1">
+                      <canvas
+                        id="stuattend-dailyTestChart"
+                        width="200"
+                        height="200"
+                      ></canvas>
+                      <div
+                        style="
+                          display: flex;
+                          flex-direction: row;
+                          justify-content: space-between;
+                          padding: 0 20px;
+                        "
+                      >
+                        <div class="stuattend-legend">
+                          <span class="stuattend-legend-color"></span>
+                          Events
+                        </div>
+                      </div>
+                    </div>
+                    <div class="stuattend-right-card1">
+                      <h3 style="padding-top: 20px; text-align: center">
+                        Summary Data Table
+                      </h3>
+                      <div id="stu_attend_result"></div>
+                      <div class="stuattend-tablecontainer4"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sattendance" id="sattendance-report">
+                  <div class="attendreportcontainer">
+                    <div
+                      id="no-data-message-report"
+                      style="display: none; text-align: center"
+                    >
+                      No data available
+                    </div>
+                    <table>
+                      <tbody class="attendreporttable"></tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="sattendance" id="sattendance-inactive">
+                  <div id="no-data-message" style="text-align: center"></div>
+                  <div class="inactive-table">
+                    <table>
+                      <thead id="inactive-table-header">
+                        <tr>
+                          <th>Name</th>
+                          <th>College Roll Number</th>
+                          <th>Phone</th>
+                          <th>Response</th>
+                        </tr>
+                      </thead>
+                      <tbody id="inactive-table-body"></tbody>
+                    </table>
+                  </div>
+                  <div id="pagination-container"></div>
+                </div>
+
+                <div class="sattendance" id="sattendance-inactive-download">
+                  <div id="event-download-result" style="display: none"></div>
+                  <div class="inactive-table">
+                    <table id="attendance-table">
+                      <thead>
+                        <tr>
+                          <th>Event Title</th>
+                          <th>Total Students</th>
+                          <th>Present Students</th>
+                          <th>Absent Students</th>
+                          <th>Hours Covered</th>
+                          <th>Attendance Rate (%)</th>
+                          <th>Average Feedback</th>
+                          <th>Interactiveness (%)</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="attendance-data">
+                        <!-- Event data will be inserted here by JavaScript -->
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="logoutModal" class="modal" style="display: none">
+            <div class="modal-content">
+              <p class="question">Are you sure you want to logout?</p>
+              <div class="logout-div"></div>
+              <div class="modal-buttons">
+                <button id="cancelLogout">Cancel</button>
+                <button id="confirmLogout">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let phaseId;
+
+      async function fetchPhaseDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        phaseId = urlParams.get("phase_id");
+
+        if (!phaseId) {
+          document.getElementById("phase-title").textContent =
+            "Invalid phase ID";
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `/api/training_phase_analysis/phase_details/${phaseId}`
+          );
+          if (response.status !== 200) {
+            document.getElementById("phase-title").textContent =
+              "Error fetching phase details";
+            return;
+          }
+
+          const phase = await response.json();
+          renderPhaseDetails(phase);
+        } catch (error) {
+          console.error("Error fetching phase details:", error);
+          document.getElementById("phase-title").textContent =
+            "Error fetching phase details";
+        }
+        fetchLiveSessionTopData(phaseId);
+        // Call the second fetch with phaseId
+        fetchEnrolledStudents(phaseId);
+        fetchEmployabilityGraphData(phaseId);
+        // Call the function with the phase ID
+        fetchAttendanceGraphData(phaseId);
+        fetchData(phaseId);
+        fetchAttendanceData(phaseId);
+        fetchDailyTestData(phaseId);
+        fetchAttendanceDataAndUpdateChart(phaseId);
+        fetchGrandTestData(phaseId);
+        fetchWeeklyTestData(phaseId);
+        loadEmployabilityStudentsData(phaseId, 1, 10);
+        // Call the function to fetch inactive students
+        fetchInactiveStudents(phaseId);
+      }
+
+      function renderPhaseDetails(phase) {
+        document.getElementById("phase-title").textContent = phase.title;
+        document.getElementById("title").textContent = phase.title;
+      }
+
+      function fetchLiveSessionTopData(phaseId) {
+        fetch(`/api/training_phase_analysis/live_sessions_topdata/${phaseId}`)
+          .then((response) => response.json())
+          .then((data) => {
+            // Update the UI with the fetched data
+            document.getElementById("live-session-count").textContent =
+              data.number_of_live_sessions;
+            document.getElementById(
+              "overall-feedback"
+            ).textContent = `${data.average_feedback} / 5`;
+            document.getElementById(
+              "session-interactiveness"
+            ).textContent = `${data.avg_interactiveness_percentage} / 100`;
+            document.getElementById("absentees").textContent =
+              data.absent_students;
+            document.getElementById("hours-covered").textContent =
+              data.total_hours;
+          })
+          .catch((error) => {
+            console.error("Error fetching live session top data:", error);
+          });
+      }
+
+      function fetchAttendanceGraphData(phaseId) {
+        fetch(
+          `/api/training_phase_analysis/assessment_graph_details/${phaseId}`
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            // Ensure the values are properly parsed as integers
+            const dailyTests = Number(data.daily_tests) || 0;
+            const assignments = Number(data.assignments) || 0;
+            const grandTests = Number(data.grand_tests) || 0;
+
+            document.getElementById("a-dailyTests").textContent = dailyTests;
+            document.getElementById("a-assignments").textContent = assignments;
+            document.getElementById("a-grandTests").textContent = grandTests;
+            document.getElementById("a-assessments").textContent =
+              data.assessment_count;
+            const assessmentLabels = [
+              "Daily Test",
+              "Weekly Test",
+              "Grand Test",
+            ];
+            const assessmentData = [dailyTests, assignments, grandTests];
+
+            // Update the chart with the new data
+            const assessmentChart = new Chart(
+              document.getElementById("myChart-assessment").getContext("2d"),
+              {
+                type: "doughnut",
+                data: {
+                  labels: assessmentLabels,
+                  datasets: [
+                    {
+                      data: assessmentData,
+                      backgroundColor: ["#FB923C", "#C084FC", "#CCF6A4"],
+                      borderWidth: 1,
+                    },
+                  ],
+                },
+                options: {
+                  cutout: "70%", // Adjust the size of the center hole
+                  plugins: {
+                    legend: {
+                      display: false,
+                    },
+                  },
+                  responsive: true,
+                  maintainAspectRatio: false,
+                },
+                plugins: [
+                  {
+                    id: "labelInsidePlugin",
+                    afterDatasetsDraw(chart) {
+                      const {
+                        ctx,
+                        chartArea: { width, height },
+                      } = chart;
+                      const centerX = width / 2;
+                      const centerY = height / 2;
+                      const totalValue = assessmentData.reduce(
+                        (total, value) => total + value,
+                        0
+                      );
+                      ctx.save();
+                      ctx.textAlign = "center";
+                      ctx.textBaseline = "iddle";
+                      ctx.font = "bold 16px Arial";
+                      ctx.fillStyle = "#000";
+                      ctx.fillText(`Total: ${totalValue}`, centerX, centerY);
+                      ctx.restore();
+                    },
+                  },
+                ],
+              }
+            );
+          })
+          .catch((error) => {
+            console.error("Error fetching assessment graph details:", error);
+          });
+      }
+
+      //overview- emp
+      let employability_labels = [];
+      let employability_data = [];
+      let emp_data2 = [];
+
+      const employability_color = "#2563EB";
+      const employability_colors = "#FB923C";
+
+      const employability_ctx = document
+        .getElementById("myChart-employability")
+        .getContext("2d");
+
+      function updateChart() {
+        if (employability_labels.length === 0) {
+          // No data available, hide canvas, show error message
+          document.getElementById("myChart-employability").style.display =
+            "none";
+          document.getElementById("chart-error-message").style.display =
+            "block";
+        } else {
+          // Data available, show canvas, hide error message
+          document.getElementById("myChart-employability").style.display =
+            "block";
+          document.getElementById("chart-error-message").style.display = "none";
+
+          const employability_myChart = new Chart(employability_ctx, {
+            type: "bar",
+            data: {
+              labels: employability_labels,
+              datasets: [
+                {
+                  label: "Average Emp Test",
+                  data: employability_data,
+                  backgroundColor: employability_color,
+                  borderRadius: Number.MAX_VALUE,
+                  borderWidth: 0,
+                  borderSkipped: false,
+                  barThickness: 15,
+                },
+                {
+                  label: "Students Attempted",
+                  data: emp_data2,
+                  backgroundColor: employability_colors,
+                  borderRadius: Number.MAX_VALUE,
+                  borderWidth: 0,
+                  borderSkipped: false,
+                  barThickness: 15,
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  ticks: {
+                    beginAtZero: true,
+                    stepSize: 100, // Step size for y-axis
+                    max: 400, // Maximum value for y-axis
+                    // Hide y-axis labels
+                  },
+                  grid: {
+                    display: true,
+                  },
+                },
+                x: {
+                  barPercentage: 0.5, // Adjust the width of the bars
+                  categoryPercentage: 1.0, // Adjust the space between the bars
+                  grid: {
+                    display: false,
+                  },
+                },
+              },
+              plugins: {
+                legend: {
+                  display: true,
+                  position: "top",
+                  clickable: false,
+                  labels: {
+                    color: "rgba(0,0,0,0.7)",
+                    padding: 15,
+                    usePointStyle: true,
+                    pointStyle: "rectRounded",
+                  },
+                },
+                tooltip: {
+                  enabled: false,
+                },
+              },
+              interaction: {
+                mode: "nearest",
+                intersect: false,
+                enabled: false,
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+            },
+          });
+        }
+      }
+
+      updateChart();
+
+      async function fetchEmployabilityGraphData(phaseId) {
+        const apiUrl = `api/training_phase_analysis/employability_graph_details/${phaseId}`;
+
+        try {
+          const response = await fetch(apiUrl);
+          if (response.status !== 200) {
+            console.error("Error fetching employability graph data");
+            return;
+          }
+
+          const data = await response.json();
+          employability_labels = data.map((item) => item.title);
+          employability_data = data.map(
+            (item) => item.average_100_equivalent_score
+          );
+          emp_data2 = data.map((item) => item.students_attempted);
+
+          // Update the chart with the new data
+          employability_myChart.data.labels = employability_labels;
+          employability_myChart.data.datasets[0].data = employability_data;
+          employability_myChart.data.datasets[1].data = emp_data2;
+          employability_myChart.update();
+
+          const testCount = data.length;
+          document.getElementById("employability_count").textContent =
+            testCount;
+        } catch (error) {
+          console.error("Error fetching employability graph data:", error);
+        }
+      }
+
+      let totalPages;
+      let current = 1;
+      const pageSize = 10;
+      let data = [];
+
+      function fetchEnrolledStudents(phaseId) {
+        fetch(`/api/training_phase_analysis/enrolled_students/${phaseId}`)
+          .then((response) => response.json())
+          .then((fetchedData) => {
+            data = fetchedData;
+            totalPages = Math.ceil(data.length / pageSize);
+            current = 1;
+
+            updateEnrolledPaginationControls();
+            renderTable();
+          })
+          .catch((error) => {
+            console.error("Error fetching enrolled students:", error);
+          });
+      }
+
+      function goToPrevPage() {
+        if (current > 1) {
+          current--;
+          updateEnrolledPaginationControls();
+          renderTable();
+        }
+      }
+
+      function goToNextPage() {
+        if (current < totalPages) {
+          current++;
+          updateEnrolledPaginationControls();
+          renderTable();
+        }
+      }
+
+      function updateEnrolledPaginationControls() {
+        const prevPageButton = document.getElementById("prevPagee");
+        const nextPageButton = document.getElementById("nextPagee");
+        const pageNumbersDiv = document.getElementById("pageNos");
+
+        prevPageButton.disabled = current === 1;
+        nextPageButton.disabled = current === totalPages;
+
+        pageNumbersDiv.innerHTML = "";
+
+        let startPage = Math.max(1, current - 3);
+        let endPage = Math.min(totalPages, current + 3);
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let page = startPage; page <= endPage; page++) {
+          const pageButton = document.createElement("span");
+          pageButton.textContent = page;
+          pageButton.className = "page-btn";
+          if (page === current) {
+            pageButton.classList.add("active");
+          }
+          pageButton.addEventListener("click", () => {
+            current = page;
+            updateEnrolledPaginationControls();
+            renderTable();
+          });
+          pageNumbersDiv.appendChild(pageButton);
+        }
+      }
+
+      function renderTable() {
+        const startIndex = (current - 1) * pageSize;
+        const endIndex = Math.min(startIndex + pageSize, data.length);
+
+        const tableRows = data
+          .slice(startIndex, endIndex)
+          .map((student, index) => {
+            const serialNumber = startIndex + index + 1;
+
+            return `
+      <li class="table-row">
+        <div class="col col-1" data-label="Basic Info">
+          <div style="display: flex; align-items: center">
+            <div style="display: flex; align-items: center">
+              <p style="margin-right: 10px">${serialNumber}</p>
+              <img src="${
+                student.image ? student.image : "img/sidebar logo.png"
+              }" alt="User Image" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;" />
+            </div>
+            <div>
+              <p class="emp-name">${student.name}</p>
+              <p class="emp-email">${student.email}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col col-2" data-label="Domain">${student.title}</div>
+        <div class="col col-3" data-label="Employability Band">${
+          student.employability_band
+        }</div>
+        <div class="col col-4" data-label="Employability Score">${
+          student.emp_score
+        }</div>
+        <div class="col col-5" data-label="Enrolled Date">${new Date(
+          student.start_date
+        ).toLocaleDateString()}</div>
+      </li>
+    `;
+          });
+
+        const candidatesTable = document.getElementById("candidates-table");
+        candidatesTable.innerHTML = tableRows.join("");
+      }
+
+      const attendReportContainer = document.querySelector(
+        ".attendreportcontainer"
+      );
+      const attendReportTable = document.querySelector(".attendreporttable");
+      const noDataMessage = document.getElementById("no-data-message-report");
+
+      async function fetchData(phaseId) {
+        try {
+          const response = await fetch(
+            `/api/training_phase_analysis/data/${phaseId}`
+          );
+          const data = await response.json();
+
+          if (!data || data.length === 0) {
+            noDataMessage.style.display = "block";
+            attendReportTable.style.display = "none";
+          } else {
+            noDataMessage.style.display = "none";
+            attendReportTable.style.display = "table-row-group";
+            createTable(data);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          noDataMessage.textContent =
+            "Failed to fetch data. Please try again later.";
+          noDataMessage.style.display = "block";
+        }
+      }
+
+      function createTable(data) {
+        attendReportTable.innerHTML = "";
+
+        const headerRow = document.createElement("tr");
+        headerRow.className = "ar-table-header";
+
+        const headers = Object.keys(data[0]);
+        headers.forEach((header) => {
+          const headerCell = document.createElement("th");
+          headerCell.textContent = header;
+          headerRow.appendChild(headerCell);
+        });
+
+        attendReportTable.appendChild(headerRow);
+
+        data.forEach((row) => {
+          const rowElement = document.createElement("tr");
+          rowElement.className = "ar-table-row";
+
+          Object.values(row).forEach((cellValue) => {
+            const cellElement = document.createElement("td");
+            cellElement.textContent = cellValue;
+            rowElement.appendChild(cellElement);
+          });
+
+          attendReportTable.appendChild(rowElement);
+        });
+      }
+      const rowsPerPage = 10;
+      let currentPage = 1;
+      let tableData = [];
+
+      async function fetchDailyTestData(phaseId) {
+        try {
+          const response = await fetch(
+            `/api/training_phase_analysis/daily_test/${phaseId}`
+          );
+          if (response.ok) {
+            const data = await response.json();
+            const hackathonTests = Object.keys(data[0].hackathon_scores);
+            tableData = data.map((item) => {
+              const hackathonScores = hackathonTests.map((test) =>
+                item.hackathon_scores[test] !== undefined
+                  ? item.hackathon_scores[test]
+                  : "Absent"
+              );
+              return {
+                ...item,
+                ...Object.fromEntries(
+                  hackathonTests.map((test, i) => [test, hackathonScores[i]])
+                ),
+              };
+            });
+            renderDailyTestData();
+            updatePaginationControls();
+            // Show/hide pagination based on data length
+            const paginationControls = document.getElementById(
+              "pagination-controls"
+            );
+            paginationControls.style.display =
+              data.length > 10 ? "flex" : "none";
+          } else {
+            const errorResponse = await response.json();
+            document.getElementById("daily-result-message").innerHTML =
+              errorResponse.error;
+            document.getElementById("daily-result-message").style.display =
+              "block"; // Show error message
+            document.getElementById("pagination-controls").style.display =
+              "none"; // Hide pagination
+          }
+        } catch (error) {
+          console.error("Error fetching daily test data:", error);
+          document.getElementById("daily-result-message").innerHTML =
+            "Failed to fetch data. Please try again later.";
+          document.getElementById("daily-result-message").style.display =
+            "block"; // Show error message
+          document.getElementById("pagination-controls").style.display = "none"; // Hide pagination
+        }
+      }
+
+      function renderDailyTestData() {
+        const tableBody = document.getElementById("dailytesttable-body");
+        const tableHead = document.getElementById("dailytesttable-head");
+        tableBody.innerHTML = "";
+        tableHead.innerHTML = "";
+
+        if (tableData.length === 0) {
+          return;
+        }
+
+        const hackathonTests = Object.keys(tableData[0].hackathon_scores);
+
+        function formatTestName(testName) {
+          const keywords = ["Alpha", "Beta", "Gamma", "Delta"]; // Add more keywords as needed
+          for (const keyword of keywords) {
+            if (testName.includes(keyword)) {
+              return testName.replace(keyword, `<br>${keyword}`);
+            }
+          }
+          return testName;
+        }
+
+        const tableHeaderRow = document.createElement("tr");
+        tableHeaderRow.innerHTML = `
+    <th>S.No</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Registration No</th>
+    <th>Average Score</th>
+    ${hackathonTests.map((test) => `<th>${formatTestName(test)}</th>`).join("")}
+  `;
+        tableHead.appendChild(tableHeaderRow);
+
+        const startIndex = (currentPage - 1) * rowsPerPage;
+        const endIndex = Math.min(startIndex + rowsPerPage, tableData.length);
+
+        for (let i = startIndex; i < endIndex; i++) {
+          const row = tableData[i];
+          const tableRow = document.createElement("tr");
+
+          tableRow.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.regno}</td>
+      <td><span class="percentage">${row.test_score}%</span></td>
+      ${hackathonTests
+        .map((test) => {
+          const score = row[test];
+          const scoreClass = score === "Absent" ? ' class="absent"' : "";
+          return `<td${scoreClass}>${score}</td>`;
+        })
+        .join("")}
+    `;
+
+          tableBody.appendChild(tableRow);
+        }
+      }
+
+      function updatePaginationControls() {
+        const pageNumbersElement = document.getElementById("pageNumbers");
+        const prevPageButton = document.getElementById("prevPage");
+        const nextPageButton = document.getElementById("nextPage");
+        const totalPages = Math.ceil(tableData.length / rowsPerPage);
+
+        pageNumbersElement.innerHTML = "";
+        prevPageButton.disabled = currentPage === 1;
+        nextPageButton.disabled = currentPage === totalPages;
+
+        let startPage = Math.max(currentPage - 3, 1);
+        let endPage = Math.min(currentPage + 3, totalPages);
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else if (endPage === totalPages) {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageNumber = document.createElement("span");
+          pageNumber.textContent = i;
+          pageNumber.style.fontWeight = i === currentPage ? "bold" : "normal";
+          pageNumber.style.backgroundColor =
+            i === currentPage ? "#7962BD" : "#D3FB52";
+          pageNumber.style.color = i === currentPage ? "#fff" : "#000";
+          pageNumber.onclick = () => goToPage(i);
+          pageNumbersElement.appendChild(pageNumber);
+        }
+      }
+
+      function goToPage(page) {
+        currentPage = page;
+        renderDailyTestData();
+        updatePaginationControls();
+      }
+
+      function prevPage() {
+        if (currentPage > 1) {
+          currentPage--;
+          renderDailyTestData();
+          updatePaginationControls();
+        }
+      }
+
+      function nextPage() {
+        const totalPages = Math.ceil(tableData.length / rowsPerPage);
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderDailyTestData();
+          updatePaginationControls();
+        }
+      }
+
+      async function fetchGrandTestData(phaseId) {
+        try {
+          const response = await fetch(
+            `/api/training_phase_analysis/grand_test/${phaseId}`
+          );
+          if (response.ok) {
+            const data = await response.json();
+            const grandTestTitles = Object.keys(data[0].test_score);
+            tableData = data.map((item) => {
+              const grandTestScores = grandTestTitles.map((title) =>
+                item.test_score[title] !== undefined
+                  ? item.test_score[title]
+                  : 0
+              );
+              return {
+                ...item,
+                ...Object.fromEntries(
+                  grandTestTitles.map((title, i) => [title, grandTestScores[i]])
+                ),
+              };
+            });
+            renderGrandTestData();
+            updateGrandPaginationControls();
+          } else {
+            const errorResponse = await response.json();
+            document.getElementById("result-message").innerHTML =
+              errorResponse.error;
+            document.getElementById("result-message").style.display = "block"; // Show error message
+            document.getElementById("grand-pagination-controls").style.display =
+              "none"; // Hide pagination
+          }
+        } catch (error) {
+          console.error("Error fetching grand test data:", error);
+          document.getElementById("result-message").innerHTML =
+            "Failed to fetch data. Please try again later.";
+          document.getElementById("result-message").style.display = "block"; // Show error message
+          document.getElementById("grand-pagination-controls").style.display =
+            "none"; // Hide pagination
+        }
+      }
+
+      function renderGrandTestData() {
+        const tableBody = document.getElementById("grandtesttable-body");
+        const tableHead = document.getElementById("grandtesttable-head");
+        tableBody.innerHTML = "";
+        tableHead.innerHTML = "";
+
+        if (tableData.length === 0) {
+          document.getElementById("result-message").innerHTML =
+            "No data available.";
+          document.getElementById("result-message").style.display = "block"; // Show error message
+          document.getElementById("grand-pagination-controls").style.display =
+            "none"; // Hide pagination
+          return;
+        } else {
+          document.getElementById("result-message").style.display = "none"; // Hide error message
+          document.getElementById("grand-pagination-controls").style.display =
+            tableData.length > grandRowsPerPage ? "block" : "none"; // Show/hide pagination controls
+        }
+
+        const grandTestTitles = Object.keys(tableData[0].hackathon_scores);
+
+        function formatTestName(testName) {
+          const keywords = ["Alpha", "Beta", "Premium", "Delta"]; // Add more keywords as needed
+          for (const keyword of keywords) {
+            if (testName.includes(keyword)) {
+              return testName.replace(keyword, `<br>${keyword}`);
+            }
+          }
+          return testName;
+        }
+
+        const tableHeaderRow = document.createElement("tr");
+        tableHeaderRow.innerHTML = `
+    <th>S.No</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Registration No</th>
+    <th>Average Score</th>
+    ${grandTestTitles
+      .map((title) => `<th>${formatTestName(title)}</th>`)
+      .join("")}
+  `;
+        tableHead.appendChild(tableHeaderRow);
+
+        const startIndex = (grandCurrentPage - 1) * grandRowsPerPage;
+        const endIndex = Math.min(
+          startIndex + grandRowsPerPage,
+          tableData.length
+        );
+
+        for (let i = startIndex; i < endIndex; i++) {
+          const row = tableData[i];
+          const tableRow = document.createElement("tr");
+
+          tableRow.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.regno}</td>
+      <td><span class="percentage">${row.test_score}%</span></td>
+      ${grandTestTitles
+        .map((title) => {
+          const score = row[title];
+          const scoreClass = score === 0 ? ' class="absent"' : "";
+          return `<td${scoreClass}>${score}</td>`;
+        })
+        .join("")}
+    `;
+
+          tableBody.appendChild(tableRow);
+        }
+
+        updateGrandPaginationControls();
+      }
+
+      function updateGrandPaginationControls() {
+        const paginationControls = document.getElementById(
+          "grand-pagination-controls"
+        );
+        const pageNumbersElement = document.getElementById("grandpageNumbers");
+        const prevPageButton = document.getElementById("grandprevPage");
+        const nextPageButton = document.getElementById("grandnextPage");
+        const totalPages = Math.ceil(tableData.length / grandRowsPerPage);
+
+        if (totalPages > 1) {
+          paginationControls.style.display = "block"; // Show pagination controls
+        } else {
+          paginationControls.style.display = "none"; // Hide pagination controls if not needed
+        }
+
+        pageNumbersElement.innerHTML = "";
+        prevPageButton.disabled = grandCurrentPage === 1;
+        nextPageButton.disabled = grandCurrentPage === totalPages;
+
+        let startPage = Math.max(grandCurrentPage - 3, 1);
+        let endPage = Math.min(grandCurrentPage + 3, totalPages);
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else if (endPage === totalPages) {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageNumber = document.createElement("span");
+          pageNumber.textContent = i;
+          pageNumber.style.fontWeight =
+            i === grandCurrentPage ? "bold" : "normal";
+          pageNumber.style.backgroundColor =
+            i === grandCurrentPage ? "#7962BD" : "#D3FB52";
+          pageNumber.style.color = i === grandCurrentPage ? "#fff" : "#000";
+          pageNumber.onclick = () => goToGrandPage(i);
+          pageNumbersElement.appendChild(pageNumber);
+        }
+      }
+
+      function grandPrevPage() {
+        if (grandCurrentPage > 1) {
+          grandCurrentPage--;
+          renderGrandTestData();
+        }
+      }
+
+      function grandNextPage() {
+        const totalPages = Math.ceil(tableData.length / grandRowsPerPage);
+        if (grandCurrentPage < totalPages) {
+          grandCurrentPage++;
+          renderGrandTestData();
+        }
+      }
+
+      function goToGrandPage(page) {
+        grandCurrentPage = page;
+        renderGrandTestData();
+      }
+
+      async function fetchWeeklyTestData(phaseId) {
+        try {
+          const response = await fetch(
+            `/api/training_phase_analysis/weekly_test/${phaseId}`
+          );
+          if (response.ok) {
+            const data = await response.json();
+            const weeklyTestTitles = Object.keys(data[0].test_score);
+            tableData = data.map((item) => {
+              const weeklyTestScores = weeklyTestTitles.map((title) =>
+                item.test_score[title] !== undefined
+                  ? item.test_score[title]
+                  : 0
+              );
+              return {
+                ...item,
+                ...Object.fromEntries(
+                  weeklyTestTitles.map((title, i) => [
+                    title,
+                    weeklyTestScores[i],
+                  ])
+                ),
+              };
+            });
+            renderWeeklyTestData();
+            updateWeeklyPaginationControls();
+          } else {
+            const errorResponse = await response.json();
+            document.getElementById("weekly-result-message").innerHTML =
+              errorResponse.error;
+            document.getElementById("weekly-result-message").style.display =
+              "block"; // Show error message
+            document.getElementById(
+              "weekly-pagination-controls"
+            ).style.display = "none"; // Hide pagination
+          }
+        } catch (error) {
+          console.error("Error fetching weekly test data:", error);
+          document.getElementById("weekly-result-message").innerHTML =
+            "Failed to fetch data. Please try again later.";
+          document.getElementById("weekly-result-message").style.display =
+            "block"; // Show error message
+          document.getElementById("weekly-pagination-controls").style.display =
+            "none"; // Hide pagination
+        }
+      }
+
+      function renderWeeklyTestData() {
+        const tableBody = document.getElementById("weeklytesttable-body");
+        const tableHead = document.getElementById("weeklytesttable-head");
+        tableBody.innerHTML = "";
+        tableHead.innerHTML = "";
+        let weeklyCurrentPage = 1;
+        let weeklyRowsPerPage = 10;
+
+        if (tableData.length === 0) {
+          return;
+        }
+
+        const weeklyTestTitles = Object.keys(tableData[0].hackathon_scores);
+
+        function formatTestName(testName) {
+          const keywords = ["Alpha", "Beta", "Premium", "Delta"]; // Add more keywords as needed
+          for (const keyword of keywords) {
+            if (testName.includes(keyword)) {
+              return testName.replace(keyword, `<br>${keyword}`);
+            }
+          }
+          return testName;
+        }
+
+        const tableHeaderRow = document.createElement("tr");
+        tableHeaderRow.innerHTML = `
+    <th>S.No</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Registration No</th>
+    <th>Average Score</th>
+    ${weeklyTestTitles
+      .map((title) => `<th>${formatTestName(title)}</th>`)
+      .join("")}
+  `;
+        tableHead.appendChild(tableHeaderRow);
+
+        const startIndex = (weeklyCurrentPage - 1) * weeklyRowsPerPage;
+        const endIndex = Math.min(
+          startIndex + weeklyRowsPerPage,
+          tableData.length
+        );
+
+        for (let i = startIndex; i < endIndex; i++) {
+          const row = tableData[i];
+          const tableRow = document.createElement("tr");
+
+          tableRow.innerHTML = `
+      <td>${i + 1}</td>
+      <td>${row.name}</td>
+      <td>${row.email}</td>
+      <td>${row.regno}</td>
+      <td><span class="percentage">${row.test_score}%</span></td>
+      ${weeklyTestTitles
+        .map((title) => {
+          const score = row[title];
+          const scoreClass = score === 0 ? ' class="absent"' : "";
+          return `<td${scoreClass}>${score}</td>`;
+        })
+        .join("")}
+    `;
+
+          tableBody.appendChild(tableRow);
+        }
+
+        updateWeeklyPaginationControls();
+      }
+
+      function updateWeeklyPaginationControls() {
+        const paginationControls = document.getElementById(
+          "weekly-pagination-controls"
+        );
+        const pageNumbersElement = document.getElementById("weeklypageNumbers");
+        const prevPageButton = document.getElementById("weeklyprevPage");
+        const nextPageButton = document.getElementById("weeklynextPage");
+        const totalPages = Math.ceil(tableData.length / weeklyRowsPerPage);
+
+        if (totalPages > 1) {
+          paginationControls.style.display = "block"; // Show pagination controls
+        } else {
+          paginationControls.style.display = "none"; // Hide pagination controls if not needed
+        }
+
+        pageNumbersElement.innerHTML = "";
+        prevPageButton.disabled = weeklyCurrentPage === 1;
+        nextPageButton.disabled = weeklyCurrentPage === totalPages;
+
+        let startPage = Math.max(weeklyCurrentPage - 3, 1);
+        let endPage = Math.min(weeklyCurrentPage + 3, totalPages);
+
+        if (endPage - startPage < 6) {
+          if (startPage === 1) {
+            endPage = Math.min(startPage + 6, totalPages);
+          } else if (endPage === totalPages) {
+            startPage = Math.max(endPage - 6, 1);
+          }
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const pageNumber = document.createElement("span");
+          pageNumber.textContent = i;
+          pageNumber.style.fontWeight =
+            i === weeklyCurrentPage ? "bold" : "normal";
+          pageNumber.style.backgroundColor =
+            i === weeklyCurrentPage ? "#7962BD" : "#D3FB52";
+          pageNumber.style.color = i === weeklyCurrentPage ? "#fff" : "#000";
+          pageNumber.onclick = () => goToWeeklyPage(i);
+          pageNumbersElement.appendChild(pageNumber);
+        }
+      }
+
+      function weeklyPrevPage() {
+        if (weeklyCurrentPage > 1) {
+          weeklyCurrentPage--;
+          renderWeeklyTestData();
+        }
+      }
+
+      function weeklyNextPage() {
+        const totalPages = Math.ceil(tableData.length / weeklyRowsPerPage);
+        if (weeklyCurrentPage < totalPages) {
+          weeklyCurrentPage++;
+          renderWeeklyTestData();
+        }
+      }
+
+      function goToWeeklyPage(page) {
+        weeklyCurrentPage = page;
+        renderWeeklyTestData();
+      }
+
+      async function loadEmployabilityStudentsData(
+        phaseId,
+        page = 1,
+        pageSize = 10
+      ) {
+        try {
+          const response = await fetch(
+            `/api/training_phase_analysis/employability_students_data/${phaseId}`
+          );
+          const data = await response.json();
+
+          if (data.length === 0) {
+            // Display message when there is no data available
+            document.getElementById("emp-result-message").innerHTML =
+              "<p>No data available</p>";
+            document.getElementById("emppageNumbers").innerHTML = ""; // Clear pagination numbers
+            document.getElementById("empprevPage").disabled = true; // Disable previous button
+            document.getElementById("empnextPage").disabled = true; // Disable next button
+            document.getElementById("emp-pagination-controls").style.display =
+              "none"; // Hide pagination
+            return;
+          }
+
+          // Extract distinct hackathon score titles
+          const hackathonTitles = new Set();
+          data.forEach((student) => {
+            for (const title in student.hackathon_scores) {
+              hackathonTitles.add(title);
+            }
+          });
+
+          // Slice the data array based on the current page and page size
+          const startIndex = (page - 1) * pageSize;
+          const endIndex = startIndex + pageSize;
+          const pagedData = data.slice(startIndex, endIndex);
+
+          const tableHead = document.getElementById("emptesttable-head");
+          const tableBody = document.getElementById("emptesttable-body");
+
+          // Clear previous table headers and body
+          tableHead.innerHTML = "";
+          tableBody.innerHTML = "";
+
+          // Create table headers
+          const headerRow = document.createElement("tr");
+          ["Name", "Email", "Registration No", "Average Score"].forEach(
+            (text) => {
+              const th = document.createElement("th");
+              const headerText = document.createElement("div");
+              headerText.innerText = text;
+              th.appendChild(headerText);
+              headerRow.appendChild(th);
+            }
+          );
+          hackathonTitles.forEach((title) => {
+            const th = document.createElement("th");
+            const headerText = document.createElement("div");
+            const index = title.indexOf("Employability Test");
+            if (index !== -1) {
+              const beforeText = title.substring(0, index);
+              const afterText = title.substring(index);
+              headerText.innerHTML = `${beforeText}<br>${afterText}`;
+            } else {
+              headerText.innerText = title;
+            }
+            th.appendChild(headerText);
+            headerRow.appendChild(th);
+          });
+          tableHead.appendChild(headerRow);
+
+          // Create table rows
+          pagedData.forEach((student) => {
+            const row = document.createElement("tr");
+            ["name", "email", "regno", "test_score"].forEach((key) => {
+              const td = document.createElement("td");
+              td.innerText = student[key];
+              row.appendChild(td);
+            });
+            hackathonTitles.forEach((title) => {
+              const td = document.createElement("td");
+              td.innerText = student.hackathon_scores[title] || 0; // Default to 0 if no score
+              row.appendChild(td);
+            });
+            tableBody.appendChild(row);
+          });
+
+          // Update the pagination controls
+          const totalPages = Math.ceil(data.length / pageSize);
+          const pageNumbers = document.getElementById("emppageNumbers");
+          pageNumbers.innerHTML = "";
+          for (let i = 1; i <= totalPages; i++) {
+            const pageNumber = document.createElement("span");
+            pageNumber.innerText = i;
+            pageNumber.onclick = () =>
+              loadEmployabilityStudentsData(phaseId, i, pageSize);
+            if (i === page) {
+              pageNumber.classList.add("active"); // Add active class to the current page
+            }
+            pageNumbers.appendChild(pageNumber);
+          }
+
+          // Enable/disable previous and next buttons based on current page
+          const prevButton = document.getElementById("empprevPage");
+          prevButton.disabled = page === 1;
+
+          const nextButton = document.getElementById("empnextPage");
+          nextButton.disabled = page === totalPages;
+
+          // Show pagination controls
+          document.getElementById("emp-pagination-controls").style.display =
+            "block";
+        } catch (error) {
+          console.error("Error loading employability students data:", error);
+          // Handle error case here, such as displaying an error message
+          document.getElementById("emp-result-message").innerHTML =
+            "The test has not been conducted yet, so there are no results to show. Please stay tuned for updates.";
+          document.getElementById("emp-result-message").style.display = "block"; // Show error message
+          document.getElementById("emp-pagination-controls").style.display =
+            "none"; // Hide pagination
+        }
+      }
+
+      async function fetchAttendanceData(phaseId) {
+        try {
+          const response = await fetch(
+            `/api/training_phase_analysis/attendance_count/${phaseId}`
+          );
+          const data = await response.json();
+          const tableContainer = document.querySelector(
+            ".stuattend-tablecontainer4"
+          );
+
+          if (!data || data.length === 0) {
+            tableContainer.innerHTML = "<p>No data available</p>";
+            return;
+          }
+
+          let tableHTML = `
+      <table class="attendance-data-table">
+        <thead>
+          <tr class="stua-table-row" style="background-color:rgb(121, 98, 189); color:white">
+            <th>Days</th>
+            <th>Event</th>
+            <th>Event Count</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          ${data
+            .map(
+              (row, index) => `
+            <tr class="stua-table-row" style="${
+              index >= 4 ? "display: none" : ""
+            }">
+              <td>${index + 1}</td>
+              <td>${row.event_title}</td>
+              <td>${row.count}</td>
+            </tr>
+          `
+            )
+            .join("")}
+        </tbody>
+      </table>
+      ${
+        data.length > 4
+          ? '<div class="show-more-container"><button class="show-more-btn" onclick="showMoreRows(this, ' +
+            data.length +
+            ')">Show more</button></div>'
+          : ""
+      }
+    `;
+
+          tableContainer.innerHTML = tableHTML;
+        } catch (error) {
+          console.error("Error fetching attendance data:", error);
+          document.querySelector(".stuattend-tablecontainer4").innerHTML =
+            '<p class="result">Classes are not started yet. Please Stay tuned for updates.</p>';
+        }
+      }
+
+      function showMoreRows(btn, totalRows) {
+        const tableBody = btn.parentNode.parentNode.querySelector("tbody");
+        const rows = Array.from(tableBody.querySelectorAll(".stua-table-row"));
+        const hiddenRows = rows.slice(4);
+
+        if (btn.textContent === "Show more") {
+          hiddenRows.forEach((row) => (row.style.display = "flex"));
+          btn.textContent = "Show less";
+        } else {
+          hiddenRows.forEach((row) => (row.style.display = "none"));
+          btn.textContent = "Show more";
+        }
+      }
+
+      async function fetchAttendanceDataAndUpdateChart(phaseId) {
+        const dailyTestCtx = document
+          .getElementById("stuattend-dailyTestChart")
+          .getContext("2d");
+        const dailyTestChart = new Chart(dailyTestCtx, {
+          type: "bar",
+          data: {
+            labels: [],
+            datasets: [
+              {
+                label: "Events",
+                data: [],
+                backgroundColor: "#2f4cff",
+                borderWidth: 1,
+                borderRadius: 20,
+                barThickness: 20,
+                borderSkipped: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 10,
+                },
+                grid: {
+                  display: false,
+                },
+              },
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+          },
+        });
+
+        try {
+          const response = await fetch(
+            `/api/training_phase_analysis/attendance_count/${phaseId}`,
+            {
+              method: "GET",
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch attendance data");
+          }
+
+          const data = await response.json();
+
+          if (!data || data.length === 0) {
+            document.querySelector(".stuattend-left-card1").innerHTML =
+              "<p>No data available</p>";
+            return;
+          }
+
+          const labels = data.map((item) => {
+            const dateString = item.event_title;
+            const dayIndex = dateString.lastIndexOf("Day");
+            const dayNumber = dateString.substring(dayIndex + 4);
+            return `Day ${dayNumber}`;
+          });
+
+          const counts = data.map((item) => item.count);
+
+          dailyTestChart.data.labels = labels;
+          dailyTestChart.data.datasets[0].data = counts;
+          dailyTestChart.update();
+        } catch (error) {
+          console.error("Error fetching Attendance Data:", error);
+          document.querySelector(".stuattend-left-card1").innerHTML =
+            '<div class="result">Events are not updated. Please stay tuned for results.</div>';
+        }
+      }
+      async function fetchInactiveStudents(phaseId) {
+        const url = `/api/training_phase_analysis/session_inactive_students/${phaseId}`;
+
+        try {
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            const errorMessage = `Failed to fetch data: ${response.status} ${response.statusText}`;
+            console.error(errorMessage);
+            throw new Error(errorMessage);
+          }
+
+          const responseData = await response.json();
+
+          const tableBody = $("#inactive-table-body");
+          const tableHeader = $("#inactive-table-header");
+          const table = $(".inactive-table table");
+          const noDataMessage = $("#no-data-message");
+
+          tableBody.empty();
+
+          if (!responseData || responseData.length === 0) {
+            console.log("No data available");
+            table.hide();
+            tableHeader.hide();
+            noDataMessage.text("Data not available").show();
+          } else {
+            console.log("Data available");
+            table.show();
+            tableHeader.show();
+            tableHeader.css("display", "table-header-group");
+            table.css("display", "table-row-group");
+            noDataMessage.hide();
+
+            responseData.forEach((student) => {
+              const row = `
+          <tr>
+            <td class="name-cell">
+              <div class="user-icon"><i class="fa-solid fa-user"></i></div>
+              ${student.name}
+            </td>
+            <td>${student.regno}</td>
+            <td>${student.phone}</td>
+            <td>${student.response_count}</td>
+          </tr>
+        `;
+              tableBody.append(row);
+            });
+
+            setupPagination(responseData.length);
+          }
+        } catch (error) {
+          console.error("Error fetching inactive students:", error);
+          const errorMessage = `<div>Data not available</div>`;
+          $("#no-data-message").html(errorMessage).show();
+          $("#inactive-table-body").empty();
+          $("#inactive-table-header").hide();
+          $(".inactive-table table").hide();
+        }
+      }
+
+      function setupPagination(totalItems) {
+        const itemsPerPage = 10; // Change this to the number of items you want per page
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+        $("#pagination-container").pagination({
+          items: totalItems,
+          itemsOnPage: itemsPerPage,
+          displayedPages: 3,
+          cssStyle: "light-theme",
+          onPageClick: function (pageNumber) {
+            const start = (pageNumber - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            $("#inactive-table-body tr").hide().slice(start, end).show();
+          },
+        });
+
+        // Show the first page by default
+        $("#pagination-container").pagination("selectPage", 1);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const phaseId = urlParams.get("phase_id"); // or urlParams.get('id') if the parameter name is 'id'
+
+        if (!phaseId) {
+          console.error("Phase ID is missing from the URL");
+          return;
+        }
+
+        fetch(`/api/training_phase_analysis/overview/${phaseId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch event data");
+            }
+            return response.json();
+          })
+          .then((events) => {
+            const eventTableBody = document.getElementById("event-data");
+            const inactiveTable = document.querySelector(".inactive-table");
+            eventTableBody.innerHTML = ""; // Clear existing table rows
+
+            if (events.length === 0) {
+              // Display message when there is no event data available
+              document.getElementById("testreport-result-message").innerHTML =
+                "<div>The test has not been conducted yet, so there are no results to show. Please stay tuned for updates </div>";
+              inactiveTable.style.display = "none"; // Hide the table
+              return;
+            }
+
+            inactiveTable.style.display = "block"; // Show the table
+
+            events.forEach((event) => {
+              const row = document.createElement("tr");
+
+              row.innerHTML = `
+          <td>${event.title}</td>
+          <td>${event.total_students}</td>
+          <td>${event.present_students}</td>
+          <td>${event.absent_students}</td>
+          <td>${event.attendance_rate}</td>
+          <td>${event.average_100_equivalent_score}</td>
+          <td><a href="/api/training_phase_analysis/download-absentees/${event.id}">Download Absentees</a></td>
+        `;
+
+              eventTableBody.appendChild(row);
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching event data:", error);
+            document.getElementById("testreport-result-message").innerHTML =
+              "Failed to fetch event data. Please try again later.";
+            document.querySelector(".inactive-table").style.display = "none"; // Hide the table in case of error
+          });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const phaseId = urlParams.get("phase_id");
+
+        if (!phaseId) {
+          console.error("Phase ID is missing from the URL");
+          return;
+        }
+
+        fetch(`/api/training_phase_analysis/report/${phaseId}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch event data");
+            }
+            return response.json();
+          })
+          .then((events) => {
+            const eventTableBody = document.getElementById("attendance-data");
+            const eventDownloadResult = document.getElementById(
+              "event-download-result"
+            );
+
+            eventTableBody.innerHTML = ""; // Clear existing rows
+
+            if (events.length === 0) {
+              showNoDataMessage(eventDownloadResult);
+              return;
+            }
+
+            events.forEach((event) => {
+              const row = document.createElement("tr");
+
+              row.innerHTML = `
+          <td>${event.event_title}</td>
+          <td>${event.total_students}</td>
+          <td>${event.present_students}</td>
+          <td>${event.absent_students}</td>
+          <td>${event.hours_covered}</td>
+          <td>${event.attendance_rate}</td>
+          <td>${
+            event.average_feedback !== null ? event.average_feedback : "N/A"
+          }</td>
+          <td>${
+            event.avg_interactiveness_percentage !== null
+              ? event.avg_interactiveness_percentage
+              : "N/A"
+          }</td>
+          <td><a href="/api/training_phase_analysis/download-event-absentees/${
+            event.id
+          }">Download Absentees</a></td>
+        `;
+
+              eventTableBody.appendChild(row);
+            });
+
+            // Show the table and hide the message
+            eventDownloadResult.style.display = "none";
+          })
+          .catch((error) => {
+            console.error("Error fetching event data:", error);
+            const eventDownloadResult = document.getElementById(
+              "event-download-result"
+            );
+            showErrorMessage(eventDownloadResult);
+          });
+      });
+
+      function showNoDataMessage(resultContainer) {
+        resultContainer.innerHTML = "No data available"; // Show no data message
+        resultContainer.style.display = "block"; // Ensure message is visible
+      }
+
+      function showErrorMessage(resultContainer) {
+        resultContainer.innerHTML =
+          "Failed to fetch data. Please try again later."; // Show error message
+        resultContainer.style.display = "block"; // Ensure message is visible
+      }
+
+      window.onload = fetchPhaseDetails;
+    </script>
+
+    <!-----------User Details Fetching---------------------->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Function to get the value of a cookie by name
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+
+        // Get the JWT token from the cookie
+        const token = getCookie("userAdminToken");
+
+        if (token) {
+          // Decode the JWT token
+          const decoded = jwt_decode(token);
+
+          // Display the username and role
+          document.querySelector(".userN").textContent = decoded.email;
+          document.querySelector(".userR").textContent = decoded.role;
+        } else {
+          // Handle the case where the token is not found
+          document.querySelector(".userN").textContent = "No user logged in";
+          document.querySelector(".userR").textContent = "";
+        }
+      });
+    </script>
+    <!---------Logout module----------->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const logoutButton = document.getElementById("logoutButton");
+        const logoutModal = document.getElementById("logoutModal");
+        const modalContent = logoutModal.querySelector(".modal-content");
+        const confirmLogoutButton =
+          modalContent.querySelector("#confirmLogout");
+        const cancelLogoutButton = modalContent.querySelector("#cancelLogout");
+
+        logoutButton.addEventListener("click", function (event) {
+          event.preventDefault(); // Prevent the default behavior of the button
+
+          // Show the modal
+          logoutModal.style.display = "block";
+
+          // Add event listeners to the modal buttons
+          confirmLogoutButton.addEventListener("click", function () {
+            // If user confirms, navigate to /logout
+            window.location.href = "/logout";
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          cancelLogoutButton.addEventListener("click", function () {
+            // If user cancels, hide the modal
+            logoutModal.style.display = "none";
+          });
+
+          // Add event listener to the close span
+          closeSpan.addEventListener("click", function () {
+            logoutModal.style.display = "none"; // Hide the modal
+          });
+
+          // Add event listener to the modal itself to close when clicked outside
+          window.addEventListener("click", function (event) {
+            if (event.target === logoutModal) {
+              logoutModal.style.display = "none"; // Hide the modal
+            }
+          });
+        });
+      });
+    </script>
+    <script src="/js/phase_analysis.js"></script>
+  </body>
+</html>

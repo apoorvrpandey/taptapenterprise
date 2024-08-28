@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="icon" type="image/x-icon" href="img/favicon.png" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="css/trainings.css">
+  <link rel="stylesheet" href="css/nav_log.css">
+  <link rel="stylesheet" href="css/trainings_common.css">
+  <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+   </head>
+
+   <body>
+    <script>
+        window.userRole = "<%= user.role %>";
+      </script>
+      <script src="js/rolebase.js"></script>
+      
+    <div class="supercss">
+  <div class="sidebar">
+        <a class="logo" style="text-align: center;align-items:center;padding:5px">
+           <img src="img/sidebar logo.png" alt="Logo" style="width: 64px; max-width: 120px;height:73px;">
+        </a>
+       <a href="myDashboard" class="menu-item" id="dashboard-link">
+            <img src="img/dash_white.png" alt="dash" style="width: 20px; height: 20px"><span style="color:white">Dashboard</span>
+        </a>
+         <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="dash" style="width: 20px; height: 20px;"><span>Employbility</span>
+            </a>
+        <a href="https://admin.hackathon.blackbucks.me"  class="menu-item" >
+            <img alt="Assessment icon" src="img/assessment.png" style="width: 20px; height: 20px;">
+            <span>Assessments</span></a>
+       
+         <a href="jobsDashboard" class="menu-item">
+           <img src="img/jobs.png" alt="jobs" style="width: 20px; height: 20px;"><span>Jobs</span>
+        </a>
+        <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/"  class="menu-item" >
+            <img alt="course icon" src="img/course.png" style="width: 20px; height: 20px;"> 
+            <span>Course</span></a>
+        <a href="https://admin.hackathon.blackbucks.me/lessonPlan/"  class="menu-item" >
+            <img alt="lessonplan icon" src="img/lessonplan.png" style="width: 20px; height: 20px;">
+            <span>Lesson Plan</span></a>
+        
+                <a href="trainingsDashboard" class="menu-item active" style="background-color: #88EB4C;">
+            <img src="img/trainings_black.png" alt="trainings" style="width: 20px; height: 20px;"><span style="color: black;font-weight:bold">Trainings</span>
+        </a>
+                 <a href="internshipsDashboard" class="menu-item">
+                    <img
+                      src="img/internship_whiteicon.png"
+                      alt="manage"
+                      style="width: 20px; height: auto"
+                    /><span>Internships</span>
+                  </a>
+                <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/"  class="menu-item" >
+                    <img alt="vpl icon" src="img/vpl.png" style="width: 20px; height: 20px;">
+                    <span>VPL</span></a>
+       
+         
+
+             
+     </div>
+     
+       <div class="css">
+        <div class="css0">
+            <div class="navbar" style="max-height:51px">
+             <div class="nav1"></div>
+             <div class="nav2">
+                 <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                     <div class="chakra-stack css-nr8aow">
+                         <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                     </div>
+                 </a>
+                 <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                     <div class="chakra-stack css-nr8aow">
+                         <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0"></div></a>
+                 <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                     <div class="chakra-stack css-nr8aow">
+                         <div class="css-1edim3w">
+                             <img alt="Notifications" src="img/newNotificationIcon.svg" class="chakra-image css-6su6fj">
+                             <div class="css-1bac456">
+                                 <div class="css-1rkwksi">1</div>
+                             </div>
+                         </div>
+                     </div>
+                 </a>
+                 <button type="button" class="navbtn" id="userButton">
+                     <span class="user-details">
+                         <div class="user">
+                             <span class="user-profile">
+                                 <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                             </span>
+                             <div class="username">
+                                 <p class="userN"></p>
+                                 <p class="userR"></p>
+                             </div>
+                         </div>
+                     </span>
+                     <span class="chakra-button__icon css-1hzyiq5">
+                         <svg viewBox="0 0 16 16" height="12px" width="12px" aria-hidden="true" focusable="false" fill="currentColor" xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                             <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"></path>
+                         </svg>
+                     </span>
+                 </button>
+                 
+                 <button type="button" class="logoutbtn" id="logoutButton" style="display: none;">
+                     Log out
+                 </button>
+                 
+                
+             </div>
+           
+     <script>
+         document.addEventListener('DOMContentLoaded', () => {
+         const userButton = document.getElementById('userButton');
+         const logoutButton = document.getElementById('logoutButton');
+     
+         userButton.addEventListener('click', () => {
+             if (logoutButton.style.display === 'none') {
+                 logoutButton.style.display = 'flex';
+                 logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+                 logoutButton.style.left = `${userButton.offsetLeft}px`;
+             } else {
+                 logoutButton.style.display = 'none';
+             }
+         });
+     
+         logoutButton.addEventListener('click', () => {
+             // Add your logout logic here
+             console.log('User logged out');
+         });
+     });
+     
+     </script>
+            </div>
+         </div>
+       <div class="css1">
+      <div class="main-container">
+        <div class="roww marginr" style="margin: 20px;">
+            <img src="img/traininggrey.png" alt="internship icon" style="width: 14px; height: 14px; margin-right: 5px">
+            <a href="trainingsDashboard" style="text-decoration: none;">
+                <p class="grey f14 marginr" style="margin: 0;">
+                  Trainings <i class="fa-solid fa-chevron-right f10 marginr grey"></i>
+                </p></a>
+            <p class="f14" style="margin-bottom: 0;">Create Trainings</p>
+          </div>
+
+    <div class="containerfull">
+        <div class="jumbotron">
+            <br>
+            <form id="registrationForm" action="/submit" method="post" enctype="multipart/form-data">
+                <div class="training-details">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="training_title">Training Title<span class="compulsory-mark">*</span></label>
+                            <input type="text" class="form-control" id="training_title" name="training_title" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="training_description">Description of Training<span class="compulsory-mark">*</span></label>
+                            <input type="text" class="form-control" id="training_description" name="training_description" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="training_hours">No of Hours<span class="compulsory-mark">*</span></label>
+                            <input type="number" class="form-control" id="training_hours" name="training_hours" required>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="training-details-p2">
+                   <div class="left-section">
+                    <div class="col-md-11" style="margin-bottom: 60px;">
+                        <div class="form-group">
+                            <label for="trainingtype"   style="margin-bottom: 20px;">Training Type<span class="compulsory-mark">*</span></label>
+                            <select id="trainingtypeInput" name="trainingtypeInput" class="form-control" required 
+                            >
+                                <option value="" >Search or select your training type</option>
+                            </select>
+                            <input type="hidden" id="selectedtrainingtypeId" name="selectedtrainingtypeId">
+                        </div>
+  
+                    </div>
+                    <div class="col-md-11" style="margin-bottom: 65px;">
+                    <div class="form-group">
+                        <label for="college"  style="margin-bottom: 20px;">College Name<span class="compulsory-mark">*</span></label>
+                        <select id="collegeInput" name="collegeInput" class="form-control" required>
+                            <option value="">Search or select your college</option>
+                        </select>
+                        <input type="hidden" id="selectedCollegeId" name="selectedCollegeId">
+                    </div></div>
+                    <div class="col-md-11" style="margin-bottom: 25px;">
+                    <div class="row" >
+                        <div class="col-md-6"  style="margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="training_start_date" >Training Start Date<span class="compulsory-mark">*</span></label>
+                                <input type="date" class="form-control" id="training_start_date" name="training_start_date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6"  style="margin-bottom: 20px;">
+                            <div class="form-group">
+                                <label for="training_end_date">Training End Date<span class="compulsory-mark">*</span></label>
+                                <input type="date" class="form-control" id="training_end_date" name="training_end_date" required>
+                            </div>
+                        </div>
+                    </div></div>
+
+                    <script>
+                        // Get the current date
+                        var currentDate = new Date().toISOString().split('T')[0];
+                    
+                        // Set the minimum value for both start and end date inputs to the current date
+                        document.getElementById("training_start_date").setAttribute("min", currentDate);
+                        document.getElementById("training_end_date").setAttribute("min", currentDate);
+                    
+                        // Add event listener to the start date input to update the minimum value of the end date input
+                        document.getElementById("training_start_date").addEventListener("change", function() {
+                            var startDate = this.value;
+                            document.getElementById("training_end_date").setAttribute("min", startDate);
+                        });
+                    </script>
+                    
+                
+                </div>
+                    <div class="right-section">
+                       
+                    <div class="form-group">
+                        <label for="banner_image">Banner Image<span class="compulsory-mark">*</span></label>
+                        <div class="banner-img">
+                            <div class="upload-container">
+                                <!-- Wrap the image inside a label element -->
+                                <label for="banner_image" class="image-label" style="cursor: pointer;">
+                                    <p>Drag & Drop your image here or <span class="browse-btn" style="color: cornflowerblue;">click here to browse</span></p>
+                                </label>
+                                <!-- Hide the file input element -->
+                                <input type="file" class="form-control-file" id="banner_image" name="banner_image" style="display: none;" required>
+                        
+                                <!-- New container for uploaded image preview below the text -->
+                                <div class="image-preview-container" style="width: 350px; height: 150px; overflow: hidden; border: 1px solid #ccc; margin-top: 10px; display: none;">
+                                    <img id="uploaded_image" style="width: 100%; height: 100%; object-fit: cover;">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <script>
+                            document.getElementById('banner_image').addEventListener('change', function(event) {
+                                const file = event.target.files[0];
+                                if (file) {
+                                    const reader = new FileReader();
+                                    reader.onload = function(e) {
+                                        const uploadedImage = document.getElementById('uploaded_image');
+                                        uploadedImage.src = e.target.result;
+                                        const previewContainer = document.querySelector('.image-preview-container');
+                                        previewContainer.style.display = 'block'; // Show the image preview container
+                                    };
+                                    reader.readAsDataURL(file);
+                                }
+                            });
+                        </script>
+                        
+                        
+                    </div>
+                    <!-- <div class="form-group">
+                        <label for="banner_image">Logo Image<span class="compulsory-mark">*</span></label>
+                        <div class="banner-img">
+                            <div class="upload-container">
+                                Wrap the image inside a label element -->
+                                <!--<label for="banner_image" class="image-label" style="cursor: pointer;">
+                                    <img id="preview_image" src="img/Frame.png" alt="Upload Icon">
+                                    <p>Drag & Drop your image here or <span class="browse-btn" style="color: cornflowerblue;">click here to browse</span></p>
+                                </label>
+                                 Hide the file input element -->
+                               <!-- <input type="file" class="form-control-file" id="banner_image" name="banner_image" style="display: none;" required>
+                            </div>
+                        </div>  
+                    </div>-->
+                </div>
+                <script>
+                    // Function to display the selected image
+                    function displayImage(input) {
+                        var file = input.files[0];
+                        var reader = new FileReader();
+                
+                        reader.onload = function(e) {
+                            // Set the source of the preview image to the selected image
+                            document.getElementById('preview_image').src = e.target.result;
+                        }
+                
+                        reader.readAsDataURL(file);
+                    }
+                
+                    // Add event listener to file input
+                    document.getElementById('banner_image').addEventListener('change', function() {
+                        displayImage(this);
+                    });
+                </script>
+                
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary-submit">Save & Next</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<div id="logoutModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <p class="question">Are you sure you want to logout?</p>
+        <div class="logout-div"></div>
+        <div class="modal-buttons">
+            <button id="cancelLogout">Cancel</button>
+            <button id="confirmLogout">Yes</button>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+
+    <script src="path/to/your/scripts.js"></script>
+    <script src="path/to/select2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Select2 for college dropdown
+            function initCollegeSelect2() {
+                $('#collegeInput').select2({
+                    placeholder: 'Search or select your college',
+                    ajax: {
+                        url: '/api/colleges_list/data',
+                        processResults: function(data) {
+                            return {
+                                results: data.map(college => ({
+                                    id: college.collegeID,
+                                    text: college.collegeName
+                                }))
+                            };
+                        }
+                    }
+                }).on('change', function(e) {
+                    document.getElementById('selectedCollegeId').value = e.target.value;
+                });
+            }
+
+            // Initialize Select2 for training type dropdown
+            function initTrainingTypeSelect2() {
+                $('#trainingtypeInput').select2({
+                    placeholder: 'Search or select your training type',
+                    ajax: {
+                        url: '/api/training_type/data',
+                        processResults: function(data) {
+                            return {
+                                results: data.map(training => ({
+                                    id: training.trainingtypeID,
+                                    text: training.trainingtypeName
+                                }))
+                            };
+                        }
+                    }
+                }).on('change', function(e) {
+                    document.getElementById('selectedtrainingtypeId').value = e.target.value;
+                });
+            }
+
+            // Load data and initialize Select2
+            initCollegeSelect2();
+            initTrainingTypeSelect2();
+        });
+
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Create a FormData object to collect form data
+            const formData = new FormData(this);
+
+            // Send form data to the server using XMLHttpRequest
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/submit');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    window.location.href = '/success'; // Redirect to a success page
+                } else {
+                    displayErrorMessage('An error occurred while submitting the form.');
+                }
+            };
+            xhr.onerror = function() {
+                displayErrorMessage('Network error occurred while submitting the form.');
+            };
+            xhr.send(formData);
+        });
+
+        function displayErrorMessage(message) {
+            // Create a popup element
+            const popup = document.createElement('div');
+            popup.classList.add('error-popup');
+
+            // Create a close button
+            const closeButton = document.createElement('span');
+            closeButton.classList.add('close-button');
+            closeButton.textContent = '×'; // Use '×' for the close icon
+            closeButton.addEventListener('click', closePopup);
+            popup.appendChild(closeButton);
+
+            const errorImage = document.createElement('img');
+            errorImage.src = 'path/to/errorimg.png'; // Replace with the path to your error image
+            errorImage.alt = 'Error'; // Alt text for accessibility
+            errorImage.classList.add('error-image');
+            popup.appendChild(errorImage);
+
+            // Add error message to the popup
+            const errorMessage = document.createElement('p');
+            errorMessage.textContent = message;
+            popup.appendChild(errorMessage);
+
+            // Add popup to the document body
+            document.body.appendChild(popup);
+
+            // Function to close the popup
+            function closePopup() {
+                document.body.removeChild(popup);
+            }
+        }
+    </script>
+
+
+<!-----------User Details Fetching---------------------->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Function to get the value of a cookie by name
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
+
+      // Get the JWT token from the cookie
+      const token = getCookie('userAdminToken');
+      
+      if (token) {
+        // Decode the JWT token
+        const decoded = jwt_decode(token);
+        
+        // Display the username and role
+        document.querySelector('.userN').textContent = decoded.email;
+        document.querySelector('.userR').textContent = decoded.role;
+      } else {
+        // Handle the case where the token is not found
+        document.querySelector('.userN').textContent = 'No user logged in';
+        document.querySelector('.userR').textContent = '';
+      }
+    });
+  </script>
+    
+  <!---------Logout module----------->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const logoutButton = document.getElementById('logoutButton');
+        const logoutModal = document.getElementById('logoutModal');
+        const modalContent = logoutModal.querySelector('.modal-content');
+        const confirmLogoutButton = modalContent.querySelector('#confirmLogout');
+        const cancelLogoutButton = modalContent.querySelector('#cancelLogout');
+  
+        logoutButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the button
+  
+            // Show the modal
+            logoutModal.style.display = 'block';
+  
+            // Add event listeners to the modal buttons
+            confirmLogoutButton.addEventListener('click', function() {
+                // If user confirms, navigate to /logout
+                window.location.href = '/logout';
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            cancelLogoutButton.addEventListener('click', function() {
+                // If user cancels, hide the modal
+                logoutModal.style.display = 'none';
+            });
+  
+            // Add event listener to the close span
+            closeSpan.addEventListener('click', function() {
+                logoutModal.style.display = 'none'; // Hide the modal
+            });
+  
+            // Add event listener to the modal itself to close when clicked outside
+            window.addEventListener('click', function(event) {
+                if (event.target === logoutModal) {
+                    logoutModal.style.display = 'none'; // Hide the modal
+                }
+            });
+        });
+    });
+  </script>
+
+      <!-- Add jQuery (required by Select2) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Add Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+   </body>
+</html>

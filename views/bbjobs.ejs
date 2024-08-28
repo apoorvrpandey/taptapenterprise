@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blackbucks Jobs</title>
+    <link rel="stylesheet" href="css/nav_log.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="shortcut icon" href="img/sidebar logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/job_dashboard.css">
+    <style>
+        .create {
+            background-color: transparent;
+            color: #333;
+            padding: 10px 15px;
+            border: 1px solid #0000009c;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .shortlisted-students-btn {
+            background-color: #D3FB52;
+            border-width: 0px;
+        }
+
+        .create:hover {
+            background-color: #D3FB52;
+            border: 2px solid #D3FB52;
+            font-weight: bold;
+        }
+
+        .toggle-description+.job-description {
+            display: none;
+        }
+
+        .toggle-description.clicked+.job-description {
+            display: block;
+        }
+
+        .create:active {
+            background-color: #D3FB52;
+        }
+
+        .loader {
+      width: 50px;
+      padding: 8px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #25b09b;
+      --_m: conic-gradient(#0000 10%, #000),
+        linear-gradient(#000 0 0) content-box;
+      -webkit-mask: var(--_m);
+      mask: var(--_m);
+      -webkit-mask-composite: source-out;
+      mask-composite: subtract;
+      animation: l3 1s infinite linear;
+    }
+
+    @keyframes l3 {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 15px;
+            width: 30%;
+            height:auto;
+            
+
+        }
+    </style>
+</head>
+<script>
+    window.userRole = "<%= user.role %>";
+  </script>
+  <script src="js/rolebase.js"></script>
+  
+
+<body>
+    <div class="supercss">
+        <div class="sidebar">
+            <a class="logo" style="text-align: center;align-items:center;padding:5px">
+                <img src="img/sidebar logo.png" alt="Logo" style="width: 58px; max-width: 70px;height:80px;">
+            </a>
+            <a href="myDashboard" class="menu-item" id="dashboard-link">
+                <img src="img/dash_white.png" alt="dash" style="max-width:22px; height:22px"><span
+                    style="color:white">Dashboard</span>
+            </a>
+            <a href="employabilityReport" class="menu-item">
+                <img src="img/emp.png" alt="dash" style="max-width:18px; height:20px"><span>Employbility</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me" class="menu-item">
+                <img alt="Assessment icon" src="img/assessment.png" style="max-width:19px; height:19.5px">
+                <span>Assessments</span></a>
+
+            <a href="jobsDashboard" class="menu-item" style="background-color: #88EB4C;">
+                <img src="img/jobs_black.png" alt="jobs" style="max-width:20px; height:21px"><span
+                    style="color:black;font-weight:bold">Jobs</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageCourse/" class="menu-item">
+                <img alt="course icon" src="img/course.png" style="max-width:19px; height:20px">
+                <span>Course</span></a>
+            <a href="https://admin.hackathon.blackbucks.me/lessonPlan/" class="menu-item">
+                <img alt="lessonplan icon" src="img/lessonplan.png" style="max-width:23px; height:18px">
+                <span>Lesson Plan</span></a>
+
+            <a href="trainingsDashboard" class="menu-item">
+                <img src="img/trainings.png" alt="trainings" style="max-width:27px; height:21px"><span>Trainings</span>
+            </a>
+            <a href="internshipsDashboard" class="menu-item">
+                <img src="img/internship_whiteicon.png" alt="manage"
+                    style="width: 20px; height: auto" /><span>Internships</span>
+            </a>
+            <a href="https://admin.hackathon.blackbucks.me/createAndManageLabTest/" class="menu-item">
+                <img alt="vpl icon" src="img/vpl.png" style="max-width:19px; height:17px">
+                <span>VPL</span></a>
+
+
+
+
+
+        </div>
+        <div class="css">
+            <div class="css0">
+                <div class="navbar">
+                    <div class="nav1"></div>
+                    <div class="nav2">
+                        <a href="https://admin.hackathon.blackbucks.me/manageStudents/">
+                            <div class="chakra-stack css-nr8aow">
+                                <img alt="Manage Users" src="img/newManageUsers.svg" class="chakra-image css-0">
+                            </div>
+                        </a>
+                        <a href="https://admin.hackathon.blackbucks.me/tpCalendar/" style="margin-left: 1rem;">
+                            <div class="chakra-stack css-nr8aow">
+                                <img alt="Calendar" src="img/newCalenderNavIcon.svg" class="chakra-image css-0">
+                            </div>
+                        </a>
+                        <a href="https://admin.hackathon.blackbucks.me/manageNotification/" style="margin-left: 1rem;">
+                            <div class="chakra-stack css-nr8aow">
+                                <div class="css-1edim3w">
+                                    <img alt="Notifications" src="img/newNotificationIcon.svg"
+                                        class="chakra-image css-6su6fj">
+                                    <div class="css-1bac456">
+                                        <div class="css-1rkwksi">1</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <button type="button" class="navbtn" id="userButton">
+                            <span class="user-details">
+                                <div class="user">
+                                    <span class="user-profile">
+                                        <i class="fa-solid fa-circle-user" style="font-size: 30px;"></i>
+                                    </span>
+                                    <div class="username">
+                                        <p class="userN"></p>
+                                        <p class="userR"></p>
+                                    </div>
+                                </div>
+                            </span>
+                            <span class="chakra-button__icon css-1hzyiq5">
+                                <svg viewBox="0 0 16 16" style="height:12px !important; width: 12px !important;"
+                                    aria-hidden="true" focusable="false" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg" color="black" class="css-1eamic5 ex0cdmw0">
+                                    <path fill-rule="evenodd"
+                                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z">
+                                    </path>
+                                </svg>
+                            </span>
+                        </button>
+
+                        <button type="button" class="logoutbtn" id="logoutButton" style="display: none;">
+                            Log out
+                        </button>
+
+
+                    </div>
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', () => {
+                            const userButton = document.getElementById('userButton');
+                            const logoutButton = document.getElementById('logoutButton');
+
+                            userButton.addEventListener('click', () => {
+                                if (logoutButton.style.display === 'none') {
+                                    logoutButton.style.display = 'flex';
+                                    logoutButton.style.top = `${userButton.offsetTop + userButton.offsetHeight}px`;
+                                    logoutButton.style.left = `${userButton.offsetLeft}px`;
+                                } else {
+                                    logoutButton.style.display = 'none';
+                                }
+                            });
+
+                            logoutButton.addEventListener('click', () => {
+                                // Add your logout logic here
+                                console.log('User logged out');
+                            });
+                        });
+
+                    </script>
+                </div>
+            </div>
+            <div class="css1">
+                <div class="main-container">
+                    <div id="blackbucks-jobs-container" style="margin-top:10px; ">
+                        
+                        <!-- <div id="loading-spinner" class="loading-container">
+                            <div class="loading-spinner">Loading....</div>
+                        </div> -->
+
+                        <div class="loading-container" id="loaderContainer" style="
+                                                                            display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
+                                                                            ">
+                        <div class="loader" id="loader" style="margin-top: 10px"></div>
+                        </div>
+                        <div id="bb-jobs" style="display: flex ; flex-wrap: wrap; column-gap: 10px; row-gap:10px;">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingSpinner = document.getElementById("loaderContainer");
+
+            fetch('/api/job_posts/bb_job_posts')
+                .then(response => response.json())
+                .then(data => {
+                    loadingSpinner.style.display = 'none'; // Hide the spinner
+
+                    const jobContainer = document.getElementById("bb-jobs");
+
+                    data.forEach(jobPost => {
+
+
+                        const jobHTML = `<div class="job card">
+                            <img src="${jobPost.job_post_logo_url}" alt="${jobPost.company_title} logo">
+    <div class="job-info">
+        <h2>${jobPost.job_post_title}</h2>
+        <p>${jobPost.company_title}</p>
+        ${jobPost.drive_type === "BB Exclusive" ? `
+            <div style="background-color: #8A2BE2; width: 110px; color: #ffffff; padding: 0.25rem 0.5rem; border-radius: 999rem; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; border: 2px solid gold;">
+                <span style="margin-right: 0.25rem; margin-top: -0.25rem; display: flex; align-items: center;">
+                    👑 
+                </span>
+                ${jobPost.drive_type}
+            </div>
+        ` : `<div style="background-color: #d3d3d3; width: 90px; color: black; padding: 0.25rem 0.5rem; border-radius: 999rem; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; justify-content:center">
+                
+                ${jobPost.drive_type}
+            </div>`}
+        
+        
+    </div>
+                    </div>`;
+
+                        jobContainer.innerHTML += jobHTML;
+                    });
+
+                
+                    const jobsContainer = document.getElementById("blackbucks-jobs-container");
+
+
+                    const marquee = document.createElement('marquee');
+                    marquee.style.whiteSpace = 'nowrap';
+                    marquee.style.overflow = 'hidden';
+                    marquee.style.width = '100%';
+                    marquee.style.position = 'static';
+                    marquee.setAttribute('direction', 'right');            
+
+                    data.forEach(job => {
+                        console.log(job);
+
+                        // Add job post logos to the marquee
+                        const logoImg = document.createElement('img');
+                        logoImg.src = job.job_post_logo_url;
+                        logoImg.alt = `${job.company_title} logo`;
+                        logoImg.style.width = 'auto';
+                        logoImg.style.height = '100px';
+                        logoImg.style.margin = '20px';
+
+                        marquee.appendChild(logoImg);
+                    })
+                    
+
+                    const header1 = document.createElement('h1');
+                    header1.style.fontSize = '20px';
+                    header1.style.marginLeft = '10px'
+                    header1.style.marginTop = '10px'
+                    header1.textContent = 'TapTap Job Posts';
+                    jobsContainer.prepend(header1);
+
+                    jobsContainer.prepend(marquee)
+                    const header = document.createElement('h1');
+                    header.style.fontSize = '20px';
+                    header.style.marginLeft = '10px'
+                    header.style.marginTop = '10px'
+                    header.textContent = 'Blackbucks Top Recruiters';
+                    jobsContainer.prepend(header);
+
+                })
+                .catch(error => {
+                    console.error('Error fetching filter options:', error);
+                });
+        })
+
+    </script>
+</body>
+
+</html>
